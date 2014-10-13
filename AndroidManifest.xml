@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.nuautotest.Activity"
+          android:versionCode="3"
+          android:versionName="3.1"
+          android:sharedUserId= "android.uid.system">
+
+	<uses-sdk android:targetSdkVersion="19"
+	          android:minSdkVersion="17"/>
+
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+	<uses-permission android:name="android.permission.REBOOT"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.READ_LOGS"/>
+	<uses-permission android:name="android.permission.CALL_PHONE"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.READ_CALL_LOG"/>
+	<uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+	<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+
+	<uses-feature android:name="android.hardware.usb.accessory"/>
+	<uses-feature android:name="android.hardware.usb.host"/>
+
+	<!-- android:name="com.nuautotest.application.ModuleTestApplicationtion" -->
+	<application
+			android:icon="@drawable/ic_launcher"
+			android:label="@string/app_name"
+			android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen"
+			android:allowBackup="true">
+
+		<!--
+				<receiver
+						android:name=".BootCompleteReceiver"
+						android:label="@string/app_name">
+					<intent-filter>
+						<action android:name="android.intent.action.BOOT_COMPLETED"/>
+					</intent-filter>
+				</receiver>
+		-->
+
+		<activity android:name="com.nuautotest.Activity.NuAutoTestActivity"
+		          android:label="@string/app_name"
+		          android:screenOrientation="portrait">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".ButtonTestActivity"/>
+		<activity android:name=".GSensorTestActivity"
+		          android:screenOrientation="portrait"/>
+		<activity android:name=".LightSensorTestActivity"/>
+		<activity android:name=".CompassTestActivity"/>
+		<activity android:name=".SDTestActivity"/>
+		<activity android:name=".ChargerTestActivity"/>
+		<activity android:name=".HDMITestActivity"/>
+		<activity android:name=".BackLightTestActivity"/>
+		<activity android:name=".AudioTestActivity"/>
+		<activity android:name=".BatteryTestActivity"/>
+		<activity android:name=".USBTestActivity"/>
+		<activity android:name=".CameraTestActivity"
+		          android:screenOrientation="portrait"/>
+		<activity android:name=".GPSTestActivity"/>
+		<activity android:name=".WifiTestActivity"/>
+		<activity android:name=".BlueToothTestActivity"/>
+		<activity android:name=".TPTestActivity"
+		          android:screenOrientation="portrait"/>
+		<activity android:name=".VibratorTestActivity"/>
+		<activity android:name=".LCDTestActivity"/>
+		<activity android:name=".HeadsetTestActivity"/>
+		<activity android:name=".FlashlightTestActivity"/>
+
+		<activity android:name=".SuspendResumeTestActivity"/>
+		<receiver android:name="com.nuautotest.BroadcastReceiver.NSDeviceAdminReceiver"
+		          android:permission="android.permission.BIND_DEVICE_ADMIN">
+			<meta-data android:name="android.app.device_admin"
+			           android:resource="@xml/ns_device_admin"/>
+			<intent-filter>
+				<action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+			</intent-filter>
+		</receiver>
+
+		<activity android:name=".FactoryResetTestActivity"/>
+		<activity android:name=".PhoneTestActivity"
+		          android:label="@string/title_activity_telinkcall"/>
+		<activity android:name=".FMTestActivity"/>
+
+	</application>
+
+</manifest>

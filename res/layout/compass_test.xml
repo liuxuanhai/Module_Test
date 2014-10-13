@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="指南针测试\n 改变方向"
+			android:textSize="25dip" >
+	</TextView>
+
+	<TextView
+			android:id="@+id/csensor"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="无反应"
+			android:textSize="25dip" >
+	</TextView>
+
+	<ImageView
+			android:id="@+id/compassimage"
+			android:layout_width="208dp"
+			android:layout_height="208dp"
+			android:layout_weight="2"
+			android:src="@drawable/compass" />
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

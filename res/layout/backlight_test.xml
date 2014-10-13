@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="背光测试"
+			android:textSize="25dip" >
+	</TextView>
+
+	<TextView
+			android:id="@+id/sensor"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="亮度"
+			android:textSize="25dip" >
+	</TextView>
+
+	<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:background="@android:color/white" >
+
+	</LinearLayout>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="Wifi测试"
+			android:textSize="25dip" >
+	</TextView>
+
+	<TextView
+			android:id="@+id/tvwifistatus"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text=""
+			android:textSize="25dip" >
+	</TextView>
+
+	<TextView
+			android:id="@+id/tvwificonnstatus"
+			android:layout_width="fill_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:textSize="25dip" >
+	</TextView>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" >
+
+		<Button
+				android:id="@+id/btEnableWifi"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="onEnableWifi"
+				android:text="设置Wifi" />
+
+		<Button
+				android:id="@+id/btPingBaidu"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="onPingBaidu"
+				android:text="打开百度" />
+
+		<TextView
+				android:id="@+id/tvPingBaidu"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" >
+		</TextView>
+
+	</LinearLayout>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

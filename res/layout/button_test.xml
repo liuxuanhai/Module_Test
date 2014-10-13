@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="按键测试"
+			android:textSize="30dip" >
+	</TextView>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" >
+
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="音量上键："
+				android:textSize="25dip" >
+		</TextView>
+
+		<TextView
+				android:id="@+id/keySoundUp"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="                  "
+				android:background="#FF0000"
+				android:textSize="25dip" >
+		</TextView>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" />
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" >
+
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="音量下键："
+				android:textSize="25dip" >
+		</TextView>
+
+		<TextView
+				android:id="@+id/keySoundDown"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="                  "
+				android:background="#FF0000"
+				android:textSize="25dip" >
+		</TextView>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" />
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" >
+
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="返回键：    "
+				android:textSize="25dip" >
+		</TextView>
+
+		<TextView
+				android:id="@+id/keyBack"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="                  "
+				android:background="#FF0000"
+				android:textSize="25dip" >
+		</TextView>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" />
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:orientation="horizontal" >
+
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="菜单键：    "
+				android:textSize="25dip" >
+		</TextView>
+
+		<TextView
+				android:id="@+id/keyMenu"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="                  "
+				android:background="#FF0000"
+				android:textSize="25dip" >
+		</TextView>
+
+	</LinearLayout>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

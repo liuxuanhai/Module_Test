@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="20dip"
+              android:paddingBottom="20dip"
+              android:orientation="vertical" >
+
+	<TextView
+			android:textSize="20dip"
+			android:id="@+id/item"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="item" />
+	<!--
+		<TextView
+			android:id="@+id/tooltip"
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:textSize="16dip" />
+	-->
+	<TextView
+			android:text="state"
+			android:textSize="20dip"
+			android:id="@+id/state"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+</LinearLayout>

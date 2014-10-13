@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="USB拔插测试"
+			android:textSize="30dip" >
+	</TextView>
+
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="对USB拔插"
+			android:textSize="25dip" />
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1" >
+
+		<TextView
+				android:id="@+id/tvUsbAccessory"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="状态:未插入"
+				android:textSize="20dip" />
+
+		<!--
+		<TextView
+			android:id="@+id/tvUsbHost"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:text="USB Host状态:未插入"
+			android:textSize="20dip" />
+		-->
+
+	</LinearLayout>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

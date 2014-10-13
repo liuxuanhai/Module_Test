@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="耳机测试"
+			android:textSize="30dip" >
+	</TextView>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0dip"
+			android:layout_weight="2"
+			android:orientation="horizontal" >
+
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="状态："
+				android:textSize="25dip" >
+		</TextView>
+
+		<TextView
+				android:id="@+id/headsetState"
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="2"
+				android:text="未插入"
+				android:textSize="25dip" >
+		</TextView>
+
+	</LinearLayout>
+
+	<Button android:id="@+id/btPlayMusic"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="3"
+	        android:text="播放音乐" />
+
+	<LinearLayout android:id="@+id/llHeadsetKey" android:layout_width="fill_parent"
+	              android:layout_height="0dip"
+	              android:layout_weight="3"
+	              android:visibility="invisible" >
+
+		<TextView android:layout_width="wrap_content"
+		          android:layout_height="fill_parent"
+		          android:text="耳机键："
+		          android:textSize="25dip" />
+
+		<TextView android:id="@+id/keyHeadset"
+		          android:layout_width="wrap_content"
+		          android:layout_height="fill_parent"
+		          android:background="@color/red"
+		          android:text="                  "
+		          android:textSize="25dip"/>
+
+	</LinearLayout>
+
+	<View android:layout_weight="10"
+	      android:layout_width="match_parent"
+	      android:layout_height="0dip"/>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>
