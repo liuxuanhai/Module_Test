@@ -196,7 +196,7 @@ public class WifiTestActivity extends Activity {
 				android.provider.Settings.ACTION_WIFI_SETTINGS));
 	}
 
-	public void onPingBaidu(View view) {
+	public void onOpenWeb(View view) {
 //		TextView tvPingBaidu = (TextView)findViewById(R.id.tvPingBaidu);
 //
 //		tvPingBaidu.setText("Pinging www.baidu.com...\t");
@@ -221,7 +221,7 @@ public class WifiTestActivity extends Activity {
 //		}
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.VIEW");
-		Uri uri = Uri.parse("http://www.baidu.com");
+		Uri uri = Uri.parse("http://www.nufront.com");
 		intent.setData(uri);
 		startActivity(intent);
 	}

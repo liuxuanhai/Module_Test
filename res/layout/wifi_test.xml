@@ -42,8 +42,8 @@
 				android:id="@+id/btPingBaidu"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:onClick="onPingBaidu"
-				android:text="打开百度" />
+				android:onClick="onOpenWeb"
+				android:text="打开网页" />
 
 		<TextView
 				android:id="@+id/tvPingBaidu"

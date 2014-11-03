@@ -37,28 +37,32 @@ public class FlashlightTestActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (ModuleTestApplication.LOG_ENABLE) {
-			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_vibrator.txt");
-			} catch (IOException e) {
-				e.printStackTrace();
+		try {
+			if (ModuleTestApplication.LOG_ENABLE) {
+				try {
+					mLogWriter = new FileWriter("/sdcard/ModuleTest/log_vibrator.txt");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				ModuleTestApplication.getInstance().recordLog(null);
 			}
-			ModuleTestApplication.getInstance().recordLog(null);
+			Log.i(ModuleTestApplication.TAG, "---Flashlight Test---");
+
+			setContentView(R.layout.flashlight_test);
+			mbtFlashlight = (Button)findViewById(R.id.btFlashlight);
+
+			isCaptureFinished = true;
+			mShutter = new Camera.ShutterCallback() {
+				@Override
+				public void onShutter() {
+					isCaptureFinished = true;
+					mbtFlashlight.setEnabled(true);
+				}
+			};
+			mCamera = Camera.open();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		Log.i(ModuleTestApplication.TAG, "---Flashlight Test---");
-
-		setContentView(R.layout.flashlight_test);
-		mbtFlashlight = (Button)findViewById(R.id.btFlashlight);
-
-		isCaptureFinished = true;
-		mShutter = new Camera.ShutterCallback() {
-			@Override
-			public void onShutter() {
-				isCaptureFinished = true;
-				mbtFlashlight.setEnabled(true);
-			}
-		};
-		mCamera = Camera.open();
 	}
 
 	@Override

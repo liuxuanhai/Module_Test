@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="version">版本: 3.3.1030</string>
 
-	<string name="hello">Hello World, NuAutoTestActivity!</string>
 	<string name="app_name">整机测试</string>
 
 	<string name="audio_test">"音频"</string>

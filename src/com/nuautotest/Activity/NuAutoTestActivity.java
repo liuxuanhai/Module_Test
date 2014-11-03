@@ -1,8 +1,11 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;

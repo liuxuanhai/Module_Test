@@ -2,6 +2,7 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.display.DisplayManager;
@@ -12,6 +13,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.view.SurfaceHolder.Callback;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -28,6 +31,7 @@ import java.util.List;
 public class CameraTestActivity extends Activity {
 	public static final int MSG_TIMEOUT = 0x101;
 	private SurfaceView surfaceView;
+	private SurfaceHolder mSurfaceHolder;
 	private Camera camera;
 	private String Flag = "";
 	private ModuleTestApplication application;
@@ -38,6 +42,12 @@ public class CameraTestActivity extends Activity {
 	private int mTimeout;
 	private TimerHandler mTimerHandler;
 	public static int mRotationFront, mRotationBack;
+
+	private Button mBtTakePicture;
+	private static final int STATE_IDLE = 0;
+	private static final int STATE_TAKING = 1;
+	private static final int STATE_TAKEN = 2;
+	private int state = STATE_IDLE;
 
 	private class CameraDisplayListener implements DisplayManager.DisplayListener {
 		@Override
@@ -76,9 +86,15 @@ public class CameraTestActivity extends Activity {
 		display.getMetrics(outMetrics);
 		Intent intent = this.getIntent();
 		Flag = intent.getStringExtra("Flag");
+		mBtTakePicture = (Button) this.findViewById(R.id.btTakePicture);
 		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView);
-		surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		surfaceView.getHolder().setKeepScreenOn(true);
+		mSurfaceHolder = surfaceView.getHolder();
+		if (mSurfaceHolder == null) {
+			Log.e(ModuleTestApplication.TAG, "SurfaceHolder is null");
+			this.finish();
+		}
+		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		mSurfaceHolder.setKeepScreenOn(true);
 		mSurfaceCallback = new SurfaceCallback();
 
 		DisplayManager dm = (DisplayManager)getSystemService(DISPLAY_SERVICE);
@@ -90,7 +106,7 @@ public class CameraTestActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		surfaceView.getHolder().addCallback(mSurfaceCallback);
+		mSurfaceHolder.addCallback(mSurfaceCallback);
 		boolean mAutomatic = this.getIntent().getBooleanExtra("Auto", false);
 		if (mAutomatic) {
 			mTimeout = 20;
@@ -106,7 +122,7 @@ public class CameraTestActivity extends Activity {
 			camera.release();
 			camera = null;
 		}
-		surfaceView.getHolder().removeCallback(mSurfaceCallback);
+		mSurfaceHolder.removeCallback(mSurfaceCallback);
 
 		super.onPause();
 	}
@@ -162,10 +178,20 @@ public class CameraTestActivity extends Activity {
 			if (camera != null) {
 				Camera.Parameters parameters = camera.getParameters();
 
-				List<Camera.Size> pSizes=parameters.getSupportedPreviewSizes();
-				Camera.Size pSize=pSizes.get((pSizes.size() -1)/2);
+				List<Camera.Size> pSizes = parameters.getSupportedPreviewSizes();
+				if (pSizes == null) {
+					Log.e(ModuleTestApplication.TAG, "getSupportedPreviewSizes returned null");
+					return;
+				}
+				Camera.Size pSize;
+				Log.d(ModuleTestApplication.TAG, "Supported Preview sizes:");
+				for (int i=0; i<pSizes.size(); i++) {
+					pSize = pSizes.get(i);
+					Log.d(ModuleTestApplication.TAG, "("+pSize.width+"x"+pSize.height+")");
+				}
+				pSize = pSizes.get(0);
 
-				parameters.setPreviewSize(pSize.width,pSize.height);
+				parameters.setPreviewSize(pSize.width, pSize.height);
 
 				try {
 					camera.setParameters(parameters);
@@ -185,10 +211,36 @@ public class CameraTestActivity extends Activity {
 				Log.d(ModuleTestApplication.TAG, "Current rotation: " + display.getRotation() +
 						"config: " + mRotationFront + " " + mRotationBack);
 
-				if (Flag.equals("Front"))
-					camera.setDisplayOrientation((display.getRotation()*90 + mRotationFront)%360);
-				else
-					camera.setDisplayOrientation((display.getRotation()*90 + mRotationBack)%360);
+				boolean swap_wh = false;
+
+				if (Flag.equals("Front")) {
+					camera.setDisplayOrientation((display.getRotation() * 90 + mRotationFront) % 360);
+					if ((display.getRotation() * 90 + mRotationFront) % 360 == 90 ||
+						(display.getRotation() * 90 + mRotationFront) % 360 == 270) swap_wh = true;
+				} else {
+					camera.setDisplayOrientation((display.getRotation() * 90 + mRotationBack) % 360);
+					if ((display.getRotation() * 90 + mRotationBack) % 360 == 90 ||
+							(display.getRotation() * 90 + mRotationBack) % 360 == 270) swap_wh = true;
+				}
+
+				LinearLayout parent = (LinearLayout)surfaceView.getParent();
+				if (parent != null) {
+					if (swap_wh) {
+						if (pSize.height / pSize.width < parent.getWidth() / parent.getHeight())
+							mSurfaceHolder.setFixedSize(parent.getHeight() * pSize.height / pSize.width,
+									parent.getHeight());
+						else
+							mSurfaceHolder.setFixedSize(parent.getWidth(),
+									parent.getWidth() * pSize.width / pSize.height);
+					} else {
+						if (pSize.width / pSize.height < parent.getWidth() / parent.getHeight())
+							mSurfaceHolder.setFixedSize(parent.getHeight() * pSize.width / pSize.height,
+									parent.getHeight());
+						else
+							mSurfaceHolder.setFixedSize(parent.getWidth(),
+									parent.getWidth() * pSize.height / pSize.width);
+					}
+				}
 
 				camera.startPreview();
 			}
@@ -201,6 +253,38 @@ public class CameraTestActivity extends Activity {
 			}
 		}
 
+	}
+
+	public class CameraFocusCallback implements Camera.AutoFocusCallback {
+		@Override
+		public void onAutoFocus(boolean success, Camera camera) {
+			camera.takePicture(null, null, null);
+			mBtTakePicture.setText("继续预览");
+			mBtTakePicture.setEnabled(true);
+			state = STATE_TAKEN;
+		}
+	}
+
+	public void onClickTakePicture(View view) {
+		if (camera == null) {
+			Log.e(ModuleTestApplication.TAG, "onClickTakePicture: camera = null");
+			return;
+		}
+		switch (state) {
+			case STATE_IDLE:
+				mBtTakePicture.setText("正在拍照...");
+				mBtTakePicture.setEnabled(false);
+				state = STATE_TAKING;
+				camera.autoFocus(new CameraFocusCallback());
+				break;
+			case STATE_TAKING:
+				break;
+			case STATE_TAKEN:
+				mBtTakePicture.setText("拍照");
+				state = STATE_IDLE;
+				camera.startPreview();
+				break;
+		}
 	}
 
 	// 成功失败按钮

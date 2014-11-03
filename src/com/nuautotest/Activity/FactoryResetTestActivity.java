@@ -3,9 +3,8 @@ package com.nuautotest.Activity;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.PowerManager;
+import android.content.Intent;
+import android.os.*;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,19 +58,32 @@ public class FactoryResetTestActivity extends Activity {
 		mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 	}
 
-	// 成功失败按钮
-	public void onbackbtn(View view) {
-		switch (view.getId()) {
-			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.factoryreset_test))]="失败";
-				this.finish();
-				break;
-			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.factoryreset_test))]="成功";
-				this.finish();
-				break;
+	private void wipeDirectory(String name) {
+		File directory = new File(name);
+		File[] files = directory.listFiles();
+
+		if (files != null && files.length > 0) {
+			for (File file : files) {
+				if (file.isDirectory()) wipeDirectory(file.toString());
+				file.delete();
+			}
+		} else {
+			directory.delete();
+		}
+	}
+
+	protected void wipeSDCard() {
+		File sdcard = new File(Environment.getExternalStorageDirectory().toString());
+		try {
+			File[] files = sdcard.listFiles();
+			if (files != null && files.length > 0) {
+				for (File file : files) {
+					if (file.isDirectory()) wipeDirectory(file.toString());
+					file.delete();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -102,6 +114,10 @@ public class FactoryResetTestActivity extends Activity {
 //			}
 //			fWriter.close();
 
+			/* wipe SD card */
+			wipeSDCard();
+
+			/* set boot_config */
 			fWriter = new FileWriter(bootconfigFlag);
 			fWriter.write("Boot system = android;\n");
 			fWriter.write("Boot device = emmc;\n");
@@ -147,10 +163,6 @@ public class FactoryResetTestActivity extends Activity {
 		public void onClick(View v) {
 			StartTest();
 		}
-	}
-
-	@Override
-	public void onBackPressed() {
 	}
 
 	public void startAutoTest() {

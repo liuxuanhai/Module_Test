@@ -61,8 +61,8 @@ public class PhoneTestActivity extends Activity {
 		mListener = new MyPhoneStateListener();
 		manager.listen(mListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-		m_context.getContentResolver().registerContentObserver(
-				Uri.parse("content://call_log"), true, new CallContentObserver(m_context, null));
+//		m_context.getContentResolver().registerContentObserver(
+//				Uri.parse("content://call_log"), true, new CallContentObserver(m_context, null));
 
 		mediaRecorder= new MediaRecorder();
 	}
