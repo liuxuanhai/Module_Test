@@ -10,6 +10,10 @@
         <option name="packageNamePattern" value="com.nuautotest.*" />
         <option name="pid" value="" />
       </filter>
+      <filter>
+        <option name="name" value="app: com.nuautotest.Activity" />
+        <option name="packageNamePattern" value="com.nuautotest.Activity" />
+      </filter>
     </filters>
   </component>
   <component name="AndroidLayoutPreviewToolWindow">
@@ -27,6 +31,11 @@
       </config>
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/res/layout/device_info.xml">
+        <config>
+          <theme>@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/res/layout/fm_test.xml">
         <config>
           <theme>@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen</theme>
@@ -35,7 +44,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Module_Test" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.nuautotest.Activity" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3628cde3-f86b-4f1a-832f-e29615f5956f" name="Default" comment="" />
@@ -60,56 +69,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <file leaf-file-name="DeviceInfoActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/DeviceInfoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.571192" vertical-offset="375" max-vertical-offset="1635">
-              <caret line="48" column="59" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.46666667" vertical-offset="1349" max-vertical-offset="4095">
+              <caret line="128" column="36" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraTestActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/CameraTestActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1108" max-vertical-offset="5310">
-              <caret line="121" column="29" selection-start-line="121" selection-start-column="29" selection-end-line="121" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlashlightTestActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/FlashlightTestActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="2775">
-              <caret line="70" column="43" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FactoryResetTestActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/FactoryResetTestActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2670">
-              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="factory_reset_test.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/factory_reset_test.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.9215684" vertical-offset="73" max-vertical-offset="615">
-              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
+      <file leaf-file-name="device_info.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/device_info.xml">
           <provider editor-type-id="android-designer">
             <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.705882" vertical-offset="240" max-vertical-offset="2715">
+              <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="529" max-vertical-offset="1965">
+              <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="705">
+              <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -123,10 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/gps_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/gsensor_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/hdmi_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/headset_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/lcd_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/light_sensor_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/nu_autotest_listview_item.xml" />
@@ -163,16 +158,20 @@
         <option value="$PROJECT_DIR$/assets/config.ini" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/FMTestActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/wifi_test.xml" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/WifiTestActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/PhoneTestActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/camera_test.xml" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/NuAutoTestActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/nu_autotest_activity.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/FlashlightTestActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/factory_reset_test.xml" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/FactoryResetTestActivity.java" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/CameraTestActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/nu_autotest_activity.xml" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/NuAutoTestActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/PhoneTestActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/BlueToothTestActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/WifiTestActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/NativeLib/SystemPropertiesProxy.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/layout/device_info.xml" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/DeviceInfoActivity.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
@@ -220,15 +219,9 @@
               <option name="myItemId" value="Module_Test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Module_Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Module_Test" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -238,14 +231,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Module_Test" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nuautotest" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -266,8 +251,26 @@
               <option name="myItemId" value="nuautotest" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nuautotest" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NativeLib" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -307,6 +310,24 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -318,18 +339,22 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode.General" />
+    <property name="options.lastSelected" value="preferences.sourceCode.XML" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$USER_HOME$/server_14/git/sdk/android/vendor/broadcom/apps/FmRadio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/framework.jar!/" />
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="SearchEverywhereHistoryKey" value="SystemProperties&#9;PSI&#9;JAVA://android.os.SystemProperties&#10;PhoneStateListener&#9;PSI&#9;JAVA://com.nuautotest.Activity.PhoneTestActivity.MyPhoneStateListener&#10;PhoneStateIntentReceiver&#9;PSI&#9;JAVA://com.android.internal.telephony.PhoneStateIntentReceiver&#10;systemservice&#9;PSI&#9;JAVA://android.os.SystemService&#10;tptestacti&#9;PSI&#9;JAVA://com.nuautotest.Activity.TPTestActivity" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0123456789ABCDEF" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="AVD4.1" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -375,19 +400,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -413,6 +425,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -475,7 +500,7 @@
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
@@ -487,6 +512,8 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
       <method />
     </configuration>
     <list size="1">
@@ -521,58 +548,30 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964426" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2735178" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31699848" sideWeight="0.49960473" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3154671" sideWeight="0.49960473" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32061067" sideWeight="0.50039524" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24980237" sideWeight="0.5011236" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44563553" sideWeight="0.50039524" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26007906" sideWeight="0.5022971" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44563553" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32465544" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44563553" sideWeight="0.49960473" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24980237" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24980237" sideWeight="0.4988764" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26007906" sideWeight="0.4977029" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32061067" sideWeight="0.50039524" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24980237" sideWeight="0.4988764" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31852987" sideWeight="0.49960473" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964426" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24980237" sideWeight="0.5011236" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44563553" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24980237" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
@@ -595,7 +594,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -603,407 +602,385 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/layout/tp_test.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/LCDTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.8235295" vertical-offset="0" max-vertical-offset="285">
-          <caret line="13" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="3240">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/usb_test.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/TPTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.470588" vertical-offset="0" max-vertical-offset="780">
-          <caret line="22" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="46" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="2670">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/vibrator_test.xml">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/SystemService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5882354" vertical-offset="0" max-vertical-offset="555">
-          <caret line="19" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="31" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1860">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/com/android/server/InputMethodManagerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40734825" vertical-offset="39300" max-vertical-offset="51765">
+          <caret line="2766" column="20" selection-start-line="2766" selection-start-column="20" selection-end-line="2766" selection-end-column="20" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/color.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.2" vertical-offset="0" max-vertical-offset="210">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.12479201" vertical-offset="0" max-vertical-offset="601">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/SDTestActivity.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/graphics/Color.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1727" max-vertical-offset="3105">
-          <caret line="147" column="57" selection-start-line="147" selection-start-column="57" selection-end-line="147" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/NuSelectActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1125">
-          <caret line="79" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/USBTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3909" max-vertical-offset="5940">
-          <caret line="274" column="58" selection-start-line="274" selection-start-column="58" selection-end-line="274" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.33278146" vertical-offset="219" max-vertical-offset="5955">
+          <caret line="46" column="52" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Adapter/NuAutoTestAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="521" max-vertical-offset="1125">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1125">
+          <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Adapter/NuSelectAdapter.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/com/android/internal/telephony/RILConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="930">
-          <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="905" max-vertical-offset="4485">
+          <caret line="81" column="8" selection-start-line="81" selection-start-column="8" selection-end-line="81" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/NativeLib/NativeLib.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/com/android/internal/telephony/PhoneConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <caret line="11" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.31044775" vertical-offset="526" max-vertical-offset="1875">
+          <caret line="56" column="62" selection-start-line="56" selection-start-column="62" selection-end-line="56" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/NativeLib/ProcessThread.java">
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/BlueToothTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state vertical-scroll-proportion="-1.4888179" vertical-offset="2222" max-vertical-offset="3675">
+          <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/net/wifi/WifiManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85365856" vertical-offset="12780" max-vertical-offset="13395">
-          <caret line="887" column="0" selection-start-line="887" selection-start-column="0" selection-end-line="887" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33226836" vertical-offset="12452" max-vertical-offset="32025">
+          <caret line="881" column="20" selection-start-line="881" selection-start-column="20" selection-end-line="881" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/View/TPTestView.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/BatteryManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0942492" vertical-offset="3084" max-vertical-offset="4815">
-          <caret line="303" column="49" selection-start-line="303" selection-start-column="49" selection-end-line="303" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.19169329" vertical-offset="0" max-vertical-offset="1740">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/media/AudioManager.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/telephony/CellInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52715653" vertical-offset="16950" max-vertical-offset="40140">
-          <caret line="1191" column="0" selection-start-line="1191" selection-start-column="0" selection-end-line="1191" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.28753993" vertical-offset="315" max-vertical-offset="2895">
+          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/HeadsetTestActivity.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/telephony/TelephonyManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2970" max-vertical-offset="4215">
-          <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.33226836" vertical-offset="17657" max-vertical-offset="21000">
+          <caret line="1239" column="23" selection-start-line="1239" selection-start-column="23" selection-end-line="1239" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/content/Intent.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/provider/Telephony.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5572139" vertical-offset="92986" max-vertical-offset="107490">
-          <caret line="6339" column="18" selection-start-line="6339" selection-start-column="18" selection-end-line="6339" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.33226836" vertical-offset="32657" max-vertical-offset="38070">
+          <caret line="2226" column="30" selection-start-line="2226" selection-start-column="30" selection-end-line="2226" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/app/ActivityManager.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/com/android/internal/telephony/PhoneStateIntentReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67469877" vertical-offset="26675" max-vertical-offset="32550">
-          <caret line="1941" column="83" selection-start-line="1941" selection-start-column="83" selection-end-line="1941" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="2535">
+          <caret line="33" column="69" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/flashlight_test.xml">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/telephony/PhoneStateListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.7058825" vertical-offset="225" max-vertical-offset="585">
-          <caret line="31" column="46" selection-start-line="6" selection-start-column="4" selection-end-line="31" selection-end-column="46" />
-          <folding />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="3428" max-vertical-offset="5550">
+          <caret line="267" column="16" selection-start-line="267" selection-start-column="16" selection-end-line="267" selection-end-column="16" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5769231" vertical-offset="435" max-vertical-offset="1365">
-          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/SuspendResumeTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.790429" vertical-offset="394" max-vertical-offset="5085">
-          <caret line="159" column="25" selection-start-line="159" selection-start-column="25" selection-end-line="159" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/FMTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40286624" vertical-offset="1217" max-vertical-offset="1845">
-          <caret line="98" column="27" selection-start-line="98" selection-start-column="27" selection-end-line="98" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fm_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6241135" vertical-offset="23" max-vertical-offset="600">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/WifiTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5511182" vertical-offset="2655" max-vertical-offset="4350">
-          <caret line="223" column="47" selection-start-line="223" selection-start-column="47" selection-end-line="223" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="4350">
+          <caret line="166" column="38" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/wifi_test.xml">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/net/wifi/WifiInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48932385" vertical-offset="385" max-vertical-offset="960">
-          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="42" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1869" max-vertical-offset="4605">
+          <caret line="172" column="15" selection-start-line="172" selection-start-column="15" selection-end-line="172" selection-end-column="15" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4090909" vertical-offset="205976" max-vertical-offset="284850">
-          <caret line="14216" column="23" selection-start-line="14216" selection-start-column="23" selection-end-line="14216" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/lcd_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5508475" vertical-offset="15" max-vertical-offset="720">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/PhoneTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3732058" vertical-offset="2321" max-vertical-offset="3585">
-          <caret line="222" column="9" selection-start-line="222" selection-start-column="9" selection-end-line="222" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="279" max-vertical-offset="3585">
+          <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/LCDTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5910543" vertical-offset="1731" max-vertical-offset="3240">
-          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/VibratorTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6230032" vertical-offset="675" max-vertical-offset="2040">
-          <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/hardware/Camera.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="17229" max-vertical-offset="56280">
-          <caret line="1208" column="69" selection-start-line="1208" selection-start-column="69" selection-end-line="1208" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/view/ContextThemeWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58373207" vertical-offset="1166" max-vertical-offset="1965">
-          <caret line="116" column="30" selection-start-line="116" selection-start-column="30" selection-end-line="116" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7777778" vertical-offset="64890" max-vertical-offset="78705">
-          <caret line="4541" column="31" selection-start-line="4541" selection-start-column="31" selection-end-line="4541" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/android-sdk-linux/platforms/android-19/android.jar!/android/Manifest.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37777779" vertical-offset="1677" max-vertical-offset="3225">
-          <caret line="123" column="63" selection-start-line="123" selection-start-column="63" selection-end-line="123" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/Environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33278146" vertical-offset="9414" max-vertical-offset="12165">
-          <caret line="687" column="25" selection-start-line="687" selection-start-column="25" selection-end-line="687" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/storage/StorageEventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49668875" vertical-offset="0" max-vertical-offset="604">
-          <caret line="34" column="88" selection-start-line="34" selection-start-column="88" selection-end-line="34" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/storage/StorageManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3576159" vertical-offset="8439" max-vertical-offset="9180">
-          <caret line="619" column="0" selection-start-line="619" selection-start-column="0" selection-end-line="619" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/camera_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8898305" vertical-offset="15" max-vertical-offset="555">
-          <caret line="22" column="36" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/res/layout/nu_autotest_activity.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/application/ModuleTestApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.3306708" vertical-offset="1894" max-vertical-offset="2520">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+        <state vertical-scroll-proportion="-2.502994" vertical-offset="1361" max-vertical-offset="1695">
+          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/content/res/Resources.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/bluetooth/BluetoothAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33226836" vertical-offset="16922" max-vertical-offset="35250">
-          <caret line="1193" column="23" selection-start-line="1193" selection-start-column="23" selection-end-line="1193" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/graphics/Paint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33226836" vertical-offset="4472" max-vertical-offset="32895">
-          <caret line="331" column="16" selection-start-line="331" selection-start-column="16" selection-end-line="331" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/content/ContextWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="602" max-vertical-offset="7365">
-          <caret line="113" column="19" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/app/Notification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33278957" vertical-offset="27546" max-vertical-offset="33705">
-          <caret line="1902" column="33" selection-start-line="1902" selection-start-column="33" selection-end-line="1902" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="6227" max-vertical-offset="25860">
+          <caret line="468" column="15" selection-start-line="468" selection-start-column="15" selection-end-line="468" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/content/Context.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4562" max-vertical-offset="43260">
-          <caret line="366" column="25" selection-start-line="366" selection-start-column="25" selection-end-line="366" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.80463576" vertical-offset="28584" max-vertical-offset="43260">
+          <caret line="1994" column="28" selection-start-line="1994" selection-start-column="28" selection-end-line="1994" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/util/Property.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3228477" vertical-offset="0" max-vertical-offset="1380">
+          <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/util/PropertyPermission.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22350994" vertical-offset="0" max-vertical-offset="604">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/android-sdk-linux/platforms/android-19/android.jar!/android/Manifest.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.962963" vertical-offset="502" max-vertical-offset="3240">
+          <caret line="46" column="118" selection-start-line="46" selection-start-column="74" selection-end-line="46" selection-end-column="118" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/util/Hashtable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33278146" vertical-offset="3384" max-vertical-offset="15780">
+          <caret line="263" column="26" selection-start-line="263" selection-start-column="26" selection-end-line="263" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/util/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2019" max-vertical-offset="10665">
+          <caret line="191" column="16" selection-start-line="191" selection-start-column="16" selection-end-line="191" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1933" max-vertical-offset="8745">
+          <caret line="207" column="59" selection-start-line="207" selection-start-column="59" selection-end-line="207" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/nio/CharArrayBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="2235">
+          <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/nio/CharBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="10800">
+          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/os/SystemProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2649007" vertical-offset="1" max-vertical-offset="2220">
+          <caret line="65" column="22" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/util/regex/Matcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3313433" vertical-offset="7119" max-vertical-offset="9765">
+          <caret line="508" column="15" selection-start-line="508" selection-start-column="15" selection-end-line="508" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/util/regex/Pattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5158" max-vertical-offset="6555">
+          <caret line="379" column="26" selection-start-line="379" selection-start-column="26" selection-end-line="379" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/BatteryTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="424" max-vertical-offset="2670">
+          <caret line="82" column="62" selection-start-line="59" selection-start-column="8" selection-end-line="82" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/telephony/SignalStrength.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8672" max-vertical-offset="13530">
+          <caret line="641" column="4" selection-start-line="641" selection-start-column="4" selection-end-line="665" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33278957" vertical-offset="17451" max-vertical-offset="78705">
+          <caret line="1284" column="19" selection-start-line="1284" selection-start-column="19" selection-end-line="1284" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07633588" vertical-offset="0" max-vertical-offset="705">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="705">
+          <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/nu_autotest_activity.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/NativeLib/SystemPropertiesProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6666667" vertical-offset="94" max-vertical-offset="1500">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4745223" vertical-offset="242" max-vertical-offset="870">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/device_info.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.705882" vertical-offset="240" max-vertical-offset="2715">
+          <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/io/BufferedReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33280253" vertical-offset="136" max-vertical-offset="7305">
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5153061" vertical-offset="6578" max-vertical-offset="9930">
+          <caret line="507" column="26" selection-start-line="507" selection-start-column="26" selection-end-line="507" selection-end-column="26" />
           <folding>
-            <element signature="e#522#540#0" expanded="false" />
-            <element signature="e#834#851#0" expanded="false" />
+            <element signature="e#17626#17627#0" expanded="true" />
+            <element signature="e#17681#17682#0" expanded="true" />
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/io/InputStreamReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6741214" vertical-offset="2836" max-vertical-offset="4245">
+          <caret line="200" column="15" selection-start-line="200" selection-start-column="15" selection-end-line="200" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="20995" max-vertical-offset="29400">
+          <caret line="1465" column="18" selection-start-line="1465" selection-start-column="18" selection-end-line="1465" selection-end-column="18" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/NuAutoTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57544756" vertical-offset="360" max-vertical-offset="7800">
-          <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/FlashlightTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="2775">
-          <caret line="70" column="43" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.5928571" vertical-offset="5121" max-vertical-offset="7875">
+          <caret line="379" column="30" selection-start-line="379" selection-start-column="30" selection-end-line="379" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/factory_reset_test.xml">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.9215684" vertical-offset="73" max-vertical-offset="615">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/FactoryResetTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2670">
-          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+        <state vertical-scroll-proportion="1.0833334" vertical-offset="4465" max-vertical-offset="6150">
+          <caret line="362" column="22" selection-start-line="362" selection-start-column="22" selection-end-line="362" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/CameraTestActivity.java">
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/io/Reader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1108" max-vertical-offset="5310">
-          <caret line="121" column="29" selection-start-line="121" selection-start-column="29" selection-end-line="121" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1615" max-vertical-offset="3435">
+          <caret line="139" column="15" selection-start-line="139" selection-start-column="15" selection-end-line="139" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux/sources/android-19/java/io/OutputStreamWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55778897" vertical-offset="1773" max-vertical-offset="4650">
+          <caret line="156" column="16" selection-start-line="156" selection-start-column="16" selection-end-line="156" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/application/ModuleTestApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="55" max-vertical-offset="2520">
+          <caret line="18" column="48" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.571192" vertical-offset="375" max-vertical-offset="1635">
-          <caret line="48" column="59" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="529" max-vertical-offset="1965">
+          <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/DeviceInfoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46666667" vertical-offset="1349" max-vertical-offset="4095">
+          <caret line="128" column="36" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -1065,7 +1042,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

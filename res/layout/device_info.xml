@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="设备信息"
+			android:textSize="30dp"
+			android:textColor="#ffff00"/>
+
+	<ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+
+		<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical">
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="IMEI"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvIMEI"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="信号强度"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvSignal"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text=""/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="校准状态"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvCalibration"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="蓝牙"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvBtName"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvBtAddr"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvBtScanmode"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvBtState"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="WIFI"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvWifiBSSID"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvWifiSSID"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvWifiMac"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvWifiIp"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvWifiSpeed"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="电池"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvBatteryCapacity"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvBatteryVoltage"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvBatteryTemperature"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="软件版本"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvVersionAP"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvVersionBP"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvVersionKernel"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>

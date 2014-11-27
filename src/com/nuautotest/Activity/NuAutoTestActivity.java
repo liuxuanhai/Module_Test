@@ -442,6 +442,14 @@ public class NuAutoTestActivity extends Activity {
 			}
 		});
 
+		Button btDeviceInfo = (Button)this.findViewById(R.id.btDeviceInfo);
+		btDeviceInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(NuAutoTestActivity.this, DeviceInfoActivity.class));
+			}
+		});
+
 		GridView gridview = (GridView) this.findViewById(R.id.gridView);
 		gridview.setNumColumns(4);
 		gridview.setAdapter(adapter);

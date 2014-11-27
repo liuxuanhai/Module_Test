@@ -38,12 +38,25 @@
 			android:numColumns="auto_fit">
 	</GridView>
 
-	<Button
-			android:id="@+id/btAutotest"
-			android:layout_width="fill_parent"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.1"
-			android:text="自动测试"/>
+			android:layout_width="fill_parent">
+
+		<Button
+				android:id="@+id/btAutotest"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="自动测试"/>
+
+		<Button
+				android:id="@+id/btDeviceInfo"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="设备信息"/>
+	</LinearLayout>
 	<!--
 		<LinearLayout
 			android:layout_width="0dp"

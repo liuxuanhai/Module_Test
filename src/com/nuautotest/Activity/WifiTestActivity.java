@@ -164,7 +164,7 @@ public class WifiTestActivity extends Activity {
 		}
 	}
 
-	private String ipIntToString(int ip) {
+	public static String ipIntToString(int ip) {
 		byte[] bytes = new byte[4];
 
 		try {
