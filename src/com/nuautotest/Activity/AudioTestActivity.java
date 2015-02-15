@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import com.nuautotest.application.ModuleTestApplication;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -163,67 +166,66 @@ public class AudioTestActivity extends Activity {
 		}
 	}
 
-	class myThread implements Runnable {
-
-		public void run() {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			// 开始录音
-			if (!mStartRecording && !mStopPlaying) {
-				mStartRecording = true;
-				Message message = new Message();
-				message.what = AudioTestActivity.START;
-				AudioTestActivity.this.handler.sendMessage(message);
-			}
-
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			// 停止录音
-			if (!mStopRecording && mStartRecording) {
-				mStopRecording = true;
-				Message message = new Message();
-				message.what = AudioTestActivity.STOP;
-				AudioTestActivity.this.handler.sendMessage(message);
-			}
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			// 开始播放
-			if (!mStartPlaying && mStopRecording) {
-				mStartPlaying = true;
-				Message message = new Message();
-				message.what = AudioTestActivity.PLAY;
-				AudioTestActivity.this.handler.sendMessage(message);
-			}
-
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			// 停止播放
-			if (!mStopPlaying && mStartPlaying) {
-				mStopPlaying = true;
-				Message message = new Message();
-				message.what = AudioTestActivity.STOPPLAY;
-				AudioTestActivity.this.handler.sendMessage(message);
-			}
-		}
-	}
+//	class myThread implements Runnable {
+//
+//		public void run() {
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			// 开始录音
+//			if (!mStartRecording && !mStopPlaying) {
+//				mStartRecording = true;
+//				Message message = new Message();
+//				message.what = AudioTestActivity.START;
+//				AudioTestActivity.this.handler.sendMessage(message);
+//			}
+//
+//			try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			// 停止录音
+//			if (!mStopRecording && mStartRecording) {
+//				mStopRecording = true;
+//				Message message = new Message();
+//				message.what = AudioTestActivity.STOP;
+//				AudioTestActivity.this.handler.sendMessage(message);
+//			}
+//
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			// 开始播放
+//			if (!mStartPlaying && mStopRecording) {
+//				mStartPlaying = true;
+//				Message message = new Message();
+//				message.what = AudioTestActivity.PLAY;
+//				AudioTestActivity.this.handler.sendMessage(message);
+//			}
+//
+//			try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//
+//			// 停止播放
+//			if (!mStopPlaying && mStartPlaying) {
+//				mStopPlaying = true;
+//				Message message = new Message();
+//				message.what = AudioTestActivity.STOPPLAY;
+//				AudioTestActivity.this.handler.sendMessage(message);
+//			}
+//		}
+//	}
 
 	public void InitPathRecord() {
-		mRecordName = "/sdcard/audiorecordtest.3gp";
-
+		mRecordName = ModuleTestApplication.LOG_DIR + "/audiorecordtest.3gp";
 		System.out.println(mRecordName);
 	}
 
@@ -362,12 +364,12 @@ public class AudioTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.audio_test))] = "失败";
+				application.setTestState(getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.audio_test))] = "成功";
+				application.setTestState(getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -397,10 +399,10 @@ public class AudioTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getListViewState()
-						[ModuleTestApplication.getInstance().getIndex(getString(R.string.audio_test))].equals("未测试")) {
-					ModuleTestApplication.getInstance().getListViewState()
-							[ModuleTestApplication.getInstance().getIndex(getString(R.string.audio_test))] = "操作超时";
+				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.audio_test))
+						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+					ModuleTestApplication.getInstance().setTestState(getString(R.string.audio_test),
+							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 					AudioTestActivity.this.finish();
 				}
 			}
@@ -410,7 +412,7 @@ public class AudioTestActivity extends Activity {
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_record.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_record.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -435,7 +437,7 @@ public class AudioTestActivity extends Activity {
 
 		initCreate();
 
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.audio_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		mPlayer = new MediaPlayer();
@@ -446,9 +448,9 @@ public class AudioTestActivity extends Activity {
 
 	public void stopAutoTest(boolean success) {
 		if (success)
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.audio_test))]="成功";
+			application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		else
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.audio_test))]="失败";
+			application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 

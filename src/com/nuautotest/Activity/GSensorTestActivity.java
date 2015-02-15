@@ -57,7 +57,7 @@ public class GSensorTestActivity extends Activity implements
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_gsensor.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_gsensor.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -156,12 +156,12 @@ public class GSensorTestActivity extends Activity implements
 		switch (view.getId()) {
 			case R.id.fail:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.gsensor_test))]="失败";
+				application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.gsensor_test))]="成功";
+				application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -176,7 +176,7 @@ public class GSensorTestActivity extends Activity implements
 		Log.e(ModuleTestApplication.TAG, "GSensorTestActivity"+"======"+error+"======");
 		if (!isAutomatic)
 			application= ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.gsensor_test))]="失败";
+		application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -185,19 +185,19 @@ public class GSensorTestActivity extends Activity implements
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.gsensor_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.gsensor_test))]="成功";
+			application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 //			application.getTooltip()[application.getIndex(getString(R.string.gsensor_test))] = "数据：["+
 //					(float)((int)(dataX*100))/100.0+", "+
 //					(float)((int)(dataY*100))/100.0+", "+
 //					(float)((int)(dataZ*100))/100.0+"]";
 		} else {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.gsensor_test))]="失败";
+			application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;

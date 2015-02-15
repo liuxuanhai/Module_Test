@@ -120,7 +120,7 @@ public class WifiTestActivity extends Activity {
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_wifi.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_wifi.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -230,12 +230,12 @@ public class WifiTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.wifi_test))] = "失败";
+				application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.wifi_test))] = "成功";
+				application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -249,7 +249,7 @@ public class WifiTestActivity extends Activity {
 		Log.e(ModuleTestApplication.TAG, "WifiTestActivity"+"======"+error+"======");
 		if (!isAutomatic)
 			application = ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.wifi_test))] = "失败";
+		application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -257,7 +257,7 @@ public class WifiTestActivity extends Activity {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.wifi_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		if (mWifiManager.getWifiState()==WifiManager.WIFI_STATE_ENABLED) {
@@ -267,12 +267,12 @@ public class WifiTestActivity extends Activity {
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.wifi_test))]="成功";
+			application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 			if (mWifiList!=null && mWifiList.size()>0)
 				application.getTooltip()[application.getIndex(mContext.getString(R.string.wifi_test))] =
 						"名称："+mWifiList.get(0).SSID+" 信号："+mWifiList.get(0).level+"dBm";
 		} else
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.wifi_test))]="失败";
+			application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();

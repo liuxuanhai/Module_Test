@@ -65,6 +65,24 @@
 			<TextView
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
+					android:text="测试状态"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:textColor="#00ffff"/>
+
+			<TextView
+					android:id="@+id/tvPcbaTestStatus"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/tvApkTestStatus"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
 					android:text="蓝牙"
 					android:textSize="20dp"
 					android:textStyle="bold"

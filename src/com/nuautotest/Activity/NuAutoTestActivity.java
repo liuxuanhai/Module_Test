@@ -1,11 +1,8 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,12 +52,12 @@ public class NuAutoTestActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ModuleTestApplication.getInstance().initLog(this);
 		setContentView(R.layout.nu_autotest_activity);
 		// 初始化配置
 		initConfig();
 		// 初始化界面
 		initView();
-		ModuleTestApplication.getInstance().initLog();
 		mRefreshHandler = new RefreshHandler();
 
 		Boolean isBootFromReceiver = this.getIntent().getBooleanExtra(IS_FROM_BOOTRECEIVER, false);
@@ -172,104 +169,88 @@ public class NuAutoTestActivity extends Activity {
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadRecord.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.gsensor_test))) {
 				GSensorTestActivity activityGSensor = new GSensorTestActivity();
 				Thread threadSpeed = new Thread(activityGSensor.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadSpeed.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.lightsensor_test))) {
 				LightSensorTestActivity activityLight = new LightSensorTestActivity();
 				Thread threadLight = new Thread(activityLight.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadLight.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.compass_test))) {
 				CompassTestActivity activityCompass = new CompassTestActivity();
 				Thread threadCompass = new Thread(activityCompass.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadCompass.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.battery_test))) {
 				BatteryTestActivity activityBattery = new BatteryTestActivity();
 				Thread threadBattery = new Thread(activityBattery.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadBattery.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.backlight_test))) {
 //				Intent intentBackLight = new Intent(NuAutoTestActivity.this, BackLightTestActivity.class);
 //				intentBackLight.putExtra("Auto", true);
 //				startActivityForResult(intentBackLight, 5);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.button_test))) {
 //				Intent intentButton = new Intent(NuAutoTestActivity.this, ButtonTestActivity.class);
 //				intentButton.putExtra("Auto", true);
 //				startActivityForResult(intentButton, 6);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.front_camera_test))) {
 //				Intent intentFrontCamera = new Intent(NuAutoTestActivity.this, CameraTestActivity.class);
 //				intentFrontCamera.putExtra("Flag", "Front");
 //				intentFrontCamera.putExtra("Auto", true);
 //				startActivityForResult(intentFrontCamera, 7);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.backlight_test))) {
 //				Intent intentBackCamera = new Intent(NuAutoTestActivity.this, CameraTestActivity.class);
 //				intentBackCamera.putExtra("Flag", "Back");
 //				intentBackCamera.putExtra("Auto", true);
 //				startActivityForResult(intentBackCamera, 8);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.usb_test))) {
 //				USBTestActivity activityUSB = new USBTestActivity();
 //				Thread threadUSB = new Thread(activityUSB.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadUSB.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.hdmi_test))) {
 //				Intent intentHDMI = new Intent(NuAutoTestActivity.this, HDMITestActivity.class);
 //				intentHDMI.putExtra("Auto", true);
 //				startActivityForResult(intentHDMI, 10);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.wifi_test))) {
 				WifiTestActivity activityWifi = new WifiTestActivity();
 				Thread threadWifi = new Thread(activityWifi.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadWifi.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.bluetooth_test))) {
 				BlueToothTestActivity activityBT = new BlueToothTestActivity();
 				Thread threadBT = new Thread(activityBT.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadBT.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.gps_test))) {
 				GPSTestActivity activityGPS = new GPSTestActivity();
 				Thread threadGPS = new Thread(activityGPS.
 						new AutoTestThread(NuAutoTestActivity.this,
 						ModuleTestApplication.getInstance(), mRefreshHandler));
 				threadGPS.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.sd_test))) {
 //				SDTestActivity activitySD = new SDTestActivity();
 //				Thread threadSD = new Thread(activitySD.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadSD.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.charger_test))) {
 //				ChargerTestActivity activityCharger = new ChargerTestActivity();
 //				Thread threadCharger = new Thread(activityCharger.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadCharger.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 //				Intent intentCharger = new Intent(NuAutoTestActivity.this, ChargerTestActivity.class);
 //				intentCharger.putExtra("Auto", true);
 //				startActivityForResult(intentCharger, 15);
@@ -277,51 +258,50 @@ public class NuAutoTestActivity extends Activity {
 //				Intent intentTP = new Intent(NuAutoTestActivity.this, TPTestActivity.class);
 //				intentTP.putExtra("Auto", true);
 //				startActivityForResult(intentTP, 16);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.vibrator_test))) {
 //				Intent intentVibrator = new Intent(NuAutoTestActivity.this, VibratorTestActivity.class);
 //				intentVibrator.putExtra("Auto", true);
 //				startActivityForResult(intentVibrator, 17);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.lcd_test))) {
 //				Intent intentLCD = new Intent(NuAutoTestActivity.this, LCDTestActivity.class);
 //				intentLCD.putExtra("Auto", true);
 //				startActivityForResult(intentLCD, 18);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.headset_test))) {
 //				HeadsetTestActivity activityHeadset = new HeadsetTestActivity();
 //				Thread threadHeadset = new Thread(activityHeadset.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadHeadset.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.flashlight_test))) {
 //				Intent intentFlashlight = new Intent(NuAutoTestActivity.this, FlashlightTestActivity.class);
 //				intentFlashlight.putExtra("Auto", true);
 //				startActivityForResult(intentFlashlight, 20);
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.suspendresume_test))) {
 //				SuspendResumeTestActivity activitySuspendResume = new SuspendResumeTestActivity();
 //				Thread threadSuspendResume = new Thread(activitySuspendResume.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadSuspendResume.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.factoryreset_test))) {
 //				FactoryResetTestActivity activityFactoryReset = new FactoryResetTestActivity();
 //				Thread threadFactoryReset = new Thread(activityFactoryReset.
 //						new AutoTestThread(NuAutoTestActivity.this,
 //						ModuleTestApplication.getInstance(), mRefreshHandler));
 //				threadFactoryReset.run();
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.phone_test))) {
-				this.sendEmptyMessage(MSG_RUNNEXT);
 			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.fm_test))) {
 //				Intent intentFM = new Intent(NuAutoTestActivity.this, FMTestActivity.class);
 //				intentFM.putExtra("Auto", true);
 //				startActivityForResult(intentFM, 24);
-				this.sendEmptyMessage(MSG_RUNNEXT);
+			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.led_test))) {
+			} else if (ModuleTestApplication.items[mMap[mIndex]].equals(getString(R.string.proximitysensor_test))) {
+				ProximitySensorTestActivity activityProx = new ProximitySensorTestActivity();
+				Thread threadProx = new Thread(activityProx.
+						new AutoTestThread(NuAutoTestActivity.this,
+						ModuleTestApplication.getInstance(), mRefreshHandler));
+				threadProx.run();
 			}
+			this.sendEmptyMessage(MSG_RUNNEXT);
 		}
 
 		public void handleMessage(Message msg) {
@@ -451,7 +431,7 @@ public class NuAutoTestActivity extends Activity {
 		});
 
 		GridView gridview = (GridView) this.findViewById(R.id.gridView);
-		gridview.setNumColumns(4);
+		gridview.setNumColumns(5);
 		gridview.setAdapter(adapter);
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -535,6 +515,12 @@ public class NuAutoTestActivity extends Activity {
 				} else if (ModuleTestApplication.items[index].equals(getString(R.string.fm_test))) {
 					// 收音机测试
 					startActivity(new Intent(NuAutoTestActivity.this, FMTestActivity.class));
+				} else if (ModuleTestApplication.items[index].equals(getString(R.string.led_test))) {
+					// LED测试
+					startActivity(new Intent(NuAutoTestActivity.this, LEDTestActivity.class));
+				} else if (ModuleTestApplication.items[index].equals(getString(R.string.proximitysensor_test))) {
+					// 距离传感器测试
+					startActivity(new Intent(NuAutoTestActivity.this, ProximitySensorTestActivity.class));
 				}
 			}
 		});

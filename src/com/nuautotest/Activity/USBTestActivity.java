@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.*;
+import java.util.HashMap;
 
 /**
  * usb测试
@@ -40,7 +43,7 @@ public class USBTestActivity extends Activity
 	private int time;
 	private Context mContext;
 	private Handler mHandler;
-	private boolean mAccessoryOK;
+	private boolean mHostOK, mAccessoryOK;
 
 	private FileWriter mLogWriter;
 
@@ -62,7 +65,7 @@ public class USBTestActivity extends Activity
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_usb.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_usb.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -138,7 +141,7 @@ public class USBTestActivity extends Activity
 				File fDeviceMaxChild;
 				boolean hasDevice = false;
 				int i;
-				for (i=0; i<fDevices.length; i++) {
+				for (i=0; i< (fDevices != null ? fDevices.length : 0); i++) {
 					fDeviceMaxChild =
 							new File("/sys/bus/usb/devices/"+fDevices[i].getName()+"/maxchild");
 					if ( (fDeviceMaxChild.isFile()) && (fDeviceMaxChild.canRead()) ) {
@@ -160,7 +163,6 @@ public class USBTestActivity extends Activity
 				}
 
 				if (hasDevice) {
-					boolean mHostOK;
 					if (isAutomatic)
 						mHostOK = true;
 					else
@@ -176,32 +178,21 @@ public class USBTestActivity extends Activity
 					e.printStackTrace();
 				}
 
-//				UsbManager manager = (UsbManager)mContext.getSystemService(USB_SERVICE);
-//
-//				HashMap<String,UsbDevice> device = manager.getDeviceList();
-////				if (device == null) Log.d("XieHang", "======USB DEVICE is NULL======");
-////				else
-////					if (device.size() == 0) Log.d("XieHang", "======USB DEVICE NUMBER is 0======");
-//
-//				if ( (device != null) && (device.size() != 0) ) {
-//					if (isAutomatic)
-//						mHostOK = true;
-//					else
-//						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
-//				} else
-//					mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
-//
-////				UsbAccessory[] accessory = manager.getAccessoryList();
-////				if (accessory == null) Log.d("XieHang", "======USB ACCESSORY is NULL======");
-////				else
-////					if (accessory.length == 0) Log.d("XieHang", "======USB ACCESSORY NUMBER is 0======");
-////					else Log.d("XieHang", "======USB ACCESSORY FOUND!!!!!!======");
-//
-//				try {
-//					Thread.sleep(100);
-//				} catch(InterruptedException e) {
-//
-//				}
+				UsbManager manager = (UsbManager)mContext.getSystemService(USB_SERVICE);
+
+				HashMap<String,UsbDevice> device = manager.getDeviceList();
+
+				if ( (device != null) && (device.size() != 0) ) {
+					if (isAutomatic)
+						mHostOK = true;
+					else
+						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
+				} else
+					mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
+
+				try {
+					Thread.sleep(100);
+				} catch(InterruptedException ignored) {}
 			}
 		}
 	}
@@ -297,7 +288,7 @@ public class USBTestActivity extends Activity
 				mContext.checkCallingOrSelfPermission("android.permission.WRITE_SECURE_SETTINGS");
 		if (permission == PackageManager.PERMISSION_GRANTED) {
 			if (mIsAdb)
-				Settings.Secure.putInt(mContext.getContentResolver(), Settings.Secure.ADB_ENABLED, 1);
+				Settings.Secure.putInt(mContext.getContentResolver(), Settings.Global.ADB_ENABLED, 1);
 		}
 
 //		try {
@@ -324,12 +315,12 @@ public class USBTestActivity extends Activity
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.usb_test))] = "失败";
+				application.setTestState(getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.usb_test))] = "成功";
+				application.setTestState(getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -344,7 +335,7 @@ public class USBTestActivity extends Activity
 		isAutomatic = true;
 		isFinished = false;
 		application.getTooltip()[application.getIndex(mContext.getString(R.string.usb_test))] = "请向device和host接口插入设备";
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.usb_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		initCreate();
 	}
@@ -352,9 +343,9 @@ public class USBTestActivity extends Activity
 	public void stopAutoTest(boolean success) {
 		application.getTooltip()[application.getIndex(mContext.getString(R.string.usb_test))] = "";
 		if (success)
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.usb_test))]="成功";
+			application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		else
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.usb_test))]="失败";
+			application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();

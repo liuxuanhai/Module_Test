@@ -14,15 +14,11 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
-import com.nuautotest.application.ModuleTestApplication;
 import com.nuautotest.NativeLib.SystemPropertiesProxy;
+import com.nuautotest.application.ModuleTestApplication;
+import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.nio.CharBuffer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
 
 /**
  * 设备信息
@@ -34,7 +30,7 @@ import java.util.regex.Pattern;
 public class DeviceInfoActivity extends Activity {
 	static final String CALIBRATION_PORT = "/dev/ttyN5";
 
-	private TextView mtvIMEI, mtvSignal, mtvCalibration;
+	private TextView mtvIMEI, mtvSignal, mtvCalibration, mtvPcbaTestStatus, mtvApkTestStatus;
 	private TextView mtvBtName, mtvBtAddr, mtvBtScanmode, mtvBtState;
 	private TextView mtvWifiBSSID, mtvWifiSSID, mtvWifiMac, mtvWifiIp, mtvWifiSpeed;
 	private TextView mtvBatteryCapacity, mtvBatteryVoltage, mtvBatteryTemperature;
@@ -42,9 +38,7 @@ public class DeviceInfoActivity extends Activity {
 
 	private TelephonyManager mPhoneManager;
 	private BluetoothAdapter mBluetoothAdapter;
-	private WifiManager mWifiManager;
 	private WifiInfo mWifiInfo;
-	private SignalStrengthListener mSignalListener;
 	private BroadcastReceiver mBatteryBcr;
 
 	@Override
@@ -55,6 +49,8 @@ public class DeviceInfoActivity extends Activity {
 		mtvIMEI = (TextView)this.findViewById(R.id.tvIMEI);
 		mtvSignal = (TextView)this.findViewById(R.id.tvSignal);
 		mtvCalibration = (TextView)this.findViewById(R.id.tvCalibration);
+		mtvPcbaTestStatus = (TextView)this.findViewById(R.id.tvPcbaTestStatus);
+		mtvApkTestStatus = (TextView)this.findViewById(R.id.tvApkTestStatus);
 		mtvBtName = (TextView)this.findViewById(R.id.tvBtName);
 		mtvBtAddr = (TextView)this.findViewById(R.id.tvBtAddr);
 		mtvBtScanmode = (TextView)this.findViewById(R.id.tvBtScanmode);
@@ -72,10 +68,10 @@ public class DeviceInfoActivity extends Activity {
 		mtvVersionKernel = (TextView)this.findViewById(R.id.tvVersionKernel);
 
 		mPhoneManager = (TelephonyManager)this.getSystemService(TELEPHONY_SERVICE);
-		mSignalListener = new SignalStrengthListener();
+		SignalStrengthListener mSignalListener = new SignalStrengthListener();
 		mPhoneManager.listen(mSignalListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		mWifiManager = (WifiManager)this.getSystemService(WIFI_SERVICE);
+		WifiManager mWifiManager = (WifiManager) this.getSystemService(WIFI_SERVICE);
 		mWifiInfo = mWifiManager.getConnectionInfo();
 
 		IntentFilter intentFilter = new IntentFilter();
@@ -148,6 +144,23 @@ public class DeviceInfoActivity extends Activity {
 			e.printStackTrace();
 		}
 
+		/* Test status */
+		mtvPcbaTestStatus.setText("PCBA: 未完成");
+		mtvApkTestStatus.setText("APK: 未完成");
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("/misc/pcba_apk_test"));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.equals("pcba_ok")) {
+					mtvPcbaTestStatus.setText("PCBA: 已完成");
+				} else if (line.equals("apk_ok")) {
+					mtvApkTestStatus.setText("APK: 已完成");
+				}
+			}
+		} catch (FileNotFoundException ignored) {
+		} catch (IOException ignored) {
+		}
+
 		/* Bluetooth */
 		if (mBluetoothAdapter != null) {
 			mtvBtName.setText("Name: " + mBluetoothAdapter.getName());
@@ -208,23 +221,23 @@ public class DeviceInfoActivity extends Activity {
 	public void onPause() {
 		try {
 			if (mBatteryBcr != null) this.unregisterReceiver(mBatteryBcr);
-		} catch (Exception e) {}
+		} catch (Exception ignored) {}
 		super.onPause();
 	}
 
-	public static String formatKernelVersion(String rawKernelVersion) {
+	/*public static String formatKernelVersion(String rawKernelVersion) {
 		// Example (see tests for more):
 		// Linux version 3.0.31-g6fb96c9 (android-build@xxx.xxx.xxx.xxx.com) \
 		//     (gcc version 4.6.x-xxx 20120106 (prerelease) (GCC) ) #1 SMP PREEMPT \
 		//     Thu Jun 28 11:02:39 PDT 2012
 
 		final String PROC_VERSION_REGEX =
-				"Linux version (\\S+) " +       /* group 1: "3.0.31-g6fb96c9" */
-				"\\((\\S+?)\\) " +              /* group 2: "x@y.com" (kernel builder) */
-				"(?:\\(gcc.+? \\)) " +          /* ignore: GCC version information */
-				"(#\\d+) " +                    /* group 3: "#1" */
-				"(?:.*?)?" +                    /* ignore: optional SMP, PREEMPT, and any CONFIG_FLAGS */
-				"((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; /* group 4: "Thu Jun 28 11:02:39 PDT 2012" */
+				"Linux version (\\S+) " +       *//* group 1: "3.0.31-g6fb96c9" *//*
+				"\\((\\S+?)\\) " +              *//* group 2: "x@y.com" (kernel builder) *//*
+				"(?:\\(gcc.+? \\)) " +          *//* ignore: GCC version information *//*
+				"(#\\d+) " +                    *//* group 3: "#1" *//*
+				"(?:.*?)?" +                    *//* ignore: optional SMP, PREEMPT, and any CONFIG_FLAGS *//*
+				"((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; *//* group 4: "Thu Jun 28 11:02:39 PDT 2012" *//*
 
 		Matcher m = Pattern.compile(PROC_VERSION_REGEX).matcher(rawKernelVersion);
 		if (!m.matches()) {
@@ -238,7 +251,7 @@ public class DeviceInfoActivity extends Activity {
 		return m.group(1) + "\n" +                      // 3.0.31-g6fb96c9
 				m.group(2) + " " + m.group(3) + "\n" +  // x@y.com #1
 				m.group(4);                             // Thu Jun 28 11:02:39 PDT 2012
-	}
+	}*/
 
 	public class SignalStrengthListener extends PhoneStateListener {
 		@Override
@@ -286,8 +299,7 @@ public class DeviceInfoActivity extends Activity {
 			else if (cdmaEcio >= -150) ecioAsuLevel = 1;
 			else ecioAsuLevel = 99;
 
-			int level = (cdmaAsuLevel < ecioAsuLevel) ? cdmaAsuLevel : ecioAsuLevel;
-			return level;
+			return (cdmaAsuLevel < ecioAsuLevel) ? cdmaAsuLevel : ecioAsuLevel;
 		}
 	}
 }

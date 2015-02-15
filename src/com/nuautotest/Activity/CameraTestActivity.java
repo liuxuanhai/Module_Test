@@ -2,7 +2,6 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.display.DisplayManager;
@@ -69,7 +68,7 @@ public class CameraTestActivity extends Activity {
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_camera.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_camera.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -93,7 +92,7 @@ public class CameraTestActivity extends Activity {
 			Log.e(ModuleTestApplication.TAG, "SurfaceHolder is null");
 			this.finish();
 		}
-		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		mSurfaceHolder.setKeepScreenOn(true);
 		mSurfaceCallback = new SurfaceCallback();
 
@@ -185,9 +184,9 @@ public class CameraTestActivity extends Activity {
 				}
 				Camera.Size pSize;
 				Log.d(ModuleTestApplication.TAG, "Supported Preview sizes:");
-				for (int i=0; i<pSizes.size(); i++) {
-					pSize = pSizes.get(i);
-					Log.d(ModuleTestApplication.TAG, "("+pSize.width+"x"+pSize.height+")");
+				for (Camera.Size pSize1 : pSizes) {
+					pSize = pSize1;
+					Log.d(ModuleTestApplication.TAG, "(" + pSize.width + "x" + pSize.height + ")");
 				}
 				pSize = pSizes.get(0);
 
@@ -294,18 +293,18 @@ public class CameraTestActivity extends Activity {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
 				if (Flag.equals("Front")) {
-					application.getListViewState()[application.getIndex(getString(R.string.front_camera_test))] = "失败";
+					application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				} else {
-					application.getListViewState()[application.getIndex(getString(R.string.back_camera_test))] = "失败";
+					application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				}
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
 				if (Flag.equals("Front")) {
-					application.getListViewState()[application.getIndex(getString(R.string.front_camera_test))] = "成功";
+					application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				} else {
-					application.getListViewState()[application.getIndex(getString(R.string.back_camera_test))] = "成功";
+					application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				}
 				this.finish();
 				break;
@@ -321,9 +320,9 @@ public class CameraTestActivity extends Activity {
 		Log.e(ModuleTestApplication.TAG, "CameraTestActivity"+"======"+error+"======");
 		application = ModuleTestApplication.getInstance();
 		if (Flag.equals("Front")) {
-			application.getListViewState()[application.getIndex(getString(R.string.front_camera_test))] = "失败";
+			application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		} else {
-			application.getListViewState()[application.getIndex(getString(R.string.back_camera_test))] = "失败";
+			application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		this.finish();
 	}
@@ -348,17 +347,17 @@ public class CameraTestActivity extends Activity {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
 				if (Flag.equals("Front")) {
-					if (ModuleTestApplication.getInstance().getListViewState()[ModuleTestApplication.getInstance().
-							getIndex(getString(R.string.front_camera_test))].equals("未测试")) {
-						ModuleTestApplication.getInstance().getListViewState()[ModuleTestApplication.getInstance().
-								getIndex(getString(R.string.front_camera_test))] = "操作超时";
+					if (ModuleTestApplication.getInstance().getTestState(getString(R.string.front_camera_test))
+							== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+						ModuleTestApplication.getInstance().setTestState(getString(R.string.front_camera_test),
+								ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 						CameraTestActivity.this.finish();
 					}
 				} else {
-					if (ModuleTestApplication.getInstance().getListViewState()[ModuleTestApplication.getInstance().
-							getIndex(getString(R.string.back_camera_test))].equals("未测试")) {
-						ModuleTestApplication.getInstance().getListViewState()[ModuleTestApplication.getInstance().
-								getIndex(getString(R.string.back_camera_test))] = "操作超时";
+					if (ModuleTestApplication.getInstance().getTestState(getString(R.string.back_camera_test))
+							== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+						ModuleTestApplication.getInstance().setTestState(getString(R.string.back_camera_test),
+								ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 						CameraTestActivity.this.finish();
 					}
 				}

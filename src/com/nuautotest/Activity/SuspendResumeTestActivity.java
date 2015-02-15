@@ -19,8 +19,7 @@ import android.view.View;
 import android.widget.*;
 import com.nuautotest.application.ModuleTestApplication;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * 休眠唤醒测试
@@ -62,7 +61,6 @@ public class SuspendResumeTestActivity extends Activity {
 		mContext = this;
 
 		CheckBox cbS3 = (CheckBox) this.findViewById(R.id.cbSuspendResumeS3);
-		TextView tvTime = (TextView) this.findViewById(R.id.tvSuspendResumeTime);
 		tbTime = (EditText)this.findViewById(R.id.tbSuspendResumeTime);
 		tbNumber = (EditText)this.findViewById(R.id.tbSuspendResumeNumber);
 		tbInterval = (EditText)this.findViewById(R.id.tbSuspendResumeInterval);
@@ -82,7 +80,7 @@ public class SuspendResumeTestActivity extends Activity {
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_suspendresume.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_suspendresume.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -146,19 +144,25 @@ public class SuspendResumeTestActivity extends Activity {
 		int i;
 
 		str = tbTime.getText();
-		mTime = 0;
-		for (i=0; i<str.length(); i++)
-			mTime = mTime*10 + str.charAt(i)-'0';
+		if (str != null) {
+			mTime = 0;
+			for (i = 0; i < str.length(); i++)
+				mTime = mTime * 10 + str.charAt(i) - '0';
+		}
 
 		str = tbNumber.getText();
-		mNumber = 0;
-		for (i=0; i<str.length(); i++)
-			mNumber = mNumber*10 + str.charAt(i)-'0';
+		if (str != null) {
+			mNumber = 0;
+			for (i = 0; i < str.length(); i++)
+				mNumber = mNumber * 10 + str.charAt(i) - '0';
+		}
 
 		str = tbInterval.getText();
-		mInterval = 0;
-		for (i=0; i<str.length(); i++)
-			mInterval = mInterval*10 + str.charAt(i)-'0';
+		if (str != null) {
+			mInterval = 0;
+			for (i = 0; i < str.length(); i++)
+				mInterval = mInterval * 10 + str.charAt(i) - '0';
+		}
 	}
 
 	public void startTest() {
@@ -283,12 +287,12 @@ public class SuspendResumeTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.suspendresume_test))]="失败";
+				application.setTestState(getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.suspendresume_test))]="成功";
+				application.setTestState(getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -306,16 +310,16 @@ public class SuspendResumeTestActivity extends Activity {
 		mTime = 2;
 		mNumber = 3;
 		mInterval = 2;
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.suspendresume_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		startTest();
 	}
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.suspendresume_test))]="成功";
+			application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		} else {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.suspendresume_test))]="失败";
+			application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;

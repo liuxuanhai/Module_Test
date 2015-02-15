@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -55,19 +56,22 @@ public class SDTestActivity extends Activity {
 		broadcastRec = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				if ("android.intent.action.MEDIA_MOUNTED".equals(intent.getAction())) {
-					String path = intent.getData().toString().substring("file://".length());
-					if (path.equals("/mnt/sdcardEx")) {
-						text.setText("操作: 插入");
-						tvSDStatus.setText("状态: SD卡已插入");
-					}
-				} else if ("android.intent.action.MEDIA_REMOVED".equals(intent.getAction())
-						|| "android.intent.action.MEDIA_UNMOUNTED".equals(intent.getAction())
-						|| "android.intent.action.MEDIA_BAD_REMOVAL".equals(intent.getAction())) {
-					String path = intent.getData().toString().substring("file://".length());
-					if (path.equals("/mnt/sdcardEx")) {
-						text.setText("操作: 移除");
-						tvSDStatus.setText("状态: SD卡未插入");
+				Uri uri = intent.getData();
+				if (uri != null) {
+					if ("android.intent.action.MEDIA_MOUNTED".equals(intent.getAction())) {
+						String path = uri.toString().substring("file://".length());
+						if (path.equals("/mnt/sdcardEx")) {
+							text.setText("操作: 插入");
+							tvSDStatus.setText("状态: SD卡已插入");
+						}
+					} else if ("android.intent.action.MEDIA_REMOVED".equals(intent.getAction())
+							|| "android.intent.action.MEDIA_UNMOUNTED".equals(intent.getAction())
+							|| "android.intent.action.MEDIA_BAD_REMOVAL".equals(intent.getAction())) {
+						String path = uri.toString().substring("file://".length());
+						if (path.equals("/mnt/sdcardEx")) {
+							text.setText("操作: 移除");
+							tvSDStatus.setText("状态: SD卡未插入");
+						}
 					}
 				}
 			}
@@ -97,12 +101,12 @@ public class SDTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.sd_test))]="失败";
+				application.setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.sd_test))]="成功";
+				application.setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -116,7 +120,7 @@ public class SDTestActivity extends Activity {
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_sd.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_sd.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -138,8 +142,7 @@ public class SDTestActivity extends Activity {
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "SDTestActivity"+"======"+error+"======");
-		ModuleTestApplication.getInstance().getListViewState()
-				[ModuleTestApplication.getInstance().getIndex(getString(R.string.sd_test))]="失败";
+		ModuleTestApplication.getInstance().setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -170,8 +173,7 @@ public class SDTestActivity extends Activity {
 		isFinished = false;
 		ModuleTestApplication.getInstance().getTooltip()
 				[ModuleTestApplication.getInstance().getIndex(mContext.getString(R.string.sd_test))]="***请插入SD卡***";
-		ModuleTestApplication.getInstance().getListViewState()
-				[ModuleTestApplication.getInstance().getIndex(mContext.getString(R.string.sd_test))]="测试中";
+		ModuleTestApplication.getInstance().setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		initCreate();
 	}
@@ -180,10 +182,10 @@ public class SDTestActivity extends Activity {
 		if (success) {
 			application.getTooltip()[application.getIndex(mContext.getString(R.string.sd_test))]=
 					"SD卡总大小："+mTotalSize/1024/1024+"M\t\t可用空间："+mAvailableSize/1024/1024+"M";
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.sd_test))]="成功";
+			application.setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		} else {
 			application.getTooltip()[application.getIndex(mContext.getString(R.string.sd_test))]="";
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.sd_test))]="失败";
+			application.setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;

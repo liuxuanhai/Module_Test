@@ -39,7 +39,7 @@ public class ButtonTestActivity extends Activity {
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_button.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_button.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -109,12 +109,12 @@ public class ButtonTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				ModuleTestApplication application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.button_test))]="失败";
+				application.setTestState(getString(R.string.button_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.button_test))]="成功";
+				application.setTestState(getString(R.string.button_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -144,10 +144,10 @@ public class ButtonTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getListViewState()
-						[ModuleTestApplication.getInstance().getIndex(getString(R.string.button_test))].equals("未测试")) {
-					ModuleTestApplication.getInstance().getListViewState()
-							[ModuleTestApplication.getInstance().getIndex(getString(R.string.button_test))] = "操作超时";
+				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.button_test))
+						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+					ModuleTestApplication.getInstance().setTestState(getString(R.string.button_test),
+							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 					ButtonTestActivity.this.finish();
 				}
 			}

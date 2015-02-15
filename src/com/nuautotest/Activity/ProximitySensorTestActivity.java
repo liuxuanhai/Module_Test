@@ -3,7 +3,10 @@ package com.nuautotest.Activity;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.hardware.*;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,19 +18,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * 光传感器
+ * 距离传感器
  *
  * @author xie-hang
  *
  */
 
-public class LightSensorTestActivity extends Activity implements SensorEventListener {
+public class ProximitySensorTestActivity extends Activity implements SensorEventListener {
 	private SensorManager sm;
-	private Sensor lightSensor;
-	private TextView tvLight;
+	private Sensor proxSensor;
+	private TextView tvProx;
 	private ModuleTestApplication application;
 	private boolean mRegisteredSensor;
-	private float dataLux;
+	private float dataProx;
 
 	private boolean isAutomatic, isFinished;
 	private int time;
@@ -40,27 +43,27 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		super.onCreate(savedInstanceState);
 
 		mContext = this;
-		setContentView(R.layout.light_sensor_test);
-		tvLight = (TextView) findViewById(R.id.lightsensor);
+		setContentView(R.layout.proximity_sensor_test);
+		tvProx = (TextView) findViewById(R.id.proxsensor);
 		initCreate();
 	}
 
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_lightsensor.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_proxsensor.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			ModuleTestApplication.getInstance().recordLog(null);
 		}
-		Log.i(ModuleTestApplication.TAG, "---Light Sensor Test---");
+		Log.i(ModuleTestApplication.TAG, "---Proximity Sensor Test---");
 
-		dataLux = 0;
+		dataProx = 0;
 
 		sm = (SensorManager)mContext.getSystemService(SENSOR_SERVICE);
 		if (sm == null) postError("In initCreate():Get SENSOR_SERVICE failed");
-		lightSensor = sm.getDefaultSensor(Sensor.TYPE_LIGHT);
+		proxSensor = sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 	}
 
 	@Override
@@ -72,7 +75,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 
 	protected void initResume() {
 		if (!mRegisteredSensor) {
-			mRegisteredSensor = sm.registerListener(this, lightSensor,
+			mRegisteredSensor = sm.registerListener(this, proxSensor,
 					SensorManager.SENSOR_DELAY_FASTEST);
 			if (!mRegisteredSensor)
 				postError("In initResume():registerListener failed");
@@ -104,12 +107,12 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		dataLux = event.values[0];
+		dataProx = event.values[0];
 
 		if (isAutomatic)
 			stopAutoTest(true);
 		else
-			tvLight.setText("光线强度:" + dataLux);
+			tvProx.setText("距离:" + dataProx);
 	}
 
 	@Override
@@ -120,12 +123,12 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		switch (view.getId()) {
 			case R.id.fail:
 				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -136,10 +139,10 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 	}
 
 	protected void postError(String error) {
-		Log.e(ModuleTestApplication.TAG, "LightSensorTestAcitivity"+"======"+error+"======");
+		Log.e(ModuleTestApplication.TAG, "ProximitySensorTestAcitivity"+"======"+error+"======");
 		if (!isAutomatic)
-			application= ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			application = ModuleTestApplication.getInstance();
+		application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -148,16 +151,16 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.lightsensor_test))] = "光线强度:" + dataLux;
+			application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+			application.getTooltip()[application.getIndex(mContext.getString(R.string.proximitysensor_test))] = "距离:" + dataProx;
 		} else {
-			application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
@@ -185,7 +188,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 				time++;
 			}
 			if (time >= 1000) {
-				Log.e(ModuleTestApplication.TAG, "======Light Test FAILED======");
+				Log.e(ModuleTestApplication.TAG, "======Proximity Test FAILED======");
 				stopAutoTest(false);
 			}
 		}

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="version">版本: 3.3.1124</string>
+	<string name="version">版本: 3.4.0205</string>
 
 	<string name="app_name">整机测试</string>
 
 	<string name="audio_test">"音频"</string>
 	<string name="gsensor_test">加速传感</string>
 	<string name="lightsensor_test">光传感</string>
+	<string name="proximitysensor_test">距离传感</string>
 	<string name="compass_test">指南针</string>
 	<string name="battery_test">电池</string>
 	<string name="backlight_test">背光</string>
@@ -29,6 +30,7 @@
 	<string name="factoryreset_test">出厂设置</string>
 	<string name="phone_test">电话</string>
 	<string name="fm_test">收音机</string>
+	<string name="led_test">LED</string>
 
 	<string name="takepicture">拍照</string>
 	<string name="autofouse">自动对焦</string>

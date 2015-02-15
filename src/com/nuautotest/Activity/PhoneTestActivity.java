@@ -82,7 +82,7 @@ public class PhoneTestActivity extends Activity {
 	@Override
 	protected void onDestroy()
 	{
-		Log.e(ModuleTestApplication.TAG, "start onDestroy~~~");
+		Log.d(ModuleTestApplication.TAG, "start onDestroy~~~");
 		if (mediaRecorder != null) {
 			mediaRecorder.reset();
 			mediaRecorder.release();
@@ -196,7 +196,7 @@ public class PhoneTestActivity extends Activity {
 					mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
 					Log.d(ModuleTestApplication.TAG, "==recordCallComment start2");
 
-					audioFile = new File(getCacheDir().getAbsolutePath() + "/record_1.amr");
+					audioFile = new File(ModuleTestApplication.LOG_DIR + "/record_1.amr");
 					System.out.println(audioFile.getAbsolutePath());
 					Log.d(ModuleTestApplication.TAG, "==recordCallComment start3");
 					mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
@@ -212,7 +212,7 @@ public class PhoneTestActivity extends Activity {
 		}
 	}
 
-	public class CallContentObserver extends ContentObserver {
+/*	public class CallContentObserver extends ContentObserver {
 		private final static String strUriInbox = "content://call_log/calls";
 		private final Uri uriCall = Uri.parse(strUriInbox);
 		private Context context;
@@ -239,18 +239,18 @@ public class PhoneTestActivity extends Activity {
 				c.close();
 			}
 		}
-	}
+	}*/
 
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
 				ModuleTestApplication application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.phone_test))] = "失败";
+				application.setTestState(getString(R.string.phone_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.phone_test))] = "成功";
+				application.setTestState(getString(R.string.phone_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}

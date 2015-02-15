@@ -6,7 +6,6 @@ import android.content.Context;
 import android.location.*;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -59,7 +58,7 @@ public class GPSTestActivity extends Activity
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_gps.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_gps.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -85,8 +84,10 @@ public class GPSTestActivity extends Activity
 		mProviderEnable = Settings.Secure.isLocationProviderEnabled(
 				mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
 
-		Settings.Secure.setLocationProviderEnabled(
-				mContext.getContentResolver(), LocationManager.GPS_PROVIDER, true);
+		try {
+			Settings.Secure.setLocationProviderEnabled(
+					mContext.getContentResolver(), LocationManager.GPS_PROVIDER, true);
+		} catch (Exception ignored) {}
 
 		try {
 			mRegisteredListener
@@ -124,8 +125,10 @@ public class GPSTestActivity extends Activity
 			postError("In releasePause():"+e);
 		}
 
-		if (!mProviderEnable) Settings.Secure.setLocationProviderEnabled(
-				mContext.getContentResolver(), LocationManager.GPS_PROVIDER, false);
+		try {
+			if (!mProviderEnable) Settings.Secure.setLocationProviderEnabled(
+					mContext.getContentResolver(), LocationManager.GPS_PROVIDER, false);
+		} catch (Exception ignored) {}
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
@@ -157,16 +160,18 @@ public class GPSTestActivity extends Activity
 				if (status == null)
 					Log.e(ModuleTestApplication.TAG, "In onGpsStatusChanged():getGpsStatus failed");
 				int satelliteCount = 0;
-				iterator = status.getSatellites().iterator();
-				while (iterator.hasNext()) {
-					satelliteCount++;
-					satellite = iterator.next();
-					if (indexOfSatellite(satellite.getPrn())!=-1)
-						mSNR[indexOfSatellite(satellite.getPrn())] = satellite.getSnr();
-					else if (mSatelliteCount<10) {
-						mPRN[mSatelliteCount] = satellite.getPrn();
-						mSNR[mSatelliteCount] = satellite.getSnr();
-						mSatelliteCount++;
+				if (status != null) {
+					iterator = status.getSatellites().iterator();
+					while (iterator.hasNext()) {
+						satelliteCount++;
+						satellite = iterator.next();
+						if (indexOfSatellite(satellite.getPrn()) != -1)
+							mSNR[indexOfSatellite(satellite.getPrn())] = satellite.getSnr();
+						else if (mSatelliteCount < 10) {
+							mPRN[mSatelliteCount] = satellite.getPrn();
+							mSNR[mSatelliteCount] = satellite.getSnr();
+							mSatelliteCount++;
+						}
 					}
 				}
 				if (isAutomatic) {
@@ -211,12 +216,12 @@ public class GPSTestActivity extends Activity
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.gps_test))] = "失败";
+				application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.gps_test))] = "成功";
+				application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -231,7 +236,7 @@ public class GPSTestActivity extends Activity
 		Log.e(ModuleTestApplication.TAG, "GPSTestActivity"+"======"+error+"======");
 		if (!isAutomatic)
 			application = ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.gps_test))] = "失败";
+		application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -243,7 +248,7 @@ public class GPSTestActivity extends Activity
 //		mLooper = Looper.myLooper();
 //		if (mLooper == null) postError("In startAutoTest():myLooper==null");
 		initResume();
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.gps_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		Timer timer = new Timer();
@@ -258,10 +263,10 @@ public class GPSTestActivity extends Activity
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.gps_test))]="成功";
+			application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 			application.getTooltip()[application.getIndex(mContext.getString(R.string.gps_test))] = "卫星数量："+mSatelliteCount;
 		} else {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.gps_test))]="失败";
+			application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;

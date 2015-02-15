@@ -3,8 +3,10 @@ package com.nuautotest.Activity;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +24,7 @@ import java.io.IOException;
  */
 
 public class FactoryResetTestActivity extends Activity {
-	public static final String AUTO_BOOT_FLAG = "/sdcard/Module_Test_autobootflag";
+	public static final String AUTO_BOOT_FLAG = ModuleTestApplication.LOG_DIR + "/Module_Test_autobootflag";
 	public static final String BOOT_CONFIG = "/misc/boot_config";
 	private PowerManager mPowerManager;
 	private ModuleTestApplication application;
@@ -47,7 +49,7 @@ public class FactoryResetTestActivity extends Activity {
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_reboot.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_reboot.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -167,7 +169,7 @@ public class FactoryResetTestActivity extends Activity {
 
 	public void startAutoTest() {
 		initCreate();
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.factoryreset_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.factoryreset_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		StartTest();

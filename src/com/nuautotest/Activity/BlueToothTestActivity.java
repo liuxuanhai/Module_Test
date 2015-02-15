@@ -91,7 +91,7 @@ public class BlueToothTestActivity extends Activity {
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_bluetooth.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_bluetooth.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -176,12 +176,12 @@ public class BlueToothTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.bluetooth_test))] = "失败";
+				application.setTestState(getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.bluetooth_test))] = "成功";
+				application.setTestState(getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -196,7 +196,7 @@ public class BlueToothTestActivity extends Activity {
 		Log.e(ModuleTestApplication.TAG, "BlueToothTestActivity"+"======"+error+"======");
 		if (!isAutomatic)
 			application = ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.bluetooth_test))] = "失败";
+		application.setTestState(getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -204,7 +204,7 @@ public class BlueToothTestActivity extends Activity {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.bluetooth_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		if ( (mBTAdapter!=null) && (mBTAdapter.getState()==BluetoothAdapter.STATE_ON) ) {
@@ -214,12 +214,12 @@ public class BlueToothTestActivity extends Activity {
 
 	public void stopAutoTest(boolean success) {
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.bluetooth_test))]="成功";
+			application.setTestState(mContext.getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 			if (mDevice != null)
 				application.getTooltip()[application.getIndex(mContext.getString(R.string.bluetooth_test))] =
 						"名称："+mDevice.getName()+" 地址："+mDevice.getAddress();
 		} else
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.bluetooth_test))]="失败";
+			application.setTestState(mContext.getString(R.string.bluetooth_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();

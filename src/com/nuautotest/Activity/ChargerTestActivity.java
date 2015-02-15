@@ -50,7 +50,7 @@ public class ChargerTestActivity extends Activity
 	protected void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_charger.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_charger.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -63,7 +63,9 @@ public class ChargerTestActivity extends Activity
 		intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
 
 		Intent batteryStatus = mContext.registerReceiver(null, intentFilter);
-		int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+		int chargePlug = 0;
+		if (batteryStatus != null)
+			chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
 		if (!isAutomatic) {
 			if (chargePlug == BatteryManager.BATTERY_PLUGGED_USB)
 				text.setText("USB充电器已插入");
@@ -131,12 +133,12 @@ public class ChargerTestActivity extends Activity
 		switch (view.getId()) {
 			case R.id.fail:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.charger_test))]="失败";
+				application.setTestState(getString(R.string.charger_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.charger_test))]="成功";
+				application.setTestState(getString(R.string.charger_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -152,16 +154,16 @@ public class ChargerTestActivity extends Activity
 		isFinished = false;
 		initCreate();
 		application.getTooltip()[application.getIndex(mContext.getString(R.string.charger_test))] = "***请插入充电器***";
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.charger_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.charger_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
 		application.getTooltip()[application.getIndex(mContext.getString(R.string.charger_test))] = "";
 		if (success) {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.charger_test))]="成功";
+			application.setTestState(mContext.getString(R.string.charger_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		} else {
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.charger_test))]="失败";
+			application.setTestState(mContext.getString(R.string.charger_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		}
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;

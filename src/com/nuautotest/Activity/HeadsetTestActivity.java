@@ -140,12 +140,12 @@ public class HeadsetTestActivity extends Activity
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.headset_test))] = "失败";
+				application.setTestState(getString(R.string.headset_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.headset_test))] = "成功";
+				application.setTestState(getString(R.string.headset_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -175,10 +175,10 @@ public class HeadsetTestActivity extends Activity
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getListViewState()
-						[ModuleTestApplication.getInstance().getIndex(getString(R.string.headset_test))].equals("未测试")) {
-					ModuleTestApplication.getInstance().getListViewState()
-							[ModuleTestApplication.getInstance().getIndex(getString(R.string.headset_test))] = "操作超时";
+				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.headset_test))
+						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+					ModuleTestApplication.getInstance().setTestState(getString(R.string.headset_test),
+							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 					HeadsetTestActivity.this.finish();
 				}
 			}
@@ -188,13 +188,13 @@ public class HeadsetTestActivity extends Activity
 	public void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_record.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_headset.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			ModuleTestApplication.getInstance().recordLog(null);
 		}
-		Log.i(ModuleTestApplication.TAG, "---Record Test---");
+		Log.i(ModuleTestApplication.TAG, "---Headset Test---");
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
@@ -256,15 +256,15 @@ public class HeadsetTestActivity extends Activity
 
 		initCreate();
 
-		application.getListViewState()[application.getIndex(mContext.getString(R.string.headset_test))]="测试中";
+		application.setTestState(mContext.getString(R.string.headset_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
 		if (success)
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.headset_test))]="成功";
+			application.setTestState(mContext.getString(R.string.headset_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 		else
-			application.getListViewState()[application.getIndex(mContext.getString(R.string.headset_test))]="失败";
+			application.setTestState(mContext.getString(R.string.headset_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 

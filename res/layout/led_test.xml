@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="LED测试"
+			android:textSize="25dip"/>
+
+	<Button
+		android:id="@+id/btLedRed"
+		android:text="红色：打开"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"
+		android:onClick="onClickLedRed"/>
+
+	<Button
+		android:id="@+id/btLedGreen"
+		android:text="绿色：打开"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"
+		android:onClick="onClickLedGreen"/>
+
+	<Button
+		android:id="@+id/btLedBlue"
+		android:text="蓝色：打开"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"
+		android:onClick="onClickLedBlue"/>
+
+	<include layout="@layout/bottom_button" />
+
+</LinearLayout>

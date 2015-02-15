@@ -34,7 +34,7 @@ public class VibratorTestActivity extends Activity {
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_vibrator.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_vibrator.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -49,7 +49,7 @@ public class VibratorTestActivity extends Activity {
 			postError("In onCreate():Get VIBRATOR_SERVICE failed");
 		if (!mVibrator.hasVibrator()) {
 			application = ModuleTestApplication.getInstance();
-			application.getListViewState()[application.getIndex(getString(R.string.vibrator_test))] = "失败";
+			application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 			this.finish();
 		}
 	}
@@ -87,12 +87,12 @@ public class VibratorTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.fail:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.vibrator_test))] = "失败";
+				application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
 				application = ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.vibrator_test))] = "成功";
+				application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -107,7 +107,7 @@ public class VibratorTestActivity extends Activity {
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "VibratorTestActivity"+"======"+error+"======");
 		application = ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.vibrator_test))] = "失败";
+		application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -130,10 +130,10 @@ public class VibratorTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getListViewState()
-						[ModuleTestApplication.getInstance().getIndex(getString(R.string.vibrator_test))].equals("未测试")) {
-					ModuleTestApplication.getInstance().getListViewState()
-							[ModuleTestApplication.getInstance().getIndex(getString(R.string.vibrator_test))] = "操作超时";
+				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.vibrator_test))
+						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+					ModuleTestApplication.getInstance().setTestState(getString(R.string.vibrator_test),
+							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 					VibratorTestActivity.this.finish();
 				}
 			}

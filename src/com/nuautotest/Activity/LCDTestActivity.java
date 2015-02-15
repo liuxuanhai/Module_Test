@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +31,7 @@ import java.util.TimerTask;
  *
  */
 
-public class LCDTestActivity extends Activity {
+public class LCDTestActivity extends Activity implements View.OnSystemUiVisibilityChangeListener {
 
 	static final boolean MANUAL = true;
 
@@ -48,6 +49,7 @@ public class LCDTestActivity extends Activity {
 	private TimerHandler mTimerHandler;
 	private ProcessThread mProcessThread;
 	private Context mContext;
+	private int mSdkVersion = Build.VERSION.SDK_INT;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class LCDTestActivity extends Activity {
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
-				mLogWriter = new FileWriter("/sdcard/ModuleTest/log_lcd.txt");
+				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_lcd.txt");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -100,8 +102,12 @@ public class LCDTestActivity extends Activity {
 			TimerThread mAutoTimer = new TimerThread();
 			mAutoTimer.start();
 		}
-		mProcessThread = new ProcessThread((ActivityManager)this.getSystemService(ACTIVITY_SERVICE), this);
-		mProcessThread.start();
+		if (mSdkVersion < Build.VERSION_CODES.KITKAT) {
+			mProcessThread = new ProcessThread((ActivityManager) this.getSystemService(ACTIVITY_SERVICE), this);
+			mProcessThread.start();
+		} else {
+			setNavVisibility(false);
+		}
 	}
 
 	@Override
@@ -110,7 +116,8 @@ public class LCDTestActivity extends Activity {
 			mTimer.cancel();
 			mTask.cancel();
 		}
-		mProcessThread.handler.sendEmptyMessage(ProcessThread.MSG_KILLTHREAD);
+		if (mSdkVersion < Build.VERSION_CODES.KITKAT)
+			mProcessThread.handler.sendEmptyMessage(ProcessThread.MSG_KILLTHREAD);
 		super.onPause();
 	}
 
@@ -133,12 +140,12 @@ public class LCDTestActivity extends Activity {
 		switch (view.getId()) {
 			case R.id.lcdBtFail:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.lcd_test))]="失败";
+				application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.lcdBtSuccess:
 				application= ModuleTestApplication.getInstance();
-				application.getListViewState()[application.getIndex(getString(R.string.lcd_test))]="成功";
+				application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -151,7 +158,7 @@ public class LCDTestActivity extends Activity {
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG,"LCDTestActivity"+"======"+error+"======");
 		application= ModuleTestApplication.getInstance();
-		application.getListViewState()[application.getIndex(getString(R.string.lcd_test))]="失败";
+		application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -177,6 +184,39 @@ public class LCDTestActivity extends Activity {
 		}
 	}
 
+	Runnable mNavHider = new Runnable() {
+		@Override public void run() {
+			setNavVisibility(false);
+		}
+	};
+
+	void setNavVisibility(boolean visible) {
+		int newVis = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+		if (!visible) {
+			newVis |= View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_FULLSCREEN
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+		}
+
+		// If we are now visible, schedule a timer for us to go invisible.
+		if (visible) {
+			Handler h = getWindow().getDecorView().getHandler();
+			if (h != null) {
+				h.removeCallbacks(mNavHider);
+				h.postDelayed(mNavHider, 0);
+			}
+		}
+
+		// Set the new desired visibility.
+		getWindow().getDecorView().setSystemUiVisibility(newVis);
+	}
+
+	@Override
+	public void onSystemUiVisibilityChange(int visibility) {
+
+	}
+
 	public class ChangeBGHandler extends Handler {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_CHANGEBG)
@@ -196,9 +236,6 @@ public class LCDTestActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			mHandler.sendEmptyMessage(MSG_CHANGEBG);
-			final String ACTION_XIEHANG_TEST = "com.nufront.xiehang.test";
-			Intent intent = new Intent(ACTION_XIEHANG_TEST);
-			mContext.sendBroadcast(intent);
 		}
 	}
 
@@ -221,10 +258,10 @@ public class LCDTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getListViewState()
-						[ModuleTestApplication.getInstance().getIndex(getString(R.string.lcd_test))].equals("未测试")) {
-					ModuleTestApplication.getInstance().getListViewState()
-							[ModuleTestApplication.getInstance().getIndex(getString(R.string.lcd_test))] = "操作超时";
+				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.lcd_test))
+						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
+					ModuleTestApplication.getInstance().setTestState(getString(R.string.lcd_test),
+							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
 					LCDTestActivity.this.finish();
 				}
 			}
