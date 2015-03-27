@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.usb.UsbDevice;
@@ -13,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.*;
@@ -30,7 +30,6 @@ public class USBTestActivity extends Activity
 {
 	private TextView mtvUsbAccessory/*, mtvUsbHost*/;
 	//	private BroadcastReceiver mBcrAccessory, mBcrHost;
-	private ModuleTestApplication application;
 	private boolean mListening, mIsAdb;
 	private Handler mUsbHandler;
 
@@ -56,7 +55,6 @@ public class USBTestActivity extends Activity
 		mtvUsbAccessory = (TextView)findViewById(R.id.tvUsbAccessory);
 //		mtvUsbHost = (TextView)findViewById(R.id.tvUsbHost);
 
-		application = ModuleTestApplication.getInstance();
 		mContext = this;
 
 		initCreate();
@@ -314,13 +312,11 @@ public class USBTestActivity extends Activity
 
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -328,24 +324,24 @@ public class USBTestActivity extends Activity
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	public void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
-		application.getTooltip()[application.getIndex(mContext.getString(R.string.usb_test))] = "请向device和host接口插入设备";
-		application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		initCreate();
 	}
 
 	public void stopAutoTest(boolean success) {
-		application.getTooltip()[application.getIndex(mContext.getString(R.string.usb_test))] = "";
 		if (success)
-			application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
-			application.setTestState(mContext.getString(R.string.usb_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();
@@ -354,10 +350,9 @@ public class USBTestActivity extends Activity
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

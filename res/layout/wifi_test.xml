@@ -2,29 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="Wifi测试"
-			android:textSize="25dip" >
-	</TextView>
+              android:orientation="vertical" android:background="@color/bg">
 
 	<TextView
 			android:id="@+id/tvwifistatus"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text=""
-			android:textSize="25dip" >
+			android:text="Wifi状态"
+			android:textSize="@dimen/header" android:textColor="@color/black" android:password="false">
 	</TextView>
 
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/tvWifiNumber" android:layout_marginTop="10dp" android:textColor="@color/black"
+			android:text="热点数量" android:password="false" android:textSize="@dimen/header"/>
 	<TextView
 			android:id="@+id/tvwificonnstatus"
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
-			android:textSize="25dip" >
+			android:textSize="@dimen/content" android:textColor="@color/black" android:layout_marginTop="10dp"
+			android:text="当前网络">
 	</TextView>
 
 	<LinearLayout
@@ -33,24 +32,17 @@
 
 		<Button
 				android:id="@+id/btEnableWifi"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:onClick="onEnableWifi"
-				android:text="设置Wifi" />
+				android:text="设置Wifi" style="@android:style/Widget.Button" android:layout_weight="1"/>
 
 		<Button
 				android:id="@+id/btPingBaidu"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:onClick="onOpenWeb"
-				android:text="打开网页" />
-
-		<TextView
-				android:id="@+id/tvPingBaidu"
-				android:layout_width="0dip"
-				android:layout_height="wrap_content"
-				android:layout_weight="1" >
-		</TextView>
+				android:text="打开网页" style="@android:style/Widget.Button" android:layout_weight="1"/>
 
 	</LinearLayout>
 

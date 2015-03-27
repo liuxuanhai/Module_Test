@@ -1,10 +1,12 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.nuautotest.application.ModuleTestApplication;
+import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,8 +26,13 @@ public class LEDTestActivity extends Activity {
 	private final String LED_GREEN_FILE = "/sys/class/leds/green/brightness";
 	private final String LED_BLUE_FILE = "/sys/class/leds/blue/brightness";
 	private Button mBtRed, mBtGreen, mBtBlue;
-	private boolean mRedOn = false, mGreenOn = false, mBlueOn = false;
-	private boolean mPrevRed = false, mPrevGreen = false, mPrevBlue = false;
+	private TextView mTvLed;
+
+	private final int LED_RED = 0x1;
+	private final int LED_GREEN = 0x2;
+	private final int LED_BLUE = 0x4;
+	private int mCurrent = 0;
+	private int mPrev = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class LEDTestActivity extends Activity {
 		mBtRed = (Button)findViewById(R.id.btLedRed);
 		mBtGreen = (Button)findViewById(R.id.btLedGreen);
 		mBtBlue = (Button)findViewById(R.id.btLedBlue);
+		mTvLed = (TextView)findViewById(R.id.tvLED);
 
 		try {
 			Scanner sred = new Scanner(new File(LED_RED_FILE));
@@ -41,47 +49,41 @@ public class LEDTestActivity extends Activity {
 			Scanner sblue = new Scanner(new File(LED_BLUE_FILE));
 
 			if (!sred.next().equals("0")) {
-				mPrevRed = mRedOn = true;
+				mPrev |= LED_RED;
 				mBtRed.setText("红色：关闭");
 			}
 			if (!sgreen.next().equals("0")) {
-				mPrevGreen = mGreenOn = true;
+				mPrev |= LED_GREEN;
 				mBtGreen.setText("绿色：关闭");
 			}
 			if (!sblue.next().equals("0")) {
-				mPrevBlue = mBlueOn = true;
+				mPrev |= LED_BLUE;
 				mBtBlue.setText("蓝色：关闭");
 			}
+			mCurrent = mPrev;
+			updateLight();
 		} catch (FileNotFoundException e) {
-			ModuleTestApplication application = ModuleTestApplication.getInstance();
-			application.setTestState(getString(R.string.led_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.led_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		}
 	}
 
 	@Override
 	public void onPause() {
-		mRedOn = mPrevRed;
-		mGreenOn = mPrevGreen;
-		mBlueOn = mPrevBlue;
-		updateLight("Red");
-		updateLight("Green");
-		updateLight("Blue");
+		mCurrent = mPrev;
+		updateLight();
 
 		super.onPause();
 	}
 
 	// 成功失败按钮
 	public void onbackbtn(View view) {
-		ModuleTestApplication application;
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.led_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.led_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.led_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.led_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -89,15 +91,16 @@ public class LEDTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
-	protected void updateLight(String color) {
+	protected void updateLight() {
 		FileWriter fw;
 		try {
-			if (color.equals("Red")) {
 				fw = new FileWriter(LED_RED_FILE);
-				if (mRedOn) {
+				if ((mCurrent & LED_RED) != 0) {
 					fw.write("1");
 					mBtRed.setText("红色：关闭");
 				} else {
@@ -105,9 +108,9 @@ public class LEDTestActivity extends Activity {
 					mBtRed.setText("红色：打开");
 				}
 				fw.close();
-			} else if (color.equals("Green")) {
+
 				fw = new FileWriter(LED_GREEN_FILE);
-				if (mGreenOn) {
+				if ((mCurrent & LED_GREEN) != 0) {
 					fw.write("1");
 					mBtGreen.setText("绿色：关闭");
 				} else {
@@ -115,9 +118,9 @@ public class LEDTestActivity extends Activity {
 					mBtGreen.setText("绿色：打开");
 				}
 				fw.close();
-			} else if (color.equals("Blue")) {
+
 				fw = new FileWriter(LED_BLUE_FILE);
-				if (mBlueOn) {
+				if ((mCurrent & LED_BLUE) != 0) {
 					fw.write("1");
 					mBtBlue.setText("蓝色：关闭");
 				} else {
@@ -125,24 +128,50 @@ public class LEDTestActivity extends Activity {
 					mBtBlue.setText("蓝色：打开");
 				}
 				fw.close();
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+
+		switch (mCurrent) {
+			case 0:
+				mTvLed.setBackgroundColor(Color.BLACK);
+				break;
+			case LED_RED:
+				mTvLed.setBackgroundColor(Color.RED);
+				break;
+			case LED_GREEN:
+				mTvLed.setBackgroundColor(Color.GREEN);
+				break;
+			case LED_BLUE:
+				mTvLed.setBackgroundColor(Color.BLUE);
+				break;
+			case LED_RED | LED_GREEN:
+				mTvLed.setBackgroundColor(Color.YELLOW);
+				break;
+			case LED_RED | LED_BLUE:
+				mTvLed.setBackgroundColor(Color.MAGENTA);
+				break;
+			case LED_GREEN | LED_BLUE:
+				mTvLed.setBackgroundColor(Color.CYAN);
+				break;
+			case LED_RED | LED_GREEN | LED_BLUE:
+				mTvLed.setBackgroundColor(Color.WHITE);
+				break;
 		}
 	}
 
 	public void onClickLedRed(View view) {
-		mRedOn = !mRedOn;
-		updateLight("Red");
+		mCurrent ^= LED_RED;
+		updateLight();
 	}
 
 	public void onClickLedGreen(View view) {
-		mGreenOn = !mGreenOn;
-		updateLight("Green");
+		mCurrent ^= LED_GREEN;
+		updateLight();
 	}
 
 	public void onClickLedBlue(View view) {
-		mBlueOn = !mBlueOn;
-		updateLight("Blue");
+		mCurrent ^= LED_BLUE;
+		updateLight();
 	}
 }

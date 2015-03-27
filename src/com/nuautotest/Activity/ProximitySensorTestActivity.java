@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -28,9 +28,9 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 	private SensorManager sm;
 	private Sensor proxSensor;
 	private TextView tvProx;
-	private ModuleTestApplication application;
 	private boolean mRegisteredSensor;
 	private float dataProx;
+	private float autoRecProx = -1;
 
 	private boolean isAutomatic, isFinished;
 	private int time;
@@ -109,9 +109,12 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 	public void onSensorChanged(SensorEvent event) {
 		dataProx = event.values[0];
 
-		if (isAutomatic)
-			stopAutoTest(true);
-		else
+		if (isAutomatic) {
+			if (autoRecProx != -1 && autoRecProx != dataProx)
+				stopAutoTest(true);
+			else
+				autoRecProx = dataProx;
+		} else
 			tvProx.setText("距离:" + dataProx);
 	}
 
@@ -122,27 +125,25 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "ProximitySensorTestAcitivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -151,17 +152,15 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.proximitysensor_test))] = "距离:" + dataProx;
-		} else {
-			application.setTestState(mContext.getString(R.string.proximitysensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.proximitysensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releasePause();
@@ -170,10 +169,9 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

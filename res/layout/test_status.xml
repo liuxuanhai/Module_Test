@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:background="@color/bg">
+
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
+			android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="校准状态"
+				android:textColor="@color/black" android:textSize="@dimen/header" android:layout_weight="5"/>
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvCalibTest" android:layout_weight="3" android:background="@color/red"
+				android:textSize="@dimen/header"/>
+	</LinearLayout>
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
+			android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="综测状态"
+		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvBPTest" android:layout_weight="3" android:background="@color/red"
+				android:textSize="@dimen/header"/>
+	</LinearLayout>
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" android:layout_weight="1" android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp" android:gravity="center">
+		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="PCBA测试状态"
+		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvPCBATest" android:layout_weight="3" android:background="@color/red"
+				android:textSize="@dimen/header"/>
+	</LinearLayout>
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" android:layout_weight="1" android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp" android:gravity="center">
+		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="APK测试状态"
+		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvAPKTest" android:layout_weight="3" android:background="@color/red"
+				android:textSize="@dimen/header"/>
+	</LinearLayout>
+
+	<include layout="@layout/bottom_button"/>
+</LinearLayout>

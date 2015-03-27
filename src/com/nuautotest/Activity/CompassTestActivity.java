@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +14,7 @@ import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -32,7 +32,6 @@ public class CompassTestActivity extends Activity implements
 	TextView text;
 
 	private boolean mRegisteredMagSensor, mRegisteredAccSensor;
-	private ModuleTestApplication application;
 
 	private SensorManager mSensorManager;
 	private Sensor mMagSensor, mAccSensor;
@@ -41,6 +40,7 @@ public class CompassTestActivity extends Activity implements
 	private float[] accValue = new float[3];
 	private float[] rotation = new float[9];
 	private float[] orientation = new float[3];
+	private float autoRecOrientation = 0;
 
 	private boolean isAutomatic, isFinished;
 	private int time;
@@ -146,7 +146,10 @@ public class CompassTestActivity extends Activity implements
 			orientation[i] = (float)Math.toDegrees(orientation[i]);
 
 		if (isAutomatic) {
-			stopAutoTest(true);
+			if (autoRecOrientation != 0 && autoRecOrientation != orientation[0])
+				stopAutoTest(true);
+			else
+				autoRecOrientation = orientation[0];
 		} else {
 			text.setText("方向="+ ((int) orientation[0]));
 
@@ -174,27 +177,25 @@ public class CompassTestActivity extends Activity implements
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "CompassTestActivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application= ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -203,17 +204,15 @@ public class CompassTestActivity extends Activity implements
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.setTestState(mContext.getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.compass_test))] = "方向角："+orientation[0];
-		} else {
-			application.setTestState(mContext.getString(R.string.compass_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releasePause();
@@ -222,10 +221,9 @@ public class CompassTestActivity extends Activity implements
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

@@ -2,22 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/bg">
 
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="背光测试"
-			android:textSize="25dip" >
-	</TextView>
 
 	<TextView
 			android:id="@+id/sensor"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:text="亮度"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black">
 	</TextView>
 
 	<LinearLayout

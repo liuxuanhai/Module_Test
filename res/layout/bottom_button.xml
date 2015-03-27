@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal" >
+              android:orientation="horizontal" android:paddingBottom="1dp" android:background="@color/bg">
 
 	<Button
 			android:id="@+id/fail"
@@ -10,7 +10,7 @@
 			android:layout_height="50dp"
 			android:layout_weight="1.00"
 			android:onClick="onbackbtn"
-			android:text="失败" />
+			android:text="失败" style="@android:style/Widget.Button"/>
 
 	<Button
 			android:id="@+id/success"
@@ -18,6 +18,6 @@
 			android:layout_height="50dp"
 			android:layout_weight="1.00"
 			android:onClick="onbackbtn"
-			android:text="成功" />
+			android:text="成功" style="@android:style/Widget.Button"/>
 
 </LinearLayout>

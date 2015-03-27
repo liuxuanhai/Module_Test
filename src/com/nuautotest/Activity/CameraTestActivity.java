@@ -14,10 +14,11 @@ import android.view.*;
 import android.view.SurfaceHolder.Callback;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
+import com.nuautotest.NativeLib.RootCommand;
 import com.nuautotest.application.ModuleTestApplication;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -33,7 +34,6 @@ public class CameraTestActivity extends Activity {
 	private SurfaceHolder mSurfaceHolder;
 	private Camera camera;
 	private String Flag = "";
-	private ModuleTestApplication application;
 	DisplayMetrics outMetrics;
 	private FileWriter mLogWriter;
 	private SurfaceCallback mSurfaceCallback;
@@ -76,15 +76,18 @@ public class CameraTestActivity extends Activity {
 		}
 		Log.i(ModuleTestApplication.TAG, "---Camera Test---");
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.camera_test);
 		Display display = getWindowManager().getDefaultDisplay();
 		outMetrics = new DisplayMetrics();
 		display.getMetrics(outMetrics);
 		Intent intent = this.getIntent();
 		Flag = intent.getStringExtra("Flag");
+		if (Flag.equals("Front")) {
+			this.setTitle(R.string.front_camera_test);
+			checkExistance();
+		} else
+			this.setTitle(R.string.back_camera_test);
+
 		mBtTakePicture = (Button) this.findViewById(R.id.btTakePicture);
 		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView);
 		mSurfaceHolder = surfaceView.getHolder();
@@ -241,7 +244,9 @@ public class CameraTestActivity extends Activity {
 					}
 				}
 
-				camera.startPreview();
+				try {
+					camera.startPreview();
+				} catch (Exception ignored) {}
 			}
 		}
 
@@ -286,25 +291,36 @@ public class CameraTestActivity extends Activity {
 		}
 	}
 
+	protected void checkExistance() {
+		RootCommand rootcmd = ModuleTestApplication.getRootcmd();
+		if (!rootcmd.isEnabled()) return;
+
+		boolean exist0 = false, exist1 = false;
+		File f;
+		f = new File("/dev/video0");
+		if (f.exists()) exist0 = true;
+		f = new File("/dev/video1");
+		if (f.exists()) exist1 = true;
+		if (exist0 && !exist1) rootcmd.Write("ln -s /dev/video0 /dev/video1\n");
+	}
+
 	// 成功失败按钮
 	public void onbackbtn(View view) {
 
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
 				if (Flag.equals("Front")) {
-					application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				} else {
-					application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.back_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				}
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
 				if (Flag.equals("Front")) {
-					application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				} else {
-					application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.back_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				}
 				this.finish();
 				break;
@@ -313,16 +329,17 @@ public class CameraTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "CameraTestActivity"+"======"+error+"======");
-		application = ModuleTestApplication.getInstance();
 		if (Flag.equals("Front")) {
-			application.setTestState(getString(R.string.front_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		} else {
-			application.setTestState(getString(R.string.back_camera_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.back_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		}
 		this.finish();
 	}
@@ -347,17 +364,17 @@ public class CameraTestActivity extends Activity {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
 				if (Flag.equals("Front")) {
-					if (ModuleTestApplication.getInstance().getTestState(getString(R.string.front_camera_test))
-							== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-						ModuleTestApplication.getInstance().setTestState(getString(R.string.front_camera_test),
-								ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+					if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.front_camera_test))
+							== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+						NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test),
+								NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 						CameraTestActivity.this.finish();
 					}
 				} else {
-					if (ModuleTestApplication.getInstance().getTestState(getString(R.string.back_camera_test))
-							== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-						ModuleTestApplication.getInstance().setTestState(getString(R.string.back_camera_test),
-								ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+					if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.back_camera_test))
+							== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+						NuAutoTestAdapter.getInstance().setTestState(getString(R.string.back_camera_test),
+								NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 						CameraTestActivity.this.finish();
 					}
 				}

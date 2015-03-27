@@ -1,15 +1,16 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.location.*;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 /**
  * GPS测试
@@ -29,11 +31,8 @@ public class GPSTestActivity extends Activity
 		implements LocationListener, GpsStatus.Listener {
 
 	TextView text, record;
-	private int[] mPRN = new int[10];
-	private float[] mSNR = new float[10];
-	private int mSatelliteCount = 0;
+	private Vector<GpsSatellite> mData = new Vector<GpsSatellite>();
 	private boolean mRegisteredListener, mProviderEnable;
-	private ModuleTestApplication application;
 
 	private LocationManager mLocationManager;
 
@@ -41,7 +40,7 @@ public class GPSTestActivity extends Activity
 	private int time;
 	private Context mContext;
 	private Handler mHandler;
-//	private Looper mLooper;
+	private Looper mLooper;
 	private FileWriter mLogWriter;
 
 	@Override
@@ -84,10 +83,12 @@ public class GPSTestActivity extends Activity
 		mProviderEnable = Settings.Secure.isLocationProviderEnabled(
 				mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
 
-		try {
-			Settings.Secure.setLocationProviderEnabled(
-					mContext.getContentResolver(), LocationManager.GPS_PROVIDER, true);
-		} catch (Exception ignored) {}
+		if (!mProviderEnable) {
+			try {
+				Settings.Secure.setLocationProviderEnabled(
+						mContext.getContentResolver(), LocationManager.GPS_PROVIDER, true);
+			} catch (Exception ignored) {}
+		}
 
 		try {
 			mRegisteredListener
@@ -145,6 +146,7 @@ public class GPSTestActivity extends Activity
 		Iterator<GpsSatellite> iterator;
 		GpsSatellite satellite;
 
+		Log.d(ModuleTestApplication.TAG, "event= "+event);
 		switch(event) {
 			case GpsStatus.GPS_EVENT_STARTED:
 				if (!isAutomatic) text.setText("GPS打开");
@@ -159,44 +161,42 @@ public class GPSTestActivity extends Activity
 				status = mLocationManager.getGpsStatus(null);
 				if (status == null)
 					Log.e(ModuleTestApplication.TAG, "In onGpsStatusChanged():getGpsStatus failed");
-				int satelliteCount = 0;
 				if (status != null) {
 					iterator = status.getSatellites().iterator();
 					while (iterator.hasNext()) {
-						satelliteCount++;
 						satellite = iterator.next();
 						if (indexOfSatellite(satellite.getPrn()) != -1)
-							mSNR[indexOfSatellite(satellite.getPrn())] = satellite.getSnr();
-						else if (mSatelliteCount < 10) {
-							mPRN[mSatelliteCount] = satellite.getPrn();
-							mSNR[mSatelliteCount] = satellite.getSnr();
-							mSatelliteCount++;
-						}
+							mData.set(indexOfSatellite(satellite.getPrn()), satellite);
+						else
+							mData.add(satellite);
 					}
 				}
 				if (isAutomatic) {
-					if (satelliteCount>0) stopAutoTest(true);
+					if (mData.size()>0) stopAutoTest(true);
 				} else {
 					printRecord();
-					text.setText("卫星数量:"+satelliteCount);
 					break;
 				}
 		}
 	}
 
 	private void printRecord() {
-		if (mSatelliteCount == 0) record.setText("暂无数据");
+		if (mData.size() == 0) record.setText("暂无数据");
 		else {
+			text.setText("卫星数量:"+mData.size());
 			record.setText("卫星:\r\n");
-			for (int i=0; i<mSatelliteCount; i++) {
-				record.append("编号:"+mPRN[i]+"\t信号强度:"+mSNR[i]+"\r\n");
+			for (GpsSatellite data : mData) {
+				record.append("编号: " + data.getPrn() +
+						"\t\t信号强度: " + data.getSnr() +
+						"\t\t海拔: " + data.getElevation() +
+						"\t\t方位:" + data.getAzimuth() + "\r\n");
 			}
 		}
 	}
 
 	private int indexOfSatellite(int prn) {
-		for (int i=0; i<mSatelliteCount; i++)
-			if (prn == mPRN[i]) return i;
+		for (int i=0; i<mData.size(); i++)
+			if (prn == mData.get(i).getPrn()) return i;
 		return -1;
 	}
 
@@ -215,28 +215,25 @@ public class GPSTestActivity extends Activity
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
-
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
-		Log.e(ModuleTestApplication.TAG, "GPSTestActivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		Log.e(ModuleTestApplication.TAG, "GPSTestActivity" + "======" + error + "======");
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -245,10 +242,10 @@ public class GPSTestActivity extends Activity
 		isFinished = false;
 		initCreate();
 //		Looper.prepare();
-//		mLooper = Looper.myLooper();
-//		if (mLooper == null) postError("In startAutoTest():myLooper==null");
+		mLooper = Looper.myLooper();
+		if (mLooper == null) postError("In startAutoTest():myLooper==null");
 		initResume();
-		application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		Timer timer = new Timer();
@@ -258,43 +255,37 @@ public class GPSTestActivity extends Activity
 		} catch(IllegalStateException e) {
 			postError("In startAutoTest():"+e);
 		}
-//		Looper.loop();
+		Looper.loop();
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.gps_test))] = "卫星数量："+mSatelliteCount;
-		} else {
-			application.setTestState(mContext.getString(R.string.gps_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releasePause();
-//		if (mLooper != null) {
-//			mLooper.quit();
-//			mLooper = null;
-//		}
+		if (mLooper != null) {
+			mLooper.quit();
+			mLooper = null;
+		}
 		this.finish();
 	}
 
 	public class EndLoopTask extends TimerTask {
 		@Override
 		public void run() {
-//			if (mLooper != null) {
-//				mLooper.quit();
-//				mLooper = null;
-//			}
+			if (mLooper != null) stopAutoTest(false);
 		}
 
 	}
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 
@@ -302,7 +293,7 @@ public class GPSTestActivity extends Activity
 			startAutoTest();
 			while ( (!isFinished) && (time<1000) ) {
 				try {
-					Thread.sleep(10);
+					Thread.sleep(0);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

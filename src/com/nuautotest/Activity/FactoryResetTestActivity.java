@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +9,7 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.File;
@@ -24,10 +24,8 @@ import java.io.IOException;
  */
 
 public class FactoryResetTestActivity extends Activity {
-	public static final String AUTO_BOOT_FLAG = ModuleTestApplication.LOG_DIR + "/Module_Test_autobootflag";
 	public static final String BOOT_CONFIG = "/misc/boot_config";
 	private PowerManager mPowerManager;
-	private ModuleTestApplication application;
 
 	private Context mContext;
 	private Handler mHandler;
@@ -89,11 +87,15 @@ public class FactoryResetTestActivity extends Activity {
 		}
 	}
 
+	@Override
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
+	}
+
 	public void StartTest() {
-//		File autobootFlag = new File(AUTO_BOOT_FLAG);
 		File bootconfigFlag = new File(BOOT_CONFIG);
 		try {
-//			autobootFlag.createNewFile();
 			if (bootconfigFlag.exists()) {
 				bootconfigFlag.delete();
 				bootconfigFlag.createNewFile();
@@ -104,18 +106,8 @@ public class FactoryResetTestActivity extends Activity {
 		}
 
 		FileWriter fWriter;
-		application = ModuleTestApplication.getInstance();
 
 		try {
-//			fWriter = new FileWriter(autobootFlag);
-//			for (int i=0; i<ModuleTestApplication.numberOfTest; i++) {
-//				if (application.getIndex(getString(R.string.factoryreset_test)) == i)
-//					fWriter.write("成功\n");
-//				else
-//					fWriter.write(application.getListViewState()[i]+"\n");
-//			}
-//			fWriter.close();
-
 			/* wipe SD card */
 			wipeSDCard();
 
@@ -134,19 +126,6 @@ public class FactoryResetTestActivity extends Activity {
 			Log.e(ModuleTestApplication.TAG, "Write autobootflag ERROR!");
 			return;
 		}
-
-//		final PackageManager pm = getPackageManager();
-//        List<ApplicationInfo> packages = pm.getInstalledApplications(
-//                PackageManager.GET_META_DATA);
-//        for (ApplicationInfo packageInfo : packages)
-//           Log.i(ModuleTestApplication.TAG, "pachageName: "+packageInfo.packageName + "   UID: " + packageInfo.uid);
-//
-//		NativeLib nativeLib = new NativeLib();
-//		File f = new File("/init.rc");
-//		Log.i(ModuleTestApplication.TAG, "rtc0 canRead: "+f.canRead());
-//		Log.i(ModuleTestApplication.TAG, "rtc0 canWrite: "+f.canWrite());
-//		int ret = nativeLib.power_on_off();
-//		Log.i(ModuleTestApplication.TAG, "power_on_off returned: "+ret);
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
@@ -169,7 +148,7 @@ public class FactoryResetTestActivity extends Activity {
 
 	public void startAutoTest() {
 		initCreate();
-		application.setTestState(mContext.getString(R.string.factoryreset_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.factoryreset_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		StartTest();
@@ -177,10 +156,9 @@ public class FactoryResetTestActivity extends Activity {
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

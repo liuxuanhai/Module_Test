@@ -1,7 +1,7 @@
 package com.nuautotest.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +15,7 @@ import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -32,7 +33,6 @@ public class GSensorTestActivity extends Activity implements
 {
 	TextView text;
 	ImageView image;
-	private ModuleTestApplication application;
 	private boolean mRegisteredSensor;
 
 	private boolean isAutomatic, isFinished;
@@ -41,6 +41,7 @@ public class GSensorTestActivity extends Activity implements
 	private Handler mHandler;
 	private FileWriter mLogWriter;
 	private SensorManager mSensorManager;
+	private float autoRecX=0, autoRecY=0, autoRecZ=0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -121,7 +122,12 @@ public class GSensorTestActivity extends Activity implements
 				float dataY = event.values[SensorManager.DATA_Y];
 				float dataZ = event.values[SensorManager.DATA_Z];
 				if (isAutomatic) {
-					if (dataX !=0 || dataY !=0 || dataZ !=0) stopAutoTest(true);
+					if (autoRecX + autoRecY + autoRecZ != 0 &&
+						autoRecX != dataX && autoRecY != dataY && autoRecZ != dataZ)
+						stopAutoTest(true);
+					autoRecX = dataX;
+					autoRecY = dataY;
+					autoRecZ = dataZ;
 				} else {
 					text.setText("数据：\nX: " + dataX);
 					text.append("\nY: " + dataY);
@@ -155,13 +161,11 @@ public class GSensorTestActivity extends Activity implements
 
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -169,14 +173,19 @@ public class GSensorTestActivity extends Activity implements
 	}
 
 	@Override
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
+	}
+
+	@Override
 	public void onBackPressed() {
+		super.onBackPressed();
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "GSensorTestActivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application= ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -185,20 +194,15 @@ public class GSensorTestActivity extends Activity implements
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-//			application.getTooltip()[application.getIndex(getString(R.string.gsensor_test))] = "数据：["+
-//					(float)((int)(dataX*100))/100.0+", "+
-//					(float)((int)(dataY*100))/100.0+", "+
-//					(float)((int)(dataZ*100))/100.0+"]";
-		} else {
-			application.setTestState(mContext.getString(R.string.gsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releasePause();
@@ -207,10 +211,9 @@ public class GSensorTestActivity extends Activity implements
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

@@ -7,6 +7,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -20,7 +21,6 @@ import java.io.IOException;
  */
 
 public class VibratorTestActivity extends Activity {
-	private ModuleTestApplication application;
 	private Vibrator mVibrator;
 	private FileWriter mLogWriter;
 	private static final int MSG_TIMEOUT = 0x101;
@@ -48,8 +48,7 @@ public class VibratorTestActivity extends Activity {
 		if (mVibrator == null)
 			postError("In onCreate():Get VIBRATOR_SERVICE failed");
 		if (!mVibrator.hasVibrator()) {
-			application = ModuleTestApplication.getInstance();
-			application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 			this.finish();
 		}
 	}
@@ -86,13 +85,11 @@ public class VibratorTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -100,14 +97,14 @@ public class VibratorTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
-
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "VibratorTestActivity"+"======"+error+"======");
-		application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.vibrator_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -130,10 +127,10 @@ public class VibratorTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.vibrator_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.vibrator_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.vibrator_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					VibratorTestActivity.this.finish();
 				}
 			}

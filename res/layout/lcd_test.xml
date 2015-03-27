@@ -24,7 +24,7 @@
 					android:onClick="onbackbtn"
 					android:text="失败"
 					android:visibility="invisible"
-					android:alpha="1" />
+					android:alpha="0.8" style="@android:style/Widget.Button"/>
 
 			<Button
 					android:id="@+id/lcdBtSuccess"
@@ -34,7 +34,7 @@
 					android:onClick="onbackbtn"
 					android:text="成功"
 					android:visibility="invisible"
-					android:alpha="1" />
+					android:alpha="0.8" style="@android:style/Widget.Button"/>
 
 		</LinearLayout>
 

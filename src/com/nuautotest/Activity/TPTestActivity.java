@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.NativeLib.ProcessThread;
 import com.nuautotest.application.ModuleTestApplication;
 
@@ -35,7 +37,6 @@ public class TPTestActivity extends Activity {
 			= "com.nuautotest.Activity.TPTestActivity.ACTION_TPSUCCESS";
 	public static final String ACTION_TPSHOWBUTTON
 			= "com.nuautotest.Activity.TPTestActivity.ACTION_TPSHOWBUTTON";
-	private ModuleTestApplication application;
 	private BroadcastReceiver mBcrTPTest;
 	private Activity self;
 	private LinearLayout mLayout;
@@ -54,8 +55,7 @@ public class TPTestActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (ACTION_TPSUCCESS.equals(intent.getAction())) {
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.tp_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.tp_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				self.finish();
 			} else if (ACTION_TPSHOWBUTTON.equals(intent.getAction())) {
 				mBottomView = self.getLayoutInflater().inflate(R.layout.bottom_button, null);
@@ -89,6 +89,8 @@ public class TPTestActivity extends Activity {
 			mProcessThread.start();
 		}
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.tp_test);
 		mLayout = (LinearLayout)this.findViewById(R.id.tpView);
 
@@ -98,12 +100,12 @@ public class TPTestActivity extends Activity {
 		mBcrTPTest = new TPTestBroadcastReceiver();
 		registerReceiver(mBcrTPTest, intentFilter);
 
-		try {
-			mPrevShowTouches = Settings.System.getInt(getContentResolver(), "show_touches");
-			mPrevPointerLocation = Settings.System.getInt(getContentResolver(), "pointer_location");
-		} catch (Settings.SettingNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			mPrevShowTouches = Settings.System.getInt(getContentResolver(), "show_touches");
+//			mPrevPointerLocation = Settings.System.getInt(getContentResolver(), "pointer_location");
+//		} catch (Settings.SettingNotFoundException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override
@@ -128,16 +130,16 @@ public class TPTestActivity extends Activity {
 			}
 		}
 
-		Settings.System.putInt(getContentResolver(), "show_touches", 1);
-		Settings.System.putInt(getContentResolver(), "pointer_location", 1);
+//		Settings.System.putInt(getContentResolver(), "show_touches", 1);
+//		Settings.System.putInt(getContentResolver(), "pointer_location", 1);
 
 		mLayout.postInvalidate();
 	}
 
 	@Override
 	public void onPause() {
-		Settings.System.putInt(getContentResolver(), "show_touches", mPrevShowTouches);
-		Settings.System.putInt(this.getContentResolver(), "pointer_location", mPrevPointerLocation);
+//		Settings.System.putInt(getContentResolver(), "show_touches", mPrevShowTouches);
+//		Settings.System.putInt(this.getContentResolver(), "pointer_location", mPrevPointerLocation);
 
 		if (mSdkVersion < Build.VERSION_CODES.KITKAT)
 			mProcessThread.handler.sendEmptyMessage(ProcessThread.MSG_KILLTHREAD);
@@ -166,24 +168,27 @@ public class TPTestActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.tp_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.tp_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		if (mAutomatic) mTimeout = -1;
 
 		super.onBackPressed();
+	}
+
+	@Override
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	// 成功失败按钮
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.tp_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.tp_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.tp_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.tp_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -209,10 +214,10 @@ public class TPTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.tp_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.tp_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.tp_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.tp_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					TPTestActivity.this.finish();
 				}
 			}

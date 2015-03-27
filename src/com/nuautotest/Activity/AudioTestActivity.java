@@ -1,13 +1,11 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -15,9 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -42,7 +40,6 @@ public class AudioTestActivity extends Activity {
 	boolean mStopPlaying = false;
 	boolean mPlayingFile = false;
 
-	private ModuleTestApplication application;
 	protected static final int START = 0x101;
 	protected static final int STOP = 0x102;
 	protected static final int PLAY = 0x103;
@@ -363,13 +360,11 @@ public class AudioTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -377,7 +372,9 @@ public class AudioTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected class TimerThread extends Thread {
@@ -399,10 +396,10 @@ public class AudioTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.audio_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.audio_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.audio_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.audio_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					AudioTestActivity.this.finish();
 				}
 			}
@@ -437,7 +434,7 @@ public class AudioTestActivity extends Activity {
 
 		initCreate();
 
-		application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		mPlayer = new MediaPlayer();
@@ -448,9 +445,9 @@ public class AudioTestActivity extends Activity {
 
 	public void stopAutoTest(boolean success) {
 		if (success)
-			application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
-			application.setTestState(mContext.getString(R.string.audio_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 
@@ -466,10 +463,9 @@ public class AudioTestActivity extends Activity {
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

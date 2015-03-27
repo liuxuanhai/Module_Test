@@ -2,8 +2,8 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +17,11 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * 休眠唤醒测试
@@ -39,9 +41,8 @@ public class SuspendResumeTestActivity extends Activity {
 	private AlarmManager mAlarmManager;
 	private PowerManager mPowerManager;
 	private WakeLock mWakeLock, mPartialWakeLock;
-	//	private DevicePolicyManager mDevicePolicyManager;
-	private ModuleTestApplication application;
-	//	private ComponentName mDeviceAdminReceiver;
+//	private DevicePolicyManager mDevicePolicyManager;
+//	private ComponentName mDeviceAdminReceiver;
 	private AlarmReceiver mAlarmReceiver;
 	private int isTesting;
 	private int mTime, mNumber, mInterval;
@@ -286,20 +287,20 @@ public class SuspendResumeTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	public void startAutoTest() {
@@ -310,17 +311,16 @@ public class SuspendResumeTestActivity extends Activity {
 		mTime = 2;
 		mNumber = 3;
 		mInterval = 2;
-		application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		startTest();
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-		} else {
-			application.setTestState(mContext.getString(R.string.suspendresume_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();
@@ -333,10 +333,9 @@ public class SuspendResumeTestActivity extends Activity {
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

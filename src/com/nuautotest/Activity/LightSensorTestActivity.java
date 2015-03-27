@@ -1,14 +1,17 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.hardware.*;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -25,9 +28,9 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 	private SensorManager sm;
 	private Sensor lightSensor;
 	private TextView tvLight;
-	private ModuleTestApplication application;
 	private boolean mRegisteredSensor;
 	private float dataLux;
+	private float autoRecLux = -1;
 
 	private boolean isAutomatic, isFinished;
 	private int time;
@@ -106,9 +109,12 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 	public void onSensorChanged(SensorEvent event) {
 		dataLux = event.values[0];
 
-		if (isAutomatic)
-			stopAutoTest(true);
-		else
+		if (isAutomatic) {
+			if (autoRecLux != -1 && autoRecLux != dataLux)
+				stopAutoTest(true);
+			else
+				autoRecLux = dataLux;
+		} else
 			tvLight.setText("光线强度:" + dataLux);
 	}
 
@@ -119,27 +125,25 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "LightSensorTestAcitivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application= ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -148,17 +152,15 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		isFinished = false;
 		initCreate();
 		initResume();
-		application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.lightsensor_test))] = "光线强度:" + dataLux;
-		} else {
-			application.setTestState(mContext.getString(R.string.lightsensor_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releasePause();
@@ -167,10 +169,9 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

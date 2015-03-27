@@ -3,26 +3,26 @@ package com.nuautotest.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.ContentObserver;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.File;
 import java.io.IOException;
 
 public class PhoneTestActivity extends Activity {
+	public static final String ACTION_CALL_PRIVILEGED = "android.intent.action.CALL_PRIVILEGED";
+
 	private MediaRecorder mediaRecorder=null;
 	private MediaPlayer   mPlayer=null;
 	private MyPhoneStateListener mListener;
@@ -42,8 +42,13 @@ public class PhoneTestActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String strNum = "10010";
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
-				startActivity(intent);
+				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
+				try {
+					startActivity(intent);
+				} catch (Exception e) {
+					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -51,8 +56,13 @@ public class PhoneTestActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String strNum = "112";
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
-				startActivity(intent);
+				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
+				try {
+					startActivity(intent);
+				} catch (Exception e) {
+					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -244,19 +254,19 @@ public class PhoneTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				ModuleTestApplication application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.phone_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.phone_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.phone_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.phone_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 }

@@ -3,15 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="设备信息"
-			android:textSize="30dp"
-			android:textColor="#ffff00"/>
+			android:layout_height="match_parent" android:background="@color/bg">
 
 	<ScrollView
 			android:layout_width="fill_parent"
@@ -28,12 +20,13 @@
 					android:text="IMEI"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvIMEI"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -41,13 +34,13 @@
 					android:text="信号强度"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvSignal"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:text=""/>
+					android:text="" android:textColor="@color/black" android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -55,12 +48,13 @@
 					android:text="校准状态"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvCalibration"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -68,17 +62,19 @@
 					android:text="测试状态"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvPcbaTestStatus"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvApkTestStatus"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -86,27 +82,31 @@
 					android:text="蓝牙"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvBtName"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvBtAddr"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvBtScanmode"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvBtState"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -114,32 +114,37 @@
 					android:text="WIFI"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvWifiBSSID"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvWifiSSID"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvWifiMac"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvWifiIp"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvWifiSpeed"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -147,22 +152,25 @@
 					android:text="电池"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvBatteryCapacity"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvBatteryVoltage"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvBatteryTemperature"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:layout_width="fill_parent"
@@ -170,22 +178,25 @@
 					android:text="软件版本"
 					android:textSize="20dp"
 					android:textStyle="bold"
-					android:textColor="#00ffff"/>
+					android:textColor="@color/green"/>
 
 			<TextView
 					android:id="@+id/tvVersionAP"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvVersionBP"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 			<TextView
 					android:id="@+id/tvVersionKernel"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
+					android:layout_height="wrap_content" android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
 
 		</LinearLayout>
 

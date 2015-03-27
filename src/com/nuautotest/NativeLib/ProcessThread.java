@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
-
-import java.util.Iterator;
 import java.util.List;
 
 public class ProcessThread extends Thread {
@@ -17,9 +15,6 @@ public class ProcessThread extends Thread {
 	public static final int MSG_KILLTHREAD = 0x101;
 	private ActivityManager am;
 	private ContextWrapper cw;
-	private List<RunningAppProcessInfo> pl;
-	private Iterator<RunningAppProcessInfo> i;
-	private RunningAppProcessInfo info;
 	private boolean flag = true;
 	public  PTHandler handler;
 
@@ -33,10 +28,8 @@ public class ProcessThread extends Thread {
 	@Override
 	public void run() {
 		while (flag) {
-			pl = am.getRunningAppProcesses();
-			i = pl.iterator();
-			while (i.hasNext()) {
-				info = i.next();
+			List<RunningAppProcessInfo> pl = am.getRunningAppProcesses();
+			for (RunningAppProcessInfo info : pl) {
 				if (info.processName.equals("com.android.systemui")) {
 					Process.killProcess(info.pid);
 					break;
@@ -59,5 +52,5 @@ public class ProcessThread extends Thread {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_KILLTHREAD) flag = false;
 		}
-	};
+	}
 }

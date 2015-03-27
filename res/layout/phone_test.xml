@@ -1,15 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
-
-	<TextView
-			android:id="@+id/textView1"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="3dip"
-			android:text="@string/input_num"
-			android:textSize="35dip" />
+              android:orientation="vertical" android:background="@color/bg">
 
 	<Button
 			android:id="@+id/btPhone1"
@@ -20,11 +12,13 @@
 			android:layout_marginRight="1dip"
 			android:digits="1234567890+"
 			android:ems="10"
-			android:hint="@string/phone1"
+			android:text="@string/phone1"
 			android:maxLength="20"
 			android:padding="5dip"
 			android:singleLine="true"
-			android:textSize="30dip" />
+			style="@android:style/Widget.Button" android:enabled="true"
+			android:clickable="true" android:textColor="@color/black" android:focusable="false"
+			android:textSize="15sp"/>
 
 	<Button
 			android:id="@+id/btPhone2"
@@ -35,11 +29,12 @@
 			android:layout_marginRight="1dip"
 			android:digits="1234567890+"
 			android:ems="10"
-			android:hint="@string/phone2"
+			android:text="@string/phone2"
 			android:maxLength="20"
 			android:padding="5dip"
 			android:singleLine="true"
-			android:textSize="30dip" android:textColor="#ffffffff"/>
+			android:textSize="15sp" style="@android:style/Widget.Button" android:clickable="true"
+			android:enabled="true" android:textColor="@color/black"/>
 
 	<!--
 	<Button

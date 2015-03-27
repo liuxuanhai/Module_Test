@@ -16,7 +16,6 @@ import android.util.Log;
 import android.widget.TextView;
 import com.nuautotest.NativeLib.SystemPropertiesProxy;
 import com.nuautotest.application.ModuleTestApplication;
-import org.w3c.dom.Text;
 
 import java.io.*;
 
@@ -99,44 +98,68 @@ public class DeviceInfoActivity extends Activity {
 		/* Calibration */
 		try {
 			final String CALIB_WRITE = "at+xprs?\r\n";
-			final String CALIB_READ = "+XPRS:\"";
+			final String CALIB_READ = "+XPRS:";
+			final String CALIB_STATE = "CAL=";
+			final String TEST_STATE = "FT=";
 			FileWriter fw = new FileWriter(CALIBRATION_PORT);
 			FileReader fr = new FileReader(CALIBRATION_PORT);
 			char calib_state[] = new char[64];
 			int count, time = 0;
+			Integer iCalib_state = -1, iTest_state = -1;
 
 			while (time < 10) {
-				fw.write(CALIB_WRITE);
-				fw.flush();
+				try {
+					fw.write(CALIB_WRITE);
+					fw.flush();
 
-				count = fr.read(calib_state);
-				String szCalib_state = String.valueOf(calib_state, 0, count);
-				if (szCalib_state.contains(CALIB_READ)) {
-					int index = szCalib_state.lastIndexOf(CALIB_READ);
-					String substr = szCalib_state.substring(index + CALIB_READ.length(), index + CALIB_READ.length() + 4);
-					Integer iCalib_state = Integer.valueOf(substr, 16);
-					switch (iCalib_state) {
-						case 0x0000:
-							mtvCalibration.setText("未校准");
-							break;
-						case 0x8000:
-							mtvCalibration.setText("已写号, 未校准");
-							break;
-						case 0xC000:
-							mtvCalibration.setText("已校准");
-							break;
-						case 0xE000:
-							mtvCalibration.setText("已校准, 已综测");
-							break;
-						default:
-							Log.e(ModuleTestApplication.TAG, "Unknown calibration state: " + iCalib_state);
-							break;
+					count = fr.read(calib_state);
+					String szCalib_state = String.valueOf(calib_state, 0, count);
+					if (szCalib_state.contains(CALIB_READ)) {
+						if (szCalib_state.contains(CALIB_STATE)) {
+							int index = szCalib_state.lastIndexOf(CALIB_STATE);
+							String substr = szCalib_state.substring(index + CALIB_STATE.length(), index + CALIB_STATE.length() + 1);
+							iCalib_state = Integer.valueOf(substr, 16);
+						}
+						if (szCalib_state.contains(TEST_STATE)) {
+							int index = szCalib_state.lastIndexOf(TEST_STATE);
+							String substr = szCalib_state.substring(index + TEST_STATE.length(), index + TEST_STATE.length() + 1);
+							iTest_state = Integer.valueOf(substr, 16);
+						}
+
+						switch (iCalib_state) {
+							case -1:
+								mtvCalibration.setText("未校准");
+								break;
+							case 0:
+								mtvCalibration.setText("校准失败");
+								break;
+							case 1:
+								mtvCalibration.setText("已校准");
+								break;
+							default:
+								Log.e(ModuleTestApplication.TAG, "Unknown calibration state: " + iCalib_state);
+								break;
+						}
+						switch (iTest_state) {
+							case -1:
+								mtvCalibration.append(", 未综测");
+								break;
+							case 0:
+								mtvCalibration.append(", 综测失败");
+								break;
+							case 1:
+								mtvCalibration.append(", 已综测");
+								break;
+							default:
+								Log.e(ModuleTestApplication.TAG, "Unknown test state: " + iTest_state);
+								break;
+						}
+						break;
+					} else {
+						Log.w(ModuleTestApplication.TAG, CALIB_READ + " not found in " + szCalib_state);
+						time++;
 					}
-					break;
-				} else {
-					Log.w(ModuleTestApplication.TAG, CALIB_READ + " not found in " + szCalib_state);
-					time++;
-				}
+				} catch (Exception ignored) {}
 			}
 			fw.close();
 			fr.close();
@@ -223,6 +246,12 @@ public class DeviceInfoActivity extends Activity {
 			if (mBatteryBcr != null) this.unregisterReceiver(mBatteryBcr);
 		} catch (Exception ignored) {}
 		super.onPause();
+	}
+
+	@Override
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	/*public static String formatKernelVersion(String rawKernelVersion) {

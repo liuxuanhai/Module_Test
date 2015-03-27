@@ -2,8 +2,6 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.NativeLib.ProcessThread;
 import com.nuautotest.application.ModuleTestApplication;
 
@@ -35,7 +34,6 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 
 	static final boolean MANUAL = true;
 
-	private ModuleTestApplication application;
 	private LinearLayout mllLcd;
 	private Button mlcdBtSuccess, mlcdBtFail;
 	private Timer mTimer;
@@ -48,7 +46,6 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 	private int mTimeout;
 	private TimerHandler mTimerHandler;
 	private ProcessThread mProcessThread;
-	private Context mContext;
 	private int mSdkVersion = Build.VERSION.SDK_INT;
 
 	@Override
@@ -73,8 +70,6 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		mllLcd.setBackgroundColor(mCurrentColor);
 		mlcdBtSuccess = (Button)this.findViewById(R.id.lcdBtSuccess);
 		mlcdBtFail = (Button)this.findViewById(R.id.lcdBtFail);
-
-		mContext = this;
 
 		mHandler = new ChangeBGHandler();
 		if (MANUAL) {
@@ -139,26 +134,25 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 
 		switch (view.getId()) {
 			case R.id.lcdBtFail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lcd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.lcdBtSuccess:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lcd_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG,"LCDTestActivity"+"======"+error+"======");
-		application= ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.lcd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lcd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -258,10 +252,10 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.lcd_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.lcd_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.lcd_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lcd_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					LCDTestActivity.this.finish();
 				}
 			}

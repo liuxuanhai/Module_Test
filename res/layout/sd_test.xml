@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/bg">
 
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="SD卡拔插测试\n对sd拔插"
-			android:textSize="25dip" >
+			android:text="请插拔SD卡"
+			android:textSize="@dimen/header" android:textColor="@color/black" android:textIsSelectable="false"
+			android:background="@color/widget">
 	</TextView>
 
 	<TextView
@@ -17,7 +18,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:text="状态: 未知"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black" android:textIsSelectable="false"
+			android:layout_marginTop="10dp">
 	</TextView>
 
 	<TextView
@@ -26,7 +28,7 @@
 			android:layout_height="0dip"
 			android:layout_weight="1"
 			android:text="操作: 无插拔"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black" android:textIsSelectable="false">
 	</TextView>
 
 	<include layout="@layout/bottom_button" />

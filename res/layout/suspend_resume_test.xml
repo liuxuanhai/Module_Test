@@ -3,20 +3,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:scrollbars="vertical" >
+              android:scrollbars="vertical" android:background="@color/bg">
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="休眠唤醒测试"
-			android:textSize="25dip" >
-	</TextView>
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="请选择是否测试深度休眠\n然后设置休眠时间、次数和间隔，点击开始按钮"
-			android:textSize="20dip" >
+			android:text="请选择是否测试深度休眠\n然后设置时间,次数和间隔,点击开始按钮"
+			android:textSize="@dimen/header" android:textColor="@color/black">
 	</TextView>
 
 	<CheckBox
@@ -24,7 +17,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="深度休眠"
-			android:checked="true" />
+			android:checked="true" style="@android:style/Widget.CompoundButton.CheckBox"
+			android:textColor="@color/black" android:textSize="15sp"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
@@ -35,7 +29,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="休眠时间(秒)"
-				android:textSize="20dip" />
+				android:textSize="15sp" android:textColor="@color/black"/>
 
 		<EditText
 				android:id="@+id/tbSuspendResumeTime"
@@ -43,9 +37,8 @@
 				android:layout_height="wrap_content"
 				android:ems="10"
 				android:text="10"
-				android:inputType="number" >
-
-			<requestFocus />
+				android:inputType="number" android:textColor="@color/black" style="@android:style/Widget.EditText"
+				android:textSize="15sp">
 
 		</EditText>
 
@@ -59,7 +52,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="休眠次数(次)"
-				android:textSize="20dip" />
+				android:textSize="15sp" android:textColor="@color/black"/>
 
 		<EditText
 				android:id="@+id/tbSuspendResumeNumber"
@@ -67,7 +60,8 @@
 				android:layout_height="wrap_content"
 				android:ems="10"
 				android:text="1"
-				android:inputType="number" >
+				android:inputType="number" android:textColor="@color/black" style="@android:style/Widget.EditText"
+				android:textSize="15sp">
 		</EditText>
 
 	</LinearLayout>
@@ -80,7 +74,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="休眠间隔(秒)"
-				android:textSize="20dip" />
+				android:textSize="15sp" android:textColor="@color/black"/>
 
 		<EditText
 				android:id="@+id/tbSuspendResumeInterval"
@@ -88,7 +82,8 @@
 				android:layout_height="wrap_content"
 				android:ems="10"
 				android:text="0"
-				android:inputType="number" />
+				android:inputType="number" android:textColor="@color/black" style="@android:style/Widget.EditText"
+				android:textSize="15sp"/>
 
 	</LinearLayout>
 
@@ -96,9 +91,9 @@
 			android:id="@+id/btSuspendResumeStart"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="开始" />
+			android:text="开始" style="@android:style/Widget.Button"/>
 
-	<EditText
+	<TextView
 			android:id="@+id/tvSuspendResumeStatus"
 			android:layout_width="match_parent"
 			android:layout_height="0dip"
@@ -107,7 +102,7 @@
 			android:focusable="false"
 			android:focusableInTouchMode="false"
 			android:gravity="top|left"
-			android:inputType="none" />
+			android:inputType="none" android:textSize="15sp" android:textColor="@color/black"/>
 
 	<include layout="@layout/bottom_button" />
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -26,7 +27,6 @@ public class BackLightTestActivity extends Activity
 	public WindowManager.LayoutParams lp;
 	public Thread thread;
 	public float j=1;
-	private ModuleTestApplication application;
 	private FileWriter mLogWriter;
 
 	protected static final int MESSAGE_TEST = 0X101;
@@ -39,7 +39,7 @@ public class BackLightTestActivity extends Activity
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case BackLightTestActivity.MESSAGE_TEST:
-					t.setText(j/10f+"");
+					t.setText("亮度: " + j/10f);
 					lp.screenBrightness = j/10f;
 					getWindow().setAttributes(lp);
 					break;
@@ -123,14 +123,11 @@ public class BackLightTestActivity extends Activity
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.backlight_test),
-						ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.backlight_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.backlight_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.backlight_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -138,13 +135,14 @@ public class BackLightTestActivity extends Activity
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "BackLightTestActivity"+"======"+error+"======");
-		application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.backlight_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.backlight_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -167,10 +165,10 @@ public class BackLightTestActivity extends Activity
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.backlight_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.backlight_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.backlight_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.backlight_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					BackLightTestActivity.this.finish();
 				}
 			}

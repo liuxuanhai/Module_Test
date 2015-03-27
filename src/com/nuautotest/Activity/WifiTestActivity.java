@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +13,11 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -33,12 +34,13 @@ import java.util.List;
  */
 
 public class WifiTestActivity extends Activity {
-	private TextView tvWifiStatus, tvWifiConnStatus;
+	private TextView tvWifiStatus, tvWifiConnStatus, tvWifiNumber;
 
-	private ModuleTestApplication application;
 	private WifiManager mWifiManager;
 	private BroadcastReceiver mBroadcastRcv;
-	private List<ScanResult> mWifiList;
+	private WifiScanThread mScanThread;
+	private WifiUpdateHandler mUpdateHandler;
+	private List<ScanResult> mScanResult;
 	private boolean mWifiEnable = false;
 
 	private boolean isAutomatic, isFinished;
@@ -52,52 +54,40 @@ public class WifiTestActivity extends Activity {
 		public void onReceive(Context context, Intent intent) {
 			if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
 				int mWifiState = mWifiManager.getWifiState();
-
-				if (isAutomatic) {
-					if (mWifiState == WifiManager.WIFI_STATE_ENABLED)
-						stopAutoTest(true);
-				} else {
-					switch(mWifiState) {
-						case WifiManager.WIFI_STATE_DISABLING:
-							tvWifiStatus.setText("Wifi状态:关闭中...");
-							break;
-						case WifiManager.WIFI_STATE_DISABLED:
-							tvWifiStatus.setText("Wifi状态:关闭");
-							break;
-						case WifiManager.WIFI_STATE_ENABLING:
-							tvWifiStatus.setText("Wifi状态:打开中...");
-							break;
-						case WifiManager.WIFI_STATE_ENABLED:
-							tvWifiStatus.setText("Wifi状态:打开");
-							break;
-						case WifiManager.WIFI_STATE_UNKNOWN:
-							tvWifiStatus.setText("Wifi状态:不可用");
-							break;
-					}
+				switch(mWifiState) {
+					case WifiManager.WIFI_STATE_DISABLING:
+						tvWifiStatus.setText("Wifi状态:关闭中...");
+						break;
+					case WifiManager.WIFI_STATE_DISABLED:
+						tvWifiStatus.setText("Wifi状态:关闭");
+						break;
+					case WifiManager.WIFI_STATE_ENABLING:
+						tvWifiStatus.setText("Wifi状态:打开中...");
+						break;
+					case WifiManager.WIFI_STATE_ENABLED:
+						tvWifiStatus.setText("Wifi状态:打开");
+						break;
+					case WifiManager.WIFI_STATE_UNKNOWN:
+						tvWifiStatus.setText("Wifi状态:不可用");
+						break;
 				}
 			} else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
-				if (isAutomatic) {
-					mWifiManager.startScan();
-					mWifiList = mWifiManager.getScanResults();
-					stopAutoTest(true);
+				WifiInfo wifiInfo;
+				wifiInfo = mWifiManager.getConnectionInfo();
+				if (wifiInfo.getNetworkId() != -1) {
+					tvWifiConnStatus.setText("当前网络:\r\n");
+					tvWifiConnStatus.append("编号:"+wifiInfo.getNetworkId()+"\r\n");
+					tvWifiConnStatus.append("名称:"+wifiInfo.getSSID()+"\r\n");
+					tvWifiConnStatus.append("IP:"+ipIntToString(wifiInfo.getIpAddress())+"\r\n");
+					tvWifiConnStatus.append("服务器状态:"+wifiInfo.getSupplicantState().name()+"\r\n");
+					tvWifiConnStatus.append("Ping服务器...\t");
+					boolean ping = mWifiManager.pingSupplicant();
+					if (ping)
+						tvWifiConnStatus.append("成功\r\n");
+					else
+						tvWifiConnStatus.append("失败\r\n");
 				} else {
-					WifiInfo wifiInfo;
-					wifiInfo = mWifiManager.getConnectionInfo();
-					if (wifiInfo.getNetworkId() != -1) {
-						tvWifiConnStatus.setText("当前网络:\r\n");
-						tvWifiConnStatus.append("编号:"+wifiInfo.getNetworkId()+"\r\n");
-						tvWifiConnStatus.append("名称:"+wifiInfo.getSSID()+"\r\n");
-						tvWifiConnStatus.append("IP:"+ipIntToString(wifiInfo.getIpAddress())+"\r\n");
-						tvWifiConnStatus.append("服务器状态:"+wifiInfo.getSupplicantState().name()+"\r\n");
-						tvWifiConnStatus.append("Pinging服务器...\t");
-						boolean ping = mWifiManager.pingSupplicant();
-						if (ping)
-							tvWifiConnStatus.append("成功\r\n");
-						else
-							tvWifiConnStatus.append("失败\r\n");
-					} else {
-						tvWifiConnStatus.setText("无网络连接");
-					}
+					tvWifiConnStatus.setText("无网络连接");
 				}
 			}
 		}
@@ -114,6 +104,15 @@ public class WifiTestActivity extends Activity {
 		setContentView(R.layout.wifi_test);
 		tvWifiStatus = (TextView)findViewById(R.id.tvwifistatus);
 		tvWifiConnStatus = (TextView)findViewById(R.id.tvwificonnstatus);
+		tvWifiNumber = (TextView)findViewById(R.id.tvWifiNumber);
+		mUpdateHandler = new WifiUpdateHandler();
+
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+		intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+		mBroadcastRcv = new WifiBroadcastReceiver();
+		mContext.registerReceiver(mBroadcastRcv, intentFilter);
+
 		initCreate();
 	}
 
@@ -133,11 +132,9 @@ public class WifiTestActivity extends Activity {
 		mWifiManager.setWifiEnabled(true);
 		if (mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED) mWifiEnable = true;
 
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-		mBroadcastRcv = new WifiBroadcastReceiver();
-		mContext.registerReceiver(mBroadcastRcv, intentFilter);
+		mScanThread = new WifiScanThread();
+		Thread thread = new Thread(mScanThread);
+		thread.start();
 	}
 
 	@Override
@@ -147,6 +144,7 @@ public class WifiTestActivity extends Activity {
 	}
 
 	protected void releaseDestroy() {
+		mScanThread.shouldStop = true;
 		try {
 			mContext.unregisterReceiver(mBroadcastRcv);
 		} catch (IllegalArgumentException e) {
@@ -197,28 +195,6 @@ public class WifiTestActivity extends Activity {
 	}
 
 	public void onOpenWeb(View view) {
-//		TextView tvPingBaidu = (TextView)findViewById(R.id.tvPingBaidu);
-//
-//		tvPingBaidu.setText("Pinging www.baidu.com...\t");
-//		Runtime run = Runtime.getRuntime();
-//		Process proc = null;
-//		String strPing = "ping -c 1 -i 0.2 -w 100 www.baidu.com";
-//		int result;
-//
-//		try {
-//			proc = run.exec(strPing);
-//			result = proc.waitFor();
-//			if (result == 0)
-//				tvPingBaidu.append(""+result);
-//			else
-//				tvPingBaidu.append(""+result);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			tvPingBaidu.append("Ping Error");
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//			tvPingBaidu.append("Ping Error");
-//		}
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.VIEW");
 		Uri uri = Uri.parse("http://www.nufront.com");
@@ -229,62 +205,84 @@ public class WifiTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
-		Log.e(ModuleTestApplication.TAG, "WifiTestActivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		Log.e(ModuleTestApplication.TAG, "WifiTestActivity" + "======" + error + "======");
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
+	}
+
+	protected class WifiUpdateHandler extends Handler {
+		@Override
+		public void handleMessage(Message msg) {
+			tvWifiNumber.setText("热点数量: " + mScanResult.size());
+		}
+	}
+
+	protected class WifiScanThread extends Handler implements Runnable {
+		public boolean shouldStop = false;
+
+		@Override
+		public void handleMessage(Message msg) {
+			Log.d(ModuleTestApplication.TAG, "ScanThread handleMessage:"+msg.what);
+			shouldStop = true;
+		}
+
+		@Override
+		public void run() {
+			while (!shouldStop) {
+				mWifiManager.startScan();
+				mScanResult = mWifiManager.getScanResults();
+				if (isAutomatic) {
+					if (!mScanResult.isEmpty()) stopAutoTest(true);
+				} else
+					mUpdateHandler.sendEmptyMessage(0);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException ignored) {}
+			}
+		}
 	}
 
 	public void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
-		application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
-
-		if (mWifiManager.getWifiState()==WifiManager.WIFI_STATE_ENABLED) {
-			stopAutoTest(true);
-		}
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			if (mWifiList!=null && mWifiList.size()>0)
-				application.getTooltip()[application.getIndex(mContext.getString(R.string.wifi_test))] =
-						"名称："+mWifiList.get(0).SSID+" 信号："+mWifiList.get(0).level+"dBm";
-		} else
-			application.setTestState(mContext.getString(R.string.wifi_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
-		isFinished = true;
 		releaseDestroy();
+		isFinished = true;
 		this.finish();
 	}
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
@@ -27,7 +27,6 @@ public class BatteryTestActivity extends Activity
 {
 	private TextView text;
 	private BroadcastReceiver broadcastRec;
-	private ModuleTestApplication application;
 	private int dataLevel, dataVol, dataTemp;
 
 	private boolean isAutomatic, isFinished;
@@ -69,7 +68,11 @@ public class BatteryTestActivity extends Activity
 					dataVol = intent.getIntExtra("voltage", 0);
 					dataTemp = intent.getIntExtra("temperature", 0)/10;
 					if (isAutomatic) {
-						stopAutoTest(true);
+						if (dataLevel>=0 && dataLevel <= intent.getIntExtra("scale", 0) &&
+							dataVol >= 3000 && dataVol <= 5000)
+							stopAutoTest(true);
+						else
+							stopAutoTest(false);
 					} else {
 						text.setText("电量："+dataLevel+"%"+"\n"
 										+"最大容量："+intent.getIntExtra("scale", 0)+"%"	+"\n"
@@ -112,13 +115,11 @@ public class BatteryTestActivity extends Activity
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application= ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -126,14 +127,14 @@ public class BatteryTestActivity extends Activity
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "BatteryTestActivity"+"======"+error+"======");
-		if (!isAutomatic)
-			application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -141,18 +142,15 @@ public class BatteryTestActivity extends Activity
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
-		application.setTestState(mContext.getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.setTestState(mContext.getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.battery_test))] =
-					"电量:"+dataLevel+" 电压:"+dataVol+" 温度:"+dataTemp;
-		} else {
-			application.setTestState(mContext.getString(R.string.battery_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();
@@ -161,10 +159,9 @@ public class BatteryTestActivity extends Activity
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication) app;
 			mHandler = handler;
 		}
 

@@ -3,7 +3,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:orientation="vertical"
-			android:gravity="bottom">
+			android:gravity="bottom" android:background="@color/bg">
 
 	<LinearLayout
 			android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 	        android:onClick="onClickTakePicture"
-			android:enabled="true" />
+			android:enabled="true" style="@android:style/Widget.Button"/>
 
 	<include layout="@layout/bottom_button" />
 </LinearLayout>

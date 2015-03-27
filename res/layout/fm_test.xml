@@ -3,15 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="收音机测试"
-			android:textSize="30dip" >
-
-	</TextView>
+              android:layout_height="match_parent" android:background="@color/bg">
 
 	<LinearLayout
 			android:layout_width="match_parent"
@@ -26,7 +18,7 @@
 				android:onClick="onFM"
 				android:text="打开"
 				android:layout_weight="0.50"
-				android:enabled="true"/>
+				android:enabled="true" style="@android:style/Widget.Button"/>
 
 	</LinearLayout>
 

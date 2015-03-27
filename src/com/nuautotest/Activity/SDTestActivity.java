@@ -1,7 +1,6 @@
 package com.nuautotest.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.File;
@@ -26,10 +26,8 @@ import java.io.IOException;
  */
 
 public class SDTestActivity extends Activity {
-	private ModuleTestApplication application;
 	private TextView text, tvSDStatus;
 	private BroadcastReceiver broadcastRec;
-	private long mTotalSize, mAvailableSize;
 
 	private boolean isFinished;
 	private Context mContext;
@@ -100,13 +98,11 @@ public class SDTestActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -114,7 +110,9 @@ public class SDTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	public void initCreate() {
@@ -142,7 +140,7 @@ public class SDTestActivity extends Activity {
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "SDTestActivity"+"======"+error+"======");
-		ModuleTestApplication.getInstance().setTestState(getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -158,8 +156,6 @@ public class SDTestActivity extends Activity {
 		try {
 			if (!mFile.createNewFile()) return false;
 			if (mFile.isFile()) {
-				mTotalSize = mFile.getTotalSpace();
-				mAvailableSize = mFile.getUsableSpace();
 				mFile.delete();
 				return true;
 			} else
@@ -171,22 +167,16 @@ public class SDTestActivity extends Activity {
 
 	public void startAutoTest() {
 		isFinished = false;
-		ModuleTestApplication.getInstance().getTooltip()
-				[ModuleTestApplication.getInstance().getIndex(mContext.getString(R.string.sd_test))]="***请插入SD卡***";
-		ModuleTestApplication.getInstance().setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_ON_GOING);
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		initCreate();
 	}
 
 	public void stopAutoTest(boolean success) {
-		if (success) {
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.sd_test))]=
-					"SD卡总大小："+mTotalSize/1024/1024+"M\t\t可用空间："+mAvailableSize/1024/1024+"M";
-			application.setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
-		} else {
-			application.getTooltip()[application.getIndex(mContext.getString(R.string.sd_test))]="";
-			application.setTestState(mContext.getString(R.string.sd_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
-		}
+		if (success)
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+		else
+			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 		releaseDestroy();
@@ -195,10 +185,9 @@ public class SDTestActivity extends Activity {
 
 	public class AutoTestThread extends Handler implements Runnable {
 
-		public AutoTestThread(Context context, Application app, Handler handler) {
+		public AutoTestThread(Context context, Handler handler) {
 			super();
 			mContext = context;
-			application = (ModuleTestApplication)app;
 			mHandler = handler;
 		}
 

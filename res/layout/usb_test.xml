@@ -2,25 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/bg">
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="USB拔插测试"
-			android:textSize="30dip" >
-	</TextView>
-
-	<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="对USB拔插"
-			android:textSize="25dip" />
+			android:text="请插拔USB线"
+			android:textSize="@dimen/header" android:textColor="@color/black" android:background="@color/widget"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dip"
-			android:layout_weight="1" >
+			android:layout_weight="1" android:layout_marginTop="10dp">
 
 		<TextView
 				android:id="@+id/tvUsbAccessory"
@@ -28,7 +21,7 @@
 				android:layout_height="fill_parent"
 				android:layout_weight="1"
 				android:text="状态:未插入"
-				android:textSize="20dip" />
+				android:textSize="@dimen/header" android:textColor="@color/black"/>
 
 		<!--
 		<TextView

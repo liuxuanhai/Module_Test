@@ -2,38 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
-
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="蓝牙测试"
-			android:textSize="25dip" >
-	</TextView>
+              android:orientation="vertical" android:background="@color/bg">
 
 	<TextView
 			android:id="@+id/tvbtstatus"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:text="打开蓝牙"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black">
 	</TextView>
 
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="设备数量:"
+			android:id="@+id/tvbtNumber" android:textColor="@color/black" android:textSize="@dimen/header"
+			android:layout_marginTop="10dp"/>
 	<TextView
 			android:id="@+id/tvbtconnstatus"
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
 			android:text="附近设备:\n"
-			android:textSize="25dip" >
+			android:textSize="@dimen/content" android:textColor="@color/black" android:layout_marginTop="10dp">
 	</TextView>
 
 	<Button
 			android:id="@+id/btEnableBT"
-			android:layout_width="wrap_content"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:onClick="onEnableBT"
-			android:text="设置蓝牙" />
+			android:text="设置蓝牙" style="@android:style/Widget.Button"/>
 
 	<include layout="@layout/bottom_button" />
 

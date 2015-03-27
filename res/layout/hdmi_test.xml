@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/bg">
 
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="HDMI测试\n请将设备与电视连接。如果显示一致的话则通过..."
-			android:textSize="25dip" >
+			android:text="请将设备与电视连接\n如果显示一致的话则通过..."
+			android:textSize="@dimen/header" android:textColor="@color/black">
 	</TextView>
 
 	<ImageView

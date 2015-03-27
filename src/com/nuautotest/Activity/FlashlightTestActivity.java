@@ -8,10 +8,11 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.nuautotest.Adapter.NuAutoTestAdapter;
+import com.nuautotest.NativeLib.RootCommand;
 import com.nuautotest.application.ModuleTestApplication;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -23,9 +24,7 @@ import java.util.List;
 
 public class FlashlightTestActivity extends Activity {
 	private Button mbtFlashlight;
-	private ModuleTestApplication application;
 	private Camera mCamera;
-//	private Camera.ShutterCallback mShutter;
 	private boolean isCaptureFinished;
 	private FileWriter mLogWriter;
 	private static final int MSG_TIMEOUT = 0x101;
@@ -40,7 +39,7 @@ public class FlashlightTestActivity extends Activity {
 		try {
 			if (ModuleTestApplication.LOG_ENABLE) {
 				try {
-					mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_vibrator.txt");
+					mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_flashlight.txt");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -52,13 +51,6 @@ public class FlashlightTestActivity extends Activity {
 			mbtFlashlight = (Button)findViewById(R.id.btFlashlight);
 
 			isCaptureFinished = true;
-//			mShutter = new Camera.ShutterCallback() {
-//				@Override
-//				public void onShutter() {
-//					isCaptureFinished = true;
-//					mbtFlashlight.setEnabled(true);
-//				}
-//			};
 			mCamera = Camera.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,11 +71,8 @@ public class FlashlightTestActivity extends Activity {
 
 	@Override
 	public void onPause() {
-		if (mCamera != null) {
-			Camera.Parameters parameters = mCamera.getParameters();
-			parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-			mCamera.setParameters(parameters);
-		}
+		turnFlashlight(true);
+
 		super.onPause();
 	}
 
@@ -104,49 +93,67 @@ public class FlashlightTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	protected void turnFlashlight() {
-		if (mCamera == null) return;
-		if (!isCaptureFinished) return;
-
-//		isCaptureFinished = false;
-//		mbtFlashlight.setEnabled(false);
-
-		Camera.Parameters parameters = mCamera.getParameters();
-		List<String> flashModes = parameters.getSupportedFlashModes();
-		if (flashModes != null) {
-			for (String flashMode1 : flashModes) Log.i(ModuleTestApplication.TAG, flashMode1);
-		}
-		// Check if camera flash exists
-		String flashMode = parameters.getFlashMode();
-		if (!Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode)) {
-			// Turn on the flash
-			if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
-				parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-				mCamera.setParameters(parameters);
-				mbtFlashlight.setText("关闭");
+	protected void turnFlashlight(boolean off) {
+		RootCommand rootcmd = ModuleTestApplication.getRootcmd();
+		if (rootcmd.isEnabled()) {
+			try {
+				rootcmd.Write("echo 46 > /sys/class/gpio/export\n");
+				/* Read current state */
+				rootcmd.Write("cat /sys/class/gpio/gpio46/value\n");
+				if (off || rootcmd.ReadLine().contains("1")) {
+					rootcmd.Write("echo 0 > /sys/class/gpio/gpio46/value\n");
+					rootcmd.Write("echo 46 > /sys/class/gpio/unexport\n");
+					rootcmd.Write("echo 47 > /sys/class/gpio/unexport\n");
+					mbtFlashlight.setText("打开");
+				} else {
+					rootcmd.Write("echo 47 > /sys/class/gpio/export\n");
+					rootcmd.Write("echo out > /sys/class/gpio/gpio47/direction\n");
+					rootcmd.Write("echo 0 > /sys/class/gpio/gpio47/value\n");
+					rootcmd.Write("echo out > /sys/class/gpio/gpio46/direction\n");
+					rootcmd.Write("echo 1 > /sys/class/gpio/gpio46/value\n");
+					mbtFlashlight.setText("关闭");
+				}
+			} catch (Exception e) {
+				Log.w(ModuleTestApplication.TAG, "Flashlight Test: get root failed");
 			}
 		} else {
-			parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-			mCamera.setParameters(parameters);
-			mbtFlashlight.setText("打开");
+			if (mCamera == null) return;
+			if (!isCaptureFinished) return;
+
+			Camera.Parameters parameters = mCamera.getParameters();
+			List<String> flashModes = parameters.getSupportedFlashModes();
+			if (flashModes != null) {
+				for (String flashMode1 : flashModes) Log.i(ModuleTestApplication.TAG, flashMode1);
+			}
+			// Check if camera flash exists
+			String flashMode = parameters.getFlashMode();
+			if (off || Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode)) {
+				parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+				mCamera.setParameters(parameters);
+				mbtFlashlight.setText("打开");
+			} else {
+				// Turn on the flash
+				if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+					parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+					mCamera.setParameters(parameters);
+					mbtFlashlight.setText("关闭");
+				}
+			}
 		}
-//		mCamera.takePicture(mShutter, null, null);
 	}
 
 	public void onFlashlight(View view) {
-		turnFlashlight();
+		turnFlashlight(false);
 	}
 
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.flashlight_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.flashlight_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				application = ModuleTestApplication.getInstance();
-				application.setTestState(getString(R.string.flashlight_test), ModuleTestApplication.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.flashlight_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}
@@ -154,14 +161,14 @@ public class FlashlightTestActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
-
+	public boolean onNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 
 	protected void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "FlashlightTestActivity"+"======"+error+"======");
-		application = ModuleTestApplication.getInstance();
-		application.setTestState(getString(R.string.flashlight_test), ModuleTestApplication.TestState.TEST_STATE_FAIL);
+		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.flashlight_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
@@ -184,10 +191,10 @@ public class FlashlightTestActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
-				if (ModuleTestApplication.getInstance().getTestState(getString(R.string.flashlight_test))
-						== ModuleTestApplication.TestState.TEST_STATE_NONE) {
-					ModuleTestApplication.getInstance().setTestState(getString(R.string.flashlight_test),
-							ModuleTestApplication.TestState.TEST_STATE_TIME_OUT);
+				if (NuAutoTestAdapter.getInstance().getTestState(getString(R.string.flashlight_test))
+						== NuAutoTestAdapter.TestState.TEST_STATE_NONE) {
+					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.flashlight_test),
+							NuAutoTestAdapter.TestState.TEST_STATE_TIME_OUT);
 					FlashlightTestActivity.this.finish();
 				}
 			}

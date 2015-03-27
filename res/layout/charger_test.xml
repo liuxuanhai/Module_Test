@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/bg">
 
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="充电测试\n对充电器拔插"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black" android:text="分别插入AC和USB充电器"
+			android:background="@color/widget">
 	</TextView>
 
 	<TextView
@@ -18,7 +18,7 @@
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:text="无反应"
-			android:textSize="25dip" >
+			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp">
 	</TextView>
 
 	<include layout="@layout/bottom_button" />

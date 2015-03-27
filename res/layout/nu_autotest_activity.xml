@@ -2,19 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical"
+              android:background="@color/bg">
 
-	<LinearLayout
+	<!--<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:gravity="center">
+			android:gravity="center" android:background="@color/widget">
 
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="left"
 				android:text="@string/app_name"
-				android:textSize="15dp"/>
+				android:textSize="15sp" android:enabled="false"
+				android:textColor="@android:color/black"/>
 
 		<TextView
 				android:layout_width="wrap_content"
@@ -26,42 +28,49 @@
 				android:layout_height="wrap_content"
 				android:gravity="right"
 				android:text="@string/version"
-				android:textSize="15dp"/>
+				android:textSize="15sp" android:textColor="@android:color/black"/>
 
-	</LinearLayout>
+	</LinearLayout>-->
 
 	<GridView
 			android:id="@+id/gridView"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:numColumns="auto_fit"
-			android:horizontalSpacing="2px"
-			android:verticalSpacing="2px">
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			style="@android:style/Widget.GridView"
+			android:drawSelectorOnTop="false"
+			android:stackFromBottom="false"
+			android:background="@color/bg"
+			android:numColumns="@integer/gridColNumber">
 	</GridView>
 
-	<Space
+<!--	<Space
 		android:layout_width="fill_parent"
-		android:layout_height="0dip"
-		android:layout_weight="2"/>
+		android:layout_height="0dp"
+		android:layout_weight="2"/>-->
 
 	<LinearLayout
 			android:orientation="horizontal"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent">
+			android:layout_width="fill_parent" android:paddingBottom="1dp">
 
 		<Button
 				android:id="@+id/btAutotest"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:text="自动测试"/>
+				android:text="自动测试"
+				style="@android:style/Widget.Button"
+				/>
 
 		<Button
 				android:id="@+id/btDeviceInfo"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:text="设备信息"/>
+				android:text="设备信息"
+				style="@android:style/Widget.Button"
+				/>
 	</LinearLayout>
 	<!--
 		<LinearLayout

@@ -3,13 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:background="@color/bg">
 
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="距离传感器\n请遮挡传感器"
-			android:textSize="25dip" />
+			android:text="请遮挡传感器"
+			android:textSize="@dimen/header" android:textColor="@color/black" android:background="@color/widget"/>
 
 	<TextView
 			android:id="@+id/proxsensor"
@@ -17,7 +17,7 @@
 			android:layout_height="0dip"
 			android:layout_weight="1"
 			android:text="无反应"
-			android:textSize="25dip" />
+			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp"/>
 
 	<include layout="@layout/bottom_button" />
 
