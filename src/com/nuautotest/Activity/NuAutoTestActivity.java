@@ -26,10 +26,13 @@ public class NuAutoTestActivity extends Activity {
 	private boolean mAutoTested;
 	private AutoTestThread mAutoTestThread;
 	public Handler mRefreshHandler;
-	private boolean isPCBA = false;
+	static private boolean isPCBA = false, isAndroid = false;
 	static final int MSG_REFRESH = 0x101;
 	static final int MSG_RUNNEXT = 0x102;
 	static final int MSG_FINISH = 0x103;
+
+	static final String MODE_PCBA = "pcba";
+	static final String Mode_ANDROID = "android";
 
 	public NuAutoTestActivity() {
 		super();
@@ -47,9 +50,15 @@ public class NuAutoTestActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		isPCBA |= (this.getIntent().getIntExtra(MODE_PCBA, 0) == 1);
+		isAndroid |= (this.getIntent().getIntExtra(Mode_ANDROID, 0) == 1);
+		if (!isPCBA && !isAndroid) {
+			startActivity(new Intent(this, ModeSelectActivity.class));
+			this.finish();
+		}
+
 		ModuleTestApplication.getInstance().initLog(this);
 		setContentView(R.layout.nu_autotest_activity);
-		isPCBA = (this.getIntent().getIntExtra("pcba", 0) == 1);
 		// 初始化界面
 		initView();
 		mRefreshHandler = new RefreshHandler();
@@ -73,6 +82,7 @@ public class NuAutoTestActivity extends Activity {
 		Log.i(ModuleTestApplication.TAG, "------Module Test Stopped------");
 		ModuleTestApplication.getInstance().recordLog(null);
 		ModuleTestApplication.getInstance().finishLog();
+		isPCBA = isAndroid = false;
 
 		super.onDestroy();
 	}
@@ -273,13 +283,17 @@ public class NuAutoTestActivity extends Activity {
 		}
 	}
 
-
+	public void setMode(String mode) {
+		if (mode.equals(MODE_PCBA)) isPCBA = true;
+		else isAndroid = true;
+	}
 
 	public void initView() {
 		if (isPCBA)
 			this.setTitle(getString(R.string.app_name_pcba)+" "+getString(R.string.version));
-		else
+		else if (isAndroid)
 			this.setTitle(getString(R.string.app_name)+" "+getString(R.string.version));
+
 		adapter = new NuAutoTestAdapter(NuAutoTestActivity.this, isPCBA);
 
 		Button btAutoTest = (Button) this.findViewById(R.id.btAutotest);

@@ -23,10 +23,7 @@ public class RootCommand {
 			pSu = Runtime.getRuntime().exec("su");
 			mWriter = new DataOutputStream(pSu.getOutputStream());
 			mReader = new BufferedReader(new InputStreamReader(pSu.getInputStream()));
-			mWriter.writeBytes("\n");
-			mWriter.flush();
 		} catch (Exception e) {
-			e.printStackTrace();
 			mCanBeEnable = false;
 		}
 	}
@@ -35,27 +32,25 @@ public class RootCommand {
 		return mCanBeEnable;
 	}
 
-	public void Write(String cmd) {
-		Log.d(ModuleTestApplication.TAG, "Write: CanBeEnable = " + mCanBeEnable);
+	public void Write(String cmd) throws Exception {
 		if (!mCanBeEnable) return;
 		try {
 			mWriter.writeBytes(cmd);
 			mWriter.flush();
 		} catch (Exception e) {
-			e.printStackTrace();
 			mCanBeEnable = false;
+			throw e;
 		}
 	}
 
-	public String ReadLine() {
+	public String ReadLine() throws Exception {
 		String ret = "";
-		Log.d(ModuleTestApplication.TAG, "ReadLine: CanBeEnable = " + mCanBeEnable);
 		if (!mCanBeEnable) return ret;
 		try {
 			ret = mReader.readLine();
 		} catch (Exception e) {
-			e.printStackTrace();
 			mCanBeEnable = false;
+			throw e;
 		}
 		return ret;
 	}

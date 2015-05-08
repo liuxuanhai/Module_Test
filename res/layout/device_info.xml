@@ -29,6 +29,22 @@
 					android:textSize="@dimen/content"/>
 
 			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="PCBASN"
+					android:textColor="@color/green"
+					android:textSize="20dp"
+					android:textStyle="bold"
+					android:singleLine="false"/>
+
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/tvPCBASN"
+					android:textColor="@color/black"
+					android:textSize="@dimen/content"/>
+
+			<TextView
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:text="信号强度"

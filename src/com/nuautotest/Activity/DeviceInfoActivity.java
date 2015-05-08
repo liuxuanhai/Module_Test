@@ -29,7 +29,7 @@ import java.io.*;
 public class DeviceInfoActivity extends Activity {
 	static final String CALIBRATION_PORT = "/dev/ttyN5";
 
-	private TextView mtvIMEI, mtvSignal, mtvCalibration, mtvPcbaTestStatus, mtvApkTestStatus;
+	private TextView mtvIMEI, mtvPCBASN, mtvSignal, mtvCalibration, mtvPcbaTestStatus, mtvApkTestStatus;
 	private TextView mtvBtName, mtvBtAddr, mtvBtScanmode, mtvBtState;
 	private TextView mtvWifiBSSID, mtvWifiSSID, mtvWifiMac, mtvWifiIp, mtvWifiSpeed;
 	private TextView mtvBatteryCapacity, mtvBatteryVoltage, mtvBatteryTemperature;
@@ -46,6 +46,7 @@ public class DeviceInfoActivity extends Activity {
 		setContentView(R.layout.device_info);
 
 		mtvIMEI = (TextView)this.findViewById(R.id.tvIMEI);
+		mtvPCBASN = (TextView)this.findViewById(R.id.tvPCBASN);
 		mtvSignal = (TextView)this.findViewById(R.id.tvSignal);
 		mtvCalibration = (TextView)this.findViewById(R.id.tvCalibration);
 		mtvPcbaTestStatus = (TextView)this.findViewById(R.id.tvPcbaTestStatus);
@@ -94,6 +95,15 @@ public class DeviceInfoActivity extends Activity {
 
 		/* IMEI */
 		if (mPhoneManager != null) mtvIMEI.setText(mPhoneManager.getDeviceId());
+
+		/* PCBA SN */
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("/misc/pcbasn"));
+			String line = br.readLine();
+			if (line != null) mtvPCBASN.setText(line);
+		} catch (FileNotFoundException ignored) {
+		} catch (IOException ignored) {
+		}
 
 		/* Calibration */
 		try {

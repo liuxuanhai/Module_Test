@@ -220,15 +220,16 @@ public class SuspendResumeTestActivity extends Activity {
 	public class AlarmReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (ACTION_SLEEP.equals(intent.getAction())) {
-				Log.d(ModuleTestApplication.TAG, "***********SLEEP************");
-				if (mWakeLock != null) {
-					if (mWakeLock.isHeld()) mWakeLock.release();
-					mWakeLock = null;
-				}
-				Intent intentWakeup = new Intent();
-				intentWakeup.setAction(ACTION_WAKEUP);
-				long sleepTime = System.currentTimeMillis();
+			try {
+				if (ACTION_SLEEP.equals(intent.getAction())) {
+					Log.d(ModuleTestApplication.TAG, "***********SLEEP************");
+					if (mWakeLock != null) {
+						if (mWakeLock.isHeld()) mWakeLock.release();
+						mWakeLock = null;
+					}
+					Intent intentWakeup = new Intent();
+					intentWakeup.setAction(ACTION_WAKEUP);
+					long sleepTime = System.currentTimeMillis();
 //				if (isS3)
 //				{
 //					if ( (mTime*60-mInterval>30) && (mTime*60-mInterval<=60) )
@@ -236,11 +237,11 @@ public class SuspendResumeTestActivity extends Activity {
 //					else
 //						sleepTime += mTime*60*1000-mInterval*1000;
 //				} else
-				sleepTime += mTime*1000;
-				mAlarmManager.set(RTC_WAKEUP_NUFRONT, sleepTime,
-						PendingIntent.getBroadcast(mContext, 0, intentWakeup, PendingIntent.FLAG_ONE_SHOT));
+					sleepTime += mTime * 1000;
+					mAlarmManager.set(RTC_WAKEUP_NUFRONT, sleepTime,
+							PendingIntent.getBroadcast(mContext, 0, intentWakeup, PendingIntent.FLAG_ONE_SHOT));
 //				mDevicePolicyManager.lockNow();
-				mPowerManager.goToSleep(SystemClock.uptimeMillis());
+					mPowerManager.goToSleep(SystemClock.uptimeMillis());
 //				FileWriter fw;
 //				try {
 //					fw = new FileWriter("/sys/power/state");
@@ -249,20 +250,20 @@ public class SuspendResumeTestActivity extends Activity {
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
-			} else if (ACTION_WAKEUP.equals(intent.getAction())) {
-				Log.d(ModuleTestApplication.TAG, "***********WAKEUP***********");
-				isTesting++;
-				if (mWakeLock != null) {
-					if (mWakeLock.isHeld()) mWakeLock.release();
-					mWakeLock = null;
-				}
-				mWakeLock = mPowerManager.newWakeLock(
-						PowerManager.ACQUIRE_CAUSES_WAKEUP|PowerManager.FULL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE,
-						TAG_WAKELOCK);
-				if (isTesting < mNumber)
-					mWakeLock.acquire();
-				else
-					mWakeLock.acquire(10*1000);
+				} else if (ACTION_WAKEUP.equals(intent.getAction())) {
+					Log.d(ModuleTestApplication.TAG, "***********WAKEUP***********");
+					isTesting++;
+					if (mWakeLock != null) {
+						if (mWakeLock.isHeld()) mWakeLock.release();
+						mWakeLock = null;
+					}
+					mWakeLock = mPowerManager.newWakeLock(
+							PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+							TAG_WAKELOCK);
+					if (isTesting < mNumber)
+						mWakeLock.acquire();
+					else
+						mWakeLock.acquire(10 * 1000);
 //				FileWriter fw;
 //				try {
 //					fw = new FileWriter("/sys/power/state");
@@ -271,15 +272,16 @@ public class SuspendResumeTestActivity extends Activity {
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
-				if (isTesting < mNumber) {
-					Intent intentSleep = new Intent();
-					intentSleep.setAction(ACTION_SLEEP);
-					mAlarmManager.set(RTC_WAKEUP_NUFRONT, System.currentTimeMillis()+mInterval*1000,
-							PendingIntent.getBroadcast(mContext, 0, intentSleep, PendingIntent.FLAG_ONE_SHOT));
-				} else if (isAutomatic) {
-					stopAutoTest(true);
+					if (isTesting < mNumber) {
+						Intent intentSleep = new Intent();
+						intentSleep.setAction(ACTION_SLEEP);
+						mAlarmManager.set(RTC_WAKEUP_NUFRONT, System.currentTimeMillis() + mInterval * 1000,
+								PendingIntent.getBroadcast(mContext, 0, intentSleep, PendingIntent.FLAG_ONE_SHOT));
+					} else if (isAutomatic) {
+						stopAutoTest(true);
+					}
 				}
-			}
+			} catch (Exception ignored) {}
 		}
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="version">3.5.0327</string>
+	<string name="version">3.5.0505</string>
 
 	<string name="app_name">整机测试</string>
 	<string name="app_name_pcba">PCBA测试</string>

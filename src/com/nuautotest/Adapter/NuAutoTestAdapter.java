@@ -61,6 +61,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 	private String[] states = new String[numberOfTest];
 	private int[] map = new int[numberOfTest];
 	private int count = 0;
+	private int needSuccessCount = 0;
 	private int successCount = 0;
 
 	private LayoutInflater inflater;
@@ -89,7 +90,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 			AssetManager config = mContext.getAssets();
 			InputStream iStream = config.open("config.ini");
 			byte[] buffer = new byte[1024];
-			String string, section;
+			String string, section = "";
 			int secIndex = -1;
 			String[] lines;
 
@@ -127,6 +128,8 @@ public class NuAutoTestAdapter extends BaseAdapter {
 							if (strs[1].equals("1")) {
 								map[count] = secIndex;
 								count++;
+								if (section.equals(mContext.getString(R.string.test_status)) || section.equals(mContext.getString(R.string.factoryreset_test)))
+									needSuccessCount--;
 							}
 						} else if (strs[0].equals("rotation") && items[secIndex].equals(mContext.getString(R.string.front_camera_test))) {
 							strs[1] = strs[1].trim();
@@ -138,6 +141,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 					}
 				}
 			}
+			needSuccessCount += count;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -217,6 +221,11 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		return mView[position];
 	}
 
+	protected void setSuccessCount(String name, int inc) {
+		if (!name.equals(mContext.getString(R.string.test_status)) && !name.equals(mContext.getString(R.string.factoryreset_test)))
+			successCount += inc;
+	}
+
 	public TestState getTestState(String name) {
 		if (states[getIndex(name)].equals("未测试"))
 			return TestState.TEST_STATE_NONE;
@@ -236,31 +245,31 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		switch (state) {
 			case TEST_STATE_NONE:
 				if (states[index].equals("成功"))
-					successCount--;
+					setSuccessCount(name, -1);
 				states[index] = "未测试";
 				break;
 			case TEST_STATE_ON_GOING:
 				if (states[index].equals("成功"))
-					successCount--;
+					setSuccessCount(name, -1);
 				states[index] = "测试中";
 				mView[index].postInvalidate();
 				break;
 			case TEST_STATE_SUCCESS:
 				if (!states[index].equals("成功")) {
-					successCount++;
+					setSuccessCount(name, 1);
 					Log.d(ModuleTestApplication.TAG, name + " test succeeded");
-					if (successCount == count-2) setMiscFlag();
+					if (successCount >= needSuccessCount) setMiscFlag();
 				}
 				states[index] = "成功";
 				break;
 			case TEST_STATE_FAIL:
 				if (states[index].equals("成功"))
-					successCount--;
+					setSuccessCount(name, -1);
 				states[index] = "失败";
 				break;
 			case TEST_STATE_TIME_OUT:
 				if (states[index].equals("成功"))
-					successCount--;
+					setSuccessCount(name, -1);
 				states[index] = "操作超时";
 				break;
 		}
@@ -278,9 +287,34 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		}
 	}
 
+	protected void copyFile(File f) {
+		String name = f.getName();
+		int length = (int) f.length();
+		char[] buf = new char[length];
+		try {
+			FileReader fr = new FileReader(f);
+			fr.read(buf, 0, length);
+			fr.close();
+		} catch (Exception ignored) {}
+
+		try {
+			f.delete();
+			f.createNewFile();
+			f.setReadable(true, false);
+			f.setWritable(true, false);
+			FileWriter fw = new FileWriter(f);
+			fw.write(buf, 0, length);
+			fw.flush();
+			fw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void setMiscFlag() {
 		File f = new File("/misc/pcba_apk_test");
-		boolean flag = false;
+		File fprodmark = new File("/misc/prodmark");
+		boolean flag = false, pflag = false;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line;
@@ -291,18 +325,47 @@ public class NuAutoTestAdapter extends BaseAdapter {
 					break;
 				}
 			}
-		} catch (Exception ignored) {
-		}
+		} catch (Exception ignored) {}
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(fprodmark));
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				if (!isPCBA && line.equals("APKTEST=1") || isPCBA && line.equals("PCBATEST=1")) {
+					pflag = true;
+					break;
+				}
+			}
+		} catch (Exception ignored) {}
 
 		try {
 			if (!flag) {
+				if (!f.canWrite()) copyFile(f);
 				FileWriter fw = new FileWriter(f, true);
-				if (isPCBA)
+				if (isPCBA) {
 					fw.write("pcba_ok\n");
-				else
+				} else {
 					fw.write("apk_ok\n");
+				}
 				fw.flush();
 				fw.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			if (!pflag) {
+				if (!fprodmark.canWrite()) copyFile(fprodmark);
+				FileWriter fwprodmark = new FileWriter(fprodmark, true);
+				if (isPCBA) {
+					fwprodmark.write("PCBATEST=1\n");
+				} else {
+					fwprodmark.write("APKTEST=1\n");
+				}
+				fwprodmark.flush();
+				fwprodmark.close();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

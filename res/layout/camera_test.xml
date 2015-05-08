@@ -19,13 +19,31 @@
 
 	</LinearLayout>
 
-	<Button
-			android:id="@+id/btTakePicture"
-			android:text="拍照"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-	        android:onClick="onClickTakePicture"
-			android:enabled="true" style="@android:style/Widget.Button"/>
+			android:layout_height="wrap_content">
+
+		<Button
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:text="对焦"
+				android:id="@+id/btAutoFocus"
+				android:layout_gravity="center_horizontal"
+				style="@android:style/Widget.Button"
+				android:enabled="true"
+				android:layout_weight="1"
+				android:onClick="onClickTakePicture"/>
+
+		<Button
+				android:id="@+id/btTakePicture"
+				android:text="拍照"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+		        android:onClick="onClickTakePicture"
+				android:enabled="true" style="@android:style/Widget.Button"
+				android:layout_weight="1"/>
+	</LinearLayout>
 
 	<include layout="@layout/bottom_button" />
 </LinearLayout>

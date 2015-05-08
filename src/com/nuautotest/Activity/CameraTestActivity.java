@@ -42,10 +42,12 @@ public class CameraTestActivity extends Activity {
 	private TimerHandler mTimerHandler;
 	public static int mRotationFront, mRotationBack;
 
-	private Button mBtTakePicture;
+	private Button mBtTakePicture, mBtAutoFocus;
 	private static final int STATE_IDLE = 0;
 	private static final int STATE_TAKING = 1;
 	private static final int STATE_TAKEN = 2;
+	private static final int STATE_FOCUSING = 3;
+	private static final int STATE_FOCUSED = 4;
 	private int state = STATE_IDLE;
 
 	private class CameraDisplayListener implements DisplayManager.DisplayListener {
@@ -77,6 +79,10 @@ public class CameraTestActivity extends Activity {
 		Log.i(ModuleTestApplication.TAG, "---Camera Test---");
 
 		setContentView(R.layout.camera_test);
+		mBtTakePicture = (Button) this.findViewById(R.id.btTakePicture);
+		mBtAutoFocus = (Button) this.findViewById(R.id.btAutoFocus);
+		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView);
+
 		Display display = getWindowManager().getDefaultDisplay();
 		outMetrics = new DisplayMetrics();
 		display.getMetrics(outMetrics);
@@ -84,12 +90,11 @@ public class CameraTestActivity extends Activity {
 		Flag = intent.getStringExtra("Flag");
 		if (Flag.equals("Front")) {
 			this.setTitle(R.string.front_camera_test);
+			mBtAutoFocus.setVisibility(View.GONE);
 			checkExistance();
 		} else
 			this.setTitle(R.string.back_camera_test);
 
-		mBtTakePicture = (Button) this.findViewById(R.id.btTakePicture);
-		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView);
 		mSurfaceHolder = surfaceView.getHolder();
 		if (mSurfaceHolder == null) {
 			Log.e(ModuleTestApplication.TAG, "SurfaceHolder is null");
@@ -262,10 +267,17 @@ public class CameraTestActivity extends Activity {
 	public class CameraFocusCallback implements Camera.AutoFocusCallback {
 		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
-			camera.takePicture(null, null, null);
-			mBtTakePicture.setText("继续预览");
-			mBtTakePicture.setEnabled(true);
-			state = STATE_TAKEN;
+			if (state == STATE_FOCUSING) {
+				mBtAutoFocus.setText("对焦");
+				state = STATE_FOCUSED;
+				mBtAutoFocus.setEnabled(true);
+				mBtTakePicture.setEnabled(true);
+			} else if (state == STATE_TAKING) {
+				camera.takePicture(null, null, null);
+				mBtTakePicture.setText("继续预览");
+				state = STATE_TAKEN;
+				mBtTakePicture.setEnabled(true);
+			}
 		}
 	}
 
@@ -274,20 +286,44 @@ public class CameraTestActivity extends Activity {
 			Log.e(ModuleTestApplication.TAG, "onClickTakePicture: camera = null");
 			return;
 		}
-		switch (state) {
-			case STATE_IDLE:
-				mBtTakePicture.setText("正在拍照...");
-				mBtTakePicture.setEnabled(false);
-				state = STATE_TAKING;
-				camera.autoFocus(new CameraFocusCallback());
-				break;
-			case STATE_TAKING:
-				break;
-			case STATE_TAKEN:
-				mBtTakePicture.setText("拍照");
-				state = STATE_IDLE;
-				camera.startPreview();
-				break;
+		boolean isFocus = view.equals(mBtAutoFocus),
+				isTake = view.equals(mBtTakePicture);
+		if (isFocus) {
+			switch (state) {
+				case STATE_IDLE:
+				case STATE_FOCUSED:
+					mBtAutoFocus.setText("正在对焦...");
+					state = STATE_FOCUSING;
+					mBtAutoFocus.setEnabled(false);
+					mBtTakePicture.setEnabled(false);
+					camera.autoFocus(new CameraFocusCallback());
+					break;
+			}
+		} else if (isTake) {
+			switch (state) {
+				case STATE_IDLE:
+				case STATE_FOCUSED:
+					mBtTakePicture.setText("正在拍照...");
+					mBtAutoFocus.setEnabled(false);
+					mBtTakePicture.setEnabled(false);
+					if (state == STATE_IDLE && Flag.equals("Back")) {
+						state = STATE_TAKING;
+						camera.autoFocus(new CameraFocusCallback());
+					} else {
+						state = STATE_TAKING;
+						camera.takePicture(null, null, null);
+						mBtTakePicture.setText("继续预览");
+						state = STATE_TAKEN;
+						mBtTakePicture.setEnabled(true);
+					}
+					break;
+				case STATE_TAKEN:
+					mBtTakePicture.setText("拍照");
+					mBtAutoFocus.setEnabled(true);
+					state = STATE_IDLE;
+					camera.startPreview();
+					break;
+			}
 		}
 	}
 
@@ -301,7 +337,11 @@ public class CameraTestActivity extends Activity {
 		if (f.exists()) exist0 = true;
 		f = new File("/dev/video1");
 		if (f.exists()) exist1 = true;
-		if (exist0 && !exist1) rootcmd.Write("ln -s /dev/video0 /dev/video1\n");
+		if (exist0 && !exist1) {
+			try {
+				rootcmd.Write("ln -s /dev/video0 /dev/video1\n");
+			} catch (Exception ignored) {}
+		}
 	}
 
 	// 成功失败按钮
@@ -335,7 +375,7 @@ public class CameraTestActivity extends Activity {
 	}
 
 	protected void postError(String error) {
-		Log.e(ModuleTestApplication.TAG, "CameraTestActivity"+"======"+error+"======");
+		Log.e(ModuleTestApplication.TAG, "CameraTestActivity" + "======" + error + "======");
 		if (Flag.equals("Front")) {
 			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		} else {

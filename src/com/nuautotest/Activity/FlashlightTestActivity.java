@@ -116,7 +116,8 @@ public class FlashlightTestActivity extends Activity {
 			} catch (Exception e) {
 				Log.w(ModuleTestApplication.TAG, "Flashlight Test: get root failed");
 			}
-		} else {
+		}
+		if (!rootcmd.isEnabled()) {
 			if (mCamera == null) return;
 			if (!isCaptureFinished) return;
 
