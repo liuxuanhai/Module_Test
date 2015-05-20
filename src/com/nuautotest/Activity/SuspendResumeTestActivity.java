@@ -13,6 +13,9 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +25,7 @@ import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * 休眠唤醒测试
@@ -105,6 +109,8 @@ public class SuspendResumeTestActivity extends Activity {
 //			intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdminReceiver);
 //			startActivityForResult(intent, 0);
 //		}
+
+		if (!GetAirplaneMode()) SetAirplaneMode(true);
 	}
 
 	@Override
@@ -129,6 +135,8 @@ public class SuspendResumeTestActivity extends Activity {
 			if (mPartialWakeLock.isHeld()) mPartialWakeLock.release();
 			mPartialWakeLock = null;
 		}
+
+		if (GetAirplaneMode()) SetAirplaneMode(false);
 
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
@@ -164,6 +172,18 @@ public class SuspendResumeTestActivity extends Activity {
 			for (i = 0; i < str.length(); i++)
 				mInterval = mInterval * 10 + str.charAt(i) - '0';
 		}
+	}
+
+	public boolean GetAirplaneMode() {
+		int enable = Settings.Global.getInt(this.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0);
+		return enable == 1;
+	}
+
+	public void SetAirplaneMode(boolean enable) {
+		Settings.Global.putInt(this.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, (enable)?1:0);
+		Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+		intent.putExtra("state", enable);
+		mContext.sendBroadcast(intent);
 	}
 
 	public void startTest() {
@@ -230,26 +250,19 @@ public class SuspendResumeTestActivity extends Activity {
 					Intent intentWakeup = new Intent();
 					intentWakeup.setAction(ACTION_WAKEUP);
 					long sleepTime = System.currentTimeMillis();
-//				if (isS3)
-//				{
-//					if ( (mTime*60-mInterval>30) && (mTime*60-mInterval<=60) )
-//						sleepTime += 30*1000;
-//					else
-//						sleepTime += mTime*60*1000-mInterval*1000;
-//				} else
 					sleepTime += mTime * 1000;
 					mAlarmManager.set(RTC_WAKEUP_NUFRONT, sleepTime,
 							PendingIntent.getBroadcast(mContext, 0, intentWakeup, PendingIntent.FLAG_ONE_SHOT));
-//				mDevicePolicyManager.lockNow();
+//				    mDevicePolicyManager.lockNow();
 					mPowerManager.goToSleep(SystemClock.uptimeMillis());
-//				FileWriter fw;
-//				try {
-//					fw = new FileWriter("/sys/power/state");
-//					fw.write("mem");
-//					fw.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+//					FileWriter fw;
+//					try {
+//						fw = new FileWriter("/sys/power/state");
+//						fw.write("mem");
+//						fw.close();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
 				} else if (ACTION_WAKEUP.equals(intent.getAction())) {
 					Log.d(ModuleTestApplication.TAG, "***********WAKEUP***********");
 					isTesting++;
@@ -264,21 +277,21 @@ public class SuspendResumeTestActivity extends Activity {
 						mWakeLock.acquire();
 					else
 						mWakeLock.acquire(10 * 1000);
-//				FileWriter fw;
-//				try {
-//					fw = new FileWriter("/sys/power/state");
-//					fw.write("on");
-//					fw.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+//					FileWriter fw;
+//					try {
+//						fw = new FileWriter("/sys/power/state");
+//						fw.write("on");
+//						fw.close();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
 					if (isTesting < mNumber) {
 						Intent intentSleep = new Intent();
 						intentSleep.setAction(ACTION_SLEEP);
 						mAlarmManager.set(RTC_WAKEUP_NUFRONT, System.currentTimeMillis() + mInterval * 1000,
 								PendingIntent.getBroadcast(mContext, 0, intentSleep, PendingIntent.FLAG_ONE_SHOT));
-					} else if (isAutomatic) {
-						stopAutoTest(true);
+					} else {
+						if (isAutomatic) stopAutoTest(true);
 					}
 				}
 			} catch (Exception ignored) {}

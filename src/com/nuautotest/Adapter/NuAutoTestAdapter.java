@@ -126,6 +126,8 @@ public class NuAutoTestAdapter extends BaseAdapter {
 						if (strs[0].equals("use")) {
 							strs[1] = strs[1].trim();
 							if (strs[1].equals("1")) {
+								if (isPCBA && (section.equals(mContext.getString(R.string.tp_test)) || section.equals(mContext.getString(R.string.lcd_test))))
+									continue;
 								map[count] = secIndex;
 								count++;
 								if (section.equals(mContext.getString(R.string.test_status)) || section.equals(mContext.getString(R.string.factoryreset_test)))

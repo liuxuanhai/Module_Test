@@ -249,14 +249,9 @@ public class AudioTestActivity extends Activity {
 			mPlayer.setDataSource(mRecordName);
 			mPlayer.prepare();
 			mPlayer.start();
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return;
 		}
 
 		text.setText("开始播放...");
@@ -283,17 +278,19 @@ public class AudioTestActivity extends Activity {
 	}
 
 	private void startRecording() {
-		mRecorder = new MediaRecorder();
-		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		mRecorder.setOutputFile(mRecordName);
-		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		try {
+			mRecorder = new MediaRecorder();
+			mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			mRecorder.setOutputFile(mRecordName);
+			mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			mRecorder.prepare();
-		} catch (IOException e) {
-			Log.e(ModuleTestApplication.TAG, "prepare() failed");
+			mRecorder.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(ModuleTestApplication.TAG, "start recording failed");
+			return;
 		}
-		mRecorder.start();
 
 		text.setText("开始录制...");
 		stopButton.setVisibility(View.VISIBLE);
@@ -304,8 +301,14 @@ public class AudioTestActivity extends Activity {
 
 	private void stopRecording() {
 		if (mRecorder != null) {
-			mRecorder.stop();
-			mRecorder.release();
+			try {
+				mRecorder.stop();
+				mRecorder.release();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(ModuleTestApplication.TAG, "stop recording failed");
+				return;
+			}
 			mRecorder = null;
 		}
 
@@ -318,9 +321,14 @@ public class AudioTestActivity extends Activity {
 
 	private void playFile() {
 		if (!mPlayingFile) {
-			mPlayer = MediaPlayer.create(this, R.raw.audiofiletest);
-			mPlayer.start();
-
+			try {
+				mPlayer = MediaPlayer.create(this, R.raw.audiofiletest);
+				mPlayer.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(ModuleTestApplication.TAG, "start playing failed");
+				return;
+			}
 			text.setText("开始播放文件...");
 			playFileButton.setText("停止播放文件");
 			playButton.setVisibility(View.INVISIBLE);

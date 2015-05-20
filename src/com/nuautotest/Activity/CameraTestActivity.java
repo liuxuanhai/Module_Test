@@ -197,8 +197,19 @@ public class CameraTestActivity extends Activity {
 					Log.d(ModuleTestApplication.TAG, "(" + pSize.width + "x" + pSize.height + ")");
 				}
 				pSize = pSizes.get(0);
+//				parameters.setPreviewSize(pSize.width, pSize.height);
+				parameters.setPreviewSize(640, 480);
 
-				parameters.setPreviewSize(pSize.width, pSize.height);
+				pSizes = parameters.getSupportedPictureSizes();
+				if (pSizes == null) {
+					Log.e(ModuleTestApplication.TAG, "getSupportedPictureSizes returned null");
+					return;
+				}
+				Log.d(ModuleTestApplication.TAG, "Supported sizes:");
+				for (Camera.Size pSize1 : pSizes) {
+					pSize = pSize1;
+					Log.d(ModuleTestApplication.TAG, "("+pSize.width+"x"+pSize.height+")");
+				}
 
 				try {
 					camera.setParameters(parameters);

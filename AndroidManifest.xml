@@ -185,6 +185,8 @@
 		          android:label="@string/test_status"
 		          android:parentActivityName=".NuAutoTestActivity"
 		          android:screenOrientation="portrait"/>
-		<activity android:name=".ModeSelectActivity"/>
+		<activity android:name=".ModeSelectActivity"
+				  android:parentActivityName=".NuAutoTestActivity"
+				  android:screenOrientation="portrait"/>
 	</application>
 </manifest>

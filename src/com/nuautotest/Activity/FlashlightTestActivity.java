@@ -100,7 +100,8 @@ public class FlashlightTestActivity extends Activity {
 				rootcmd.Write("echo 46 > /sys/class/gpio/export\n");
 				/* Read current state */
 				rootcmd.Write("cat /sys/class/gpio/gpio46/value\n");
-				if (off || rootcmd.ReadLine().contains("1")) {
+				String read = rootcmd.ReadLine();
+				if (off || read.contains("1")) {
 					rootcmd.Write("echo 0 > /sys/class/gpio/gpio46/value\n");
 					rootcmd.Write("echo 46 > /sys/class/gpio/unexport\n");
 					rootcmd.Write("echo 47 > /sys/class/gpio/unexport\n");

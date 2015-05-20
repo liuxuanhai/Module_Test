@@ -141,22 +141,28 @@ public class HeadsetTestActivity extends Activity
 
 	private void record() {
 		if (mRecording) {
-			mRecorder = new MediaRecorder();
-			mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
-			mRecorder.setOutputFile(mRecordName);
-			mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 			try {
+				mRecorder = new MediaRecorder();
+				mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+				mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
+				mRecorder.setOutputFile(mRecordName);
+				mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 				mRecorder.prepare();
-			} catch (IOException e) {
-				Log.e(ModuleTestApplication.TAG, "prepare() failed");
+				mRecorder.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(ModuleTestApplication.TAG, "start recording failed");
 			}
-			mRecorder.start();
 			mbtRecord.setText("停止录音");
 		} else {
 			if (mRecorder != null) {
-				mRecorder.stop();
-				mRecorder.release();
+				try {
+					mRecorder.stop();
+					mRecorder.release();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Log.e(ModuleTestApplication.TAG, "stop recording failed");
+				}
 				mRecorder = null;
 			}
 			mbtRecord.setText("开始录音");
@@ -173,13 +179,12 @@ public class HeadsetTestActivity extends Activity
 				else
 					next = mPlayer;
 
-				int current = mp.getCurrentPosition();
-				next.seekTo(current);
-				Log.d(ModuleTestApplication.TAG, "complete on: " + current);
+				next.start();
 
 				mp.reset();
 				mp.setDataSource(mRecordName);
 				mp.prepare();
+				mp.seekTo(next.getDuration());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -192,14 +197,14 @@ public class HeadsetTestActivity extends Activity
 				mPlayer = new MediaPlayer();
 				mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mPlayer.setDataSource(mRecordName);
-				mPlayer.setOnCompletionListener(new OnRecordCompletionListener());
+//				mPlayer.setOnCompletionListener(new OnRecordCompletionListener());
 				mPlayer.setNextMediaPlayer(mPlayer2);
 				mPlayer.prepare();
 
 				mPlayer2 = new MediaPlayer();
 				mPlayer2.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mPlayer2.setDataSource(mRecordName);
-				mPlayer2.setOnCompletionListener(new OnRecordCompletionListener());
+//				mPlayer2.setOnCompletionListener(new OnRecordCompletionListener());
 				mPlayer2.setNextMediaPlayer(mPlayer);
 				mPlayer2.prepare();
 
@@ -229,6 +234,10 @@ public class HeadsetTestActivity extends Activity
 
 	@Override
 	public void onPause() {
+		if (mRecorder != null) {
+			mRecorder.release();
+			mRecorder = null;
+		}
 		if (mPlayer != null) {
 			mPlayer.release();
 			mPlayer = null;
