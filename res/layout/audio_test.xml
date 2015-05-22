@@ -21,14 +21,16 @@
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="开始录音" style="@android:style/Widget.Button"/>
+				android:text="开始录音" style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 
 		<Button
 				android:id="@+id/stop"
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="停止录音" style="@android:style/Widget.Button"/>
+				android:text="停止录音" style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
 
 	<LinearLayout
@@ -42,7 +44,8 @@
 				android:layout_height="match_parent"
 				android:layout_weight="1"
 				android:text="播放录音"
-				style="@android:style/Widget.Button"/>
+				style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 
 		<Button
 				android:id="@+id/stopPlay"
@@ -50,7 +53,8 @@
 				android:layout_height="match_parent"
 				android:layout_weight="1"
 				android:text="停止播放"
-				style="@android:style/Widget.Button"/>
+				style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
 
 	<LinearLayout
@@ -63,7 +67,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:text="播放音频文件"
-				style="@android:style/Widget.Button"/>
+				style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
 
 	<include layout="@layout/bottom_button" />

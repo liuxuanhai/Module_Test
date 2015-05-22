@@ -18,7 +18,7 @@
 			android:singleLine="true"
 			style="@android:style/Widget.Button" android:enabled="true"
 			android:clickable="true" android:textColor="@color/black" android:focusable="false"
-			android:textSize="15sp"/>
+			android:textSize="@dimen/buttonText"/>
 
 	<Button
 			android:id="@+id/btPhone2"
@@ -33,7 +33,7 @@
 			android:maxLength="20"
 			android:padding="5dip"
 			android:singleLine="true"
-			android:textSize="15sp" style="@android:style/Widget.Button" android:clickable="true"
+			android:textSize="@dimen/buttonText" style="@android:style/Widget.Button" android:clickable="true"
 			android:enabled="true" android:textColor="@color/black"/>
 
 	<!--
@@ -47,7 +47,7 @@
 	<View
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
-			android:layout_weight="1" />
+			android:layout_weight="0.5" />
 
 	<include layout="@layout/bottom_button" />
 

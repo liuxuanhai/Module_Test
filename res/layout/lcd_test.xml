@@ -13,28 +13,30 @@
 
 		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="50dip"
+				android:layout_height="wrap_content"
 				android:orientation="horizontal" >
 
 			<Button
 					android:id="@+id/lcdBtFail"
 					android:layout_width="fill_parent"
-					android:layout_height="50dp"
+					android:layout_height="@dimen/buttonHeight"
 					android:layout_weight="1"
 					android:onClick="onbackbtn"
 					android:text="失败"
 					android:visibility="invisible"
-					android:alpha="0.8" style="@android:style/Widget.Button"/>
+					android:alpha="0.8" style="@android:style/Widget.Button"
+					android:textSize="@dimen/buttonText"/>
 
 			<Button
 					android:id="@+id/lcdBtSuccess"
 					android:layout_width="fill_parent"
-					android:layout_height="50dp"
+					android:layout_height="@dimen/buttonHeight"
 					android:layout_weight="1"
 					android:onClick="onbackbtn"
 					android:text="成功"
 					android:visibility="invisible"
-					android:alpha="0.8" style="@android:style/Widget.Button"/>
+					android:alpha="0.8" style="@android:style/Widget.Button"
+					android:textSize="@dimen/buttonText"/>
 
 		</LinearLayout>
 

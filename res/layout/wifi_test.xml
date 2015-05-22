@@ -33,16 +33,18 @@
 		<Button
 				android:id="@+id/btEnableWifi"
 				android:layout_width="0dp"
-				android:layout_height="wrap_content"
+				android:layout_height="@dimen/buttonHeight"
 				android:onClick="onEnableWifi"
-				android:text="设置Wifi" style="@android:style/Widget.Button" android:layout_weight="1"/>
+				android:text="设置Wifi" style="@android:style/Widget.Button" android:layout_weight="1"
+				android:textSize="@dimen/buttonText"/>
 
 		<Button
 				android:id="@+id/btPingBaidu"
 				android:layout_width="0dp"
-				android:layout_height="wrap_content"
+				android:layout_height="@dimen/buttonHeight"
 				android:onClick="onOpenWeb"
-				android:text="打开网页" style="@android:style/Widget.Button" android:layout_weight="1"/>
+				android:text="打开网页" style="@android:style/Widget.Button" android:layout_weight="1"
+				android:textSize="@dimen/buttonText"/>
 
 	</LinearLayout>
 

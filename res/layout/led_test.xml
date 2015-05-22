@@ -27,7 +27,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
-		android:onClick="onClickLedRed" style="@android:style/Widget.Button"/>
+		android:onClick="onClickLedRed" style="@android:style/Widget.Button"
+		android:textSize="@dimen/buttonText"/>
 
 	<Button
 		android:id="@+id/btLedGreen"
@@ -35,7 +36,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
-		android:onClick="onClickLedGreen" style="@android:style/Widget.Button"/>
+		android:onClick="onClickLedGreen" style="@android:style/Widget.Button"
+		android:textSize="@dimen/buttonText"/>
 
 	<Button
 		android:id="@+id/btLedBlue"
@@ -43,7 +45,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
-		android:onClick="onClickLedBlue" style="@android:style/Widget.Button"/>
+		android:onClick="onClickLedBlue" style="@android:style/Widget.Button"
+		android:textSize="@dimen/buttonText"/>
 
 	<include layout="@layout/bottom_button" />
 

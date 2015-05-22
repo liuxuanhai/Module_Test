@@ -30,9 +30,10 @@
 	<Button
 			android:id="@+id/btEnableBT"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="@dimen/buttonHeight"
 			android:onClick="onEnableBT"
-			android:text="设置蓝牙" style="@android:style/Widget.Button"/>
+			android:text="设置蓝牙" style="@android:style/Widget.Button"
+			android:textSize="@dimen/buttonText"/>
 
 	<include layout="@layout/bottom_button" />
 

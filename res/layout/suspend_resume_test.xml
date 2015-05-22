@@ -5,13 +5,6 @@
               android:orientation="vertical"
               android:scrollbars="vertical" android:background="@color/bg">
 
-	<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="请选择是否测试深度休眠\n然后设置时间,次数和间隔,点击开始按钮"
-			android:textSize="@dimen/header" android:textColor="@color/black">
-	</TextView>
-
 	<CheckBox
 			android:id="@+id/cbSuspendResumeS3"
 			android:layout_width="match_parent"
@@ -36,7 +29,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:ems="10"
-				android:text="10"
+				android:text="12"
 				android:inputType="number" android:textColor="@color/black" style="@android:style/Widget.EditText"
 				android:textSize="15sp">
 
@@ -89,9 +82,10 @@
 
 	<Button
 			android:id="@+id/btSuspendResumeStart"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="开始" style="@android:style/Widget.Button"/>
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/buttonHeight"
+			android:text="开始" style="@android:style/Widget.Button"
+			android:textSize="@dimen/buttonText"/>
 
 	<TextView
 			android:id="@+id/tvSuspendResumeStatus"

@@ -7,17 +7,19 @@
 	<Button
 			android:id="@+id/fail"
 			android:layout_width="wrap_content"
-			android:layout_height="50dp"
+			android:layout_height="@dimen/buttonHeight"
 			android:layout_weight="1.00"
 			android:onClick="onbackbtn"
-			android:text="失败" style="@android:style/Widget.Button"/>
+			android:text="失败" style="@android:style/Widget.Button"
+			android:textSize="@dimen/buttonText"/>
 
 	<Button
 			android:id="@+id/success"
 			android:layout_width="wrap_content"
-			android:layout_height="50dp"
+			android:layout_height="@dimen/buttonHeight"
 			android:layout_weight="1.00"
 			android:onClick="onbackbtn"
-			android:text="成功" style="@android:style/Widget.Button"/>
+			android:text="成功" style="@android:style/Widget.Button"
+			android:textSize="@dimen/buttonText"/>
 
 </LinearLayout>

@@ -15,7 +15,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:onClick="onVibrate"
-				android:text="震动" android:layout_weight="0.50" style="@android:style/Widget.Button"/>
+				android:text="震动" android:layout_weight="0.50" style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 
 	</LinearLayout>
 

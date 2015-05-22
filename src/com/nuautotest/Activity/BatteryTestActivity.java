@@ -74,10 +74,10 @@ public class BatteryTestActivity extends Activity
 						else
 							stopAutoTest(false);
 					} else {
-						text.setText("电量："+dataLevel+"%"+"\n"
-										+"最大容量："+intent.getIntExtra("scale", 0)+"%"	+"\n"
-										+"电压："+dataVol+"mV"+"\n"
-										+"温度："+dataTemp+"度"+"\n"
+						text.setText("电量：\t"+dataLevel+"%"+"\n\n"
+										+"最大：\t"+intent.getIntExtra("scale", 0)+"%"	+"\n\n"
+										+"温度：\t"+dataTemp+"度"+"\n\n"
+										+"电压：\t"+dataVol+"mV"+"\n"
 						);
 					}
 				}

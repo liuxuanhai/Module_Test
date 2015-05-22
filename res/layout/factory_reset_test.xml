@@ -16,7 +16,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:text="开始" style="@android:style/Widget.Button"/>
+			android:text="开始" style="@android:style/Widget.Button"
+			android:textSize="@dimen/buttonText"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:orientation="vertical"
-			android:gravity="bottom" android:background="@color/bg">
+			android:background="@color/bg">
 
 	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="0dip"
-			android:layout_weight="1"
 			android:orientation="vertical"
-			android:gravity="center" >
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_above="@+id/llCameraTakepicture">
 
 		<SurfaceView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:id="@+id/surfaceView" />
-
 	</LinearLayout>
 
 	<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="false"
+			android:layout_alignParentBottom="false"
+			android:layout_above="@+id/llCameraBottom"
+			android:id="@+id/llCameraTakepicture">
 
 		<Button
 				android:layout_width="0dip"
@@ -33,7 +35,9 @@
 				style="@android:style/Widget.Button"
 				android:enabled="true"
 				android:layout_weight="1"
-				android:onClick="onClickTakePicture"/>
+				android:onClick="onClickTakePicture"
+				android:textSize="@dimen/buttonText"
+				android:textColor="@color/black"/>
 
 		<Button
 				android:id="@+id/btTakePicture"
@@ -42,8 +46,42 @@
 				android:layout_height="wrap_content"
 		        android:onClick="onClickTakePicture"
 				android:enabled="true" style="@android:style/Widget.Button"
-				android:layout_weight="1"/>
+				android:layout_weight="1"
+				android:textSize="@dimen/buttonText"
+				android:textColor="@color/black"/>
 	</LinearLayout>
 
-	<include layout="@layout/bottom_button" />
-</LinearLayout>
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:id="@+id/llCameraBottom">
+
+		<Button
+				style="@android:style/Widget.Button"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:text="失败"
+				android:id="@+id/btCameraFail"
+				android:layout_gravity="center_horizontal"
+				android:enabled="true"
+				android:layout_weight="1"
+				android:onClick="onbackbtn"
+				android:textSize="@dimen/buttonText"
+				android:textColor="@color/black"/>
+
+		<Button
+				style="@android:style/Widget.Button"
+				android:id="@+id/btCameraSuccess"
+				android:text="成功"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:onClick="onbackbtn"
+				android:enabled="true"
+				android:layout_weight="1"
+				android:textSize="@dimen/buttonText"
+				android:textColor="@color/black"/>
+	</LinearLayout>
+
+</RelativeLayout>

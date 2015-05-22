@@ -28,7 +28,8 @@
 			android:layout_height="0dip"
 			android:layout_weight="1"
 			android:text="操作: 无插拔"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:textIsSelectable="false">
+			android:textSize="@dimen/header" android:textColor="@color/black" android:textIsSelectable="false"
+			android:visibility="invisible">
 	</TextView>
 
 	<include layout="@layout/bottom_button" />

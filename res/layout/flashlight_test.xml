@@ -17,7 +17,8 @@
 				android:onClick="onFlashlight"
 				android:text="打开"
 				android:layout_weight="0.50"
-				android:enabled="true" style="@android:style/Widget.Button"/>
+				android:enabled="true" style="@android:style/Widget.Button"
+				android:textSize="@dimen/buttonText"/>
 
 	</LinearLayout>
 

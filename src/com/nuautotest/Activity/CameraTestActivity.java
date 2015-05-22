@@ -359,7 +359,7 @@ public class CameraTestActivity extends Activity {
 	public void onbackbtn(View view) {
 
 		switch (view.getId()) {
-			case R.id.fail:
+			case R.id.btCameraFail:
 				if (Flag.equals("Front")) {
 					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				} else {
@@ -367,7 +367,7 @@ public class CameraTestActivity extends Activity {
 				}
 				this.finish();
 				break;
-			case R.id.success:
+			case R.id.btCameraSuccess:
 				if (Flag.equals("Front")) {
 					NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				} else {

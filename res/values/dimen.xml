@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="header">18sp</dimen>
-	<dimen name="content">16sp</dimen>
+	<dimen name="header">24sp</dimen>
+	<dimen name="content">20sp</dimen>
+	<dimen name="buttonText">20sp</dimen>
+	<dimen name="buttonHeight">100dp</dimen>
 </resources>
