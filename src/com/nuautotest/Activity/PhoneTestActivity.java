@@ -29,6 +29,8 @@ public class PhoneTestActivity extends Activity {
 	Button m_phone1Button, m_phone2Button;
 	TelephonyManager manager;
 	Context m_context;
+	private Boolean isFromThis = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class PhoneTestActivity extends Activity {
 		m_phone1Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				isFromThis = true;
 				String strNum = "10010";
 				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
 				try {
@@ -55,6 +58,7 @@ public class PhoneTestActivity extends Activity {
 		m_phone2Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				isFromThis = true;
 				String strNum = "112";
 				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
 				try {
@@ -78,8 +82,7 @@ public class PhoneTestActivity extends Activity {
 	}
 
 	@Override
-	protected void onPause()
-	{
+	protected void onPause() {
 		if (mPlayer != null) {
 			if (mPlayer.isPlaying()) mPlayer.stop();
 			mPlayer.release();
@@ -90,8 +93,7 @@ public class PhoneTestActivity extends Activity {
 	}
 
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
 		Log.d(ModuleTestApplication.TAG, "start onDestroy~~~");
 		if (mediaRecorder != null) {
 			mediaRecorder.reset();
@@ -102,15 +104,17 @@ public class PhoneTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	class MyPhoneStateListener extends PhoneStateListener{
+	class MyPhoneStateListener extends PhoneStateListener {
 		File audioFile;
 		private boolean iscall=false;
 		private boolean isStart=false;
 
 		@Override
 		public void onCallStateChanged(int state, String incomingNumber) {
+			if (!isFromThis) return;
 			switch (state) {
 				case TelephonyManager.CALL_STATE_IDLE:
+					isFromThis = false;
 					if (iscall) {
 						Log.d(ModuleTestApplication.TAG, "==CALL_STATE_IDLE");
 						if (isStart) {
@@ -193,7 +197,7 @@ public class PhoneTestActivity extends Activity {
 			super.onCallStateChanged(state, incomingNumber);
 		}
 
-		public void recordCallComment() throws IOException{
+		public void recordCallComment() throws IOException {
 			if (!isStart) {
 				Log.d(ModuleTestApplication.TAG, "==recordCallComment start");
 				isStart = true;

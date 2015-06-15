@@ -12,6 +12,16 @@
 			android:text="测试录音"
 			android:textSize="@dimen/header" android:background="@color/widget" android:textColor="@color/black"/>
 
+	<TextView
+			android:id="@+id/textView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="**请务必拔出耳机**"
+			android:textSize="@dimen/content"
+			android:background="@color/bg"
+			android:textColor="@color/black"/>
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dip"

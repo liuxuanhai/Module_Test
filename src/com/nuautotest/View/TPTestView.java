@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import com.nuautotest.Activity.TPTestActivity;
 import com.nuautotest.application.ModuleTestApplication;
 
 public class TPTestView extends View implements View.OnSystemUiVisibilityChangeListener {
@@ -20,10 +21,10 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 	private int width;
 
 	private Paint mPaint;
-	Path mPath, mPathStart, mPathEnd;
-	private Rect[][] mRect;
+	Path [] mPath, mPathStart, mPathEnd;
+	private RectF[][] mRect;
 	private boolean[][] mPressed;
-	private int mNumberPressed;
+	private int mNumberPressed, mNumberNeeded;
 	private int mRectRow, mRectColumn, mRectWidth, mRectHeight;
 	private Context mContext;
 	private int mStep;
@@ -36,9 +37,15 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 		super(context, attr);
 		mContext = context;
 		mPaint = new Paint();
-		mPath = new Path();
-		mPathStart = new Path();
-		mPathEnd = new Path();
+		mPath = new Path[2];
+		mPath[0] = new Path();
+		mPath[1] = new Path();
+		mPathStart = new Path[2];
+		mPathStart[0] = new Path();
+		mPathStart[1] = new Path();
+		mPathEnd = new Path[2];
+		mPathEnd[0] = new Path();
+		mPathEnd[1] = new Path();
 		mStep = 0;
 		if (mSdkVersion >= Build.VERSION_CODES.KITKAT)
 			setOnSystemUiVisibilityChangeListener(this);
@@ -66,33 +73,108 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 	}
 
 	protected void init(int w, int h) {
-		this.setRectInfo(w, h);
-		width = (int)(tolerance*Math.sqrt(w*w+h*h)/h);
+		width = (int) (tolerance * Math.sqrt(w * w + h * h) / h);
+		mNumberPressed = 0;
+		mStep = 4;
 
-		mRect = new Rect[mRectRow][mRectColumn];
-		mPressed = new boolean[mRectRow][mRectColumn];
-		for (int i=0; i<mRectRow; i++) {
-			for (int j = 0; j < mRectColumn; j++) {
-				mRect[i][j] = new Rect();
-				mRect[i][j].left = j * mRectWidth + 1;
-				if (j == mRectColumn - 1)
-					mRect[i][j].right = w;
-				else
-					mRect[i][j].right = (j + 1) * mRectWidth - 1;
-				mRect[i][j].top = i * mRectHeight + 1;
-				if (i == mRectRow - 1)
-					mRect[i][j].bottom = h;
-				else
-					mRect[i][j].bottom = (i + 1) * mRectHeight - 1;
+		if (mStep == 4) {
+			final float width = (float) w / 9, height = (float) h / 13;
+			float s;
+			int i;
 
-				mPressed[i][j] = false;
+			mRect = new RectF[7][13];
+			mPressed = new boolean[7][13];
+			mNumberNeeded = 0;
+			mLine = 0;
+			mStartX = mStartY = mEndX = mEndY = -1;
+
+			/* Top H */
+			mRect[0][0] = new RectF(9, 9, 9, 9);
+			for (i = 1; i <= 9; i++) {
+				mRect[0][i] = new RectF((i - 1) * width + 1, 1, i * width - 1, height - 1);
+				mPressed[0][i] = false;
+			}
+			mNumberNeeded += 9;
+
+			/* Mid H */
+			mRect[1][0] = new RectF(7, 7, 7, 7);
+			s = h / 2 - height / 2;
+			for (i = 1; i <= 7; i++) {
+				mRect[1][i] = new RectF(i * width + 1, s + 1, (i + 1) * width - 1, s + height - 1);
+				mPressed[1][i] = false;
+			}
+			mNumberNeeded += 7;
+
+			/* Bottom H */
+			mRect[2][0] = new RectF(9, 9, 9, 9);
+			s = h - height;
+			for (i = 1; i <= 9; i++) {
+				mRect[2][i] = new RectF((i - 1) * width + 1, s + 1, i * width - 1, h - 1);
+				mPressed[2][i] = false;
+			}
+			mNumberNeeded += 9;
+
+			/* Left V */
+			mRect[3][0] = new RectF(11, 11, 11, 11);
+			for (i = 1; i <= 11; i++) {
+				mRect[3][i] = new RectF(1, i * height + 1, width - 1, (i + 1) * height - 1);
+				mPressed[3][i] = false;
+			}
+			mNumberNeeded += 11;
+
+			/* Mid upper V */
+			mRect[4][0] = new RectF(5, 5, 5, 5);
+			s = w / 2 - width / 2;
+			for (i = 1; i <= 5; i++) {
+				mRect[4][i] = new RectF(s + 1, i * height + 1, s + width - 1, (i + 1) * height - 1);
+				mPressed[4][i] = false;
+			}
+			mNumberNeeded += 5;
+
+			/* Mid lower V */
+			mRect[5][0] = new RectF(5, 5, 5, 5);
+			s = w / 2 - width / 2;
+			for (i = 1; i <= 5; i++) {
+				mRect[5][i] = new RectF(s + 1, h / 2 + height / 2 + (i - 1) * height + 1,
+						s + width - 1, h / 2 + height / 2 + i * height - 1);
+				mPressed[5][i] = false;
+			}
+			mNumberNeeded += 5;
+
+			/* Right V */
+			mRect[6][0] = new RectF(11, 11, 11, 11);
+			s = w - width;
+			for (i = 1; i <= 11; i++) {
+				mRect[6][i] = new RectF(s + 1, i * height + 1, w - 1, (i + 1) * height - 1);
+				mPressed[6][i] = false;
+			}
+			mNumberNeeded += 11;
+
+			setPath(1, 0);
+			setPath(2, 1);
+		} else {
+			this.setRectInfo(w, h);
+
+			mRect = new RectF[mRectRow][mRectColumn];
+			mPressed = new boolean[mRectRow][mRectColumn];
+			for (int i = 0; i < mRectRow; i++) {
+				for (int j = 0; j < mRectColumn; j++) {
+					mRect[i][j] = new RectF();
+					mRect[i][j].left = j * mRectWidth + 1;
+					if (j == mRectColumn - 1)
+						mRect[i][j].right = w;
+					else
+						mRect[i][j].right = (j + 1) * mRectWidth - 1;
+					mRect[i][j].top = i * mRectHeight + 1;
+					if (i == mRectRow - 1)
+						mRect[i][j].bottom = h;
+					else
+						mRect[i][j].bottom = (i + 1) * mRectHeight - 1;
+
+					mPressed[i][j] = false;
+				}
 			}
 		}
-		mNumberPressed = 0;
-//		mStartX = mStartY = mEndX = mEndY = -1;
-//		mLine = 1;
-//		setPath(mLine);
-		mStep = 1;
 		this.postInvalidate();
 		if (mSdkVersion >= Build.VERSION_CODES.KITKAT)
 			setNavVisibility(true);
@@ -100,7 +182,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		if (mStep > 1) return;
+//		if (mStep > 1) return;
 		if (mStep != 0) Log.d(ModuleTestApplication.TAG, "Old w="+mRectWidth+" h="+mRectHeight);
 		this.init(w, h);
 		Log.d(ModuleTestApplication.TAG, "New w="+mRectWidth+" h="+mRectHeight);
@@ -132,7 +214,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 							mPaint.setColor(Color.GREEN);
 						else
 							mPaint.setColor(Color.RED);
-						canvas.drawRect(mRect[i][j], mPaint);
+						canvas.drawRect(mRect[i][j].left, mRect[i][j].top, mRect[i][j].right, mRect[i][j].bottom, mPaint);
 					}
 				} else {
 					for (int j=0; j<mRectColumn; j++) {
@@ -158,10 +240,10 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 			canvas.drawText("多点触摸测试，触摸点："+mTouchNum, 50, 50, mPaint);
 		} else if (mStep == 3) {
 			mPaint.setColor(Color.GRAY);
-			canvas.drawPath(mPath, mPaint);
+			canvas.drawPath(mPath[0], mPaint);
 			mPaint.setColor(Color.LTGRAY);
-			canvas.drawPath(mPathStart, mPaint);
-			canvas.drawPath(mPathEnd, mPaint);
+			canvas.drawPath(mPathStart[0], mPaint);
+			canvas.drawPath(mPathEnd[0], mPaint);
 //			if (mLine == 1)
 //				canvas.drawLine(0, 0, this.getWidth(), this.getHeight(), mPaint);
 //			else if (mLine == 2)
@@ -188,72 +270,101 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 			mPaint.setColor(Color.WHITE);
 			mPaint.setTextSize(30);
 			canvas.drawText("对角线测试：请沿屏幕所示区域绘制", 50, 50, mPaint);
+		} else if (mStep == 4) {
+			for (int i=0; i<7; i++) {
+				for (int j=1; j<=mRect[i][0].top; j++) {
+					if (mPressed[i][j])
+						mPaint.setColor(Color.GREEN);
+					else
+						mPaint.setColor(Color.RED);
+					canvas.drawRect(mRect[i][j], mPaint);
+				}
+			}
+
+			for (int i=0; i<2; i++) {
+				mPaint.setStyle(Paint.Style.STROKE);
+				mPaint.setStrokeWidth(3);
+				if ((mLine & (1 << (i+2))) != 0)
+					mPaint.setColor(Color.rgb(0, 0xaa, 0));
+				else
+					mPaint.setColor(Color.LTGRAY);
+				canvas.drawPath(mPath[i], mPaint);
+				canvas.drawPath(mPathStart[i], mPaint);
+				canvas.drawPath(mPathEnd[i], mPaint);
+			}
+
+			if (mStartX != -1 && mStartY != -1) {
+				mPaint.setColor(Color.LTGRAY);
+				mPaint.setStrokeWidth(8.0f);
+				canvas.drawLine(mStartX, mStartY, mEndX, mEndY, mPaint);
+				mPaint.setStrokeWidth(1.0f);
+			}
 		}
 	}
 
-	protected void setPath(int line) {
+	protected void setPath(int line, int index) {
 		switch (line) {
 			case 1:
-				mPath.reset();
-				mPath.lineTo(width, 0);
-				mPath.lineTo(this.getWidth(), this.getHeight()-width);
-				mPath.lineTo(this.getWidth(), this.getHeight());
-				mPath.lineTo(this.getWidth()-width, this.getHeight());
-				mPath.lineTo(0, width);
-				mPath.close();
+				mPath[index].reset();
+				mPath[index].lineTo(width, 0);
+				mPath[index].lineTo(this.getWidth(), this.getHeight() - width);
+				mPath[index].lineTo(this.getWidth(), this.getHeight());
+				mPath[index].lineTo(this.getWidth() - width, this.getHeight());
+				mPath[index].lineTo(0, width);
+				mPath[index].close();
 
-				mPathStart.reset();
-				mPathStart.addRect(0, 0, width, width, Path.Direction.CW);
+				mPathStart[index].reset();
+				mPathStart[index].addRect(0, 0, width, width, Path.Direction.CW);
 
-				mPathEnd.reset();
-				mPathEnd.addRect(this.getWidth() - width, this.getHeight() - width, this.getWidth(), this.getHeight(), Path.Direction.CW);
+				mPathEnd[index].reset();
+				mPathEnd[index].addRect(this.getWidth() - width, this.getHeight() - width, this.getWidth(), this.getHeight(), Path.Direction.CW);
 				break;
 			case 2:
-				mPath.reset();
-				mPath.moveTo(this.getWidth(), 0);
-				mPath.lineTo(this.getWidth(), width);
-				mPath.lineTo(width, this.getHeight());
-				mPath.lineTo(0, this.getHeight());
-				mPath.lineTo(0, this.getHeight()-width);
-				mPath.lineTo(this.getWidth()-width, 0);
-				mPath.close();
+				mPath[index].reset();
+				mPath[index].moveTo(this.getWidth(), 0);
+				mPath[index].lineTo(this.getWidth(), width);
+				mPath[index].lineTo(width, this.getHeight());
+				mPath[index].lineTo(0, this.getHeight());
+				mPath[index].lineTo(0, this.getHeight() - width);
+				mPath[index].lineTo(this.getWidth() - width, 0);
+				mPath[index].close();
 
-				mPathStart.reset();
-				mPathStart.addRect(this.getWidth()-width, 0, this.getWidth(), width, Path.Direction.CW);
+				mPathStart[index].reset();
+				mPathStart[index].addRect(this.getWidth() - width, 0, this.getWidth(), width, Path.Direction.CW);
 
-				mPathEnd.reset();
-				mPathEnd.addRect(0, this.getHeight()-width, width, this.getHeight(), Path.Direction.CW);
+				mPathEnd[index].reset();
+				mPathEnd[index].addRect(0, this.getHeight() - width, width, this.getHeight(), Path.Direction.CW);
 				break;
 			case 3:
-				mPath.reset();
-				mPath.addRect(0, 0, this.getWidth(), tolerance, Path.Direction.CW);
+				mPath[index].reset();
+				mPath[index].addRect(0, 0, this.getWidth(), tolerance, Path.Direction.CW);
 
-				mPathStart.reset();
-				mPathStart.addRect(0, 0, tolerance, tolerance, Path.Direction.CW);
+				mPathStart[index].reset();
+				mPathStart[index].addRect(0, 0, tolerance, tolerance, Path.Direction.CW);
 
-				mPathEnd.reset();
-				mPathEnd.addRect(this.getWidth()-tolerance, 0, this.getWidth(), tolerance, Path.Direction.CW);
+				mPathEnd[index].reset();
+				mPathEnd[index].addRect(this.getWidth() - tolerance, 0, this.getWidth(), tolerance, Path.Direction.CW);
 				break;
 			case 4:
-				mPath.reset();
-				mPath.addRect(this.getWidth()-tolerance, 0, this.getWidth(), this.getHeight(), Path.Direction.CW);
+				mPath[index].reset();
+				mPath[index].addRect(this.getWidth() - tolerance, 0, this.getWidth(), this.getHeight(), Path.Direction.CW);
 
-				mPathStart.reset();
-				mPathStart.addRect(this.getWidth()-tolerance, this.getHeight()-tolerance, this.getWidth(), this.getHeight(), Path.Direction.CW);
+				mPathStart[index].reset();
+				mPathStart[index].addRect(this.getWidth() - tolerance, this.getHeight() - tolerance, this.getWidth(), this.getHeight(), Path.Direction.CW);
 				break;
 			case 5:
-				mPath.reset();
-				mPath.addRect(0, this.getHeight()-tolerance, this.getWidth(), this.getHeight(), Path.Direction.CW);
+				mPath[index].reset();
+				mPath[index].addRect(0, this.getHeight() - tolerance, this.getWidth(), this.getHeight(), Path.Direction.CW);
 
-				mPathEnd.reset();
-				mPathEnd.addRect(0, this.getHeight()-tolerance, tolerance, this.getHeight(), Path.Direction.CW);
+				mPathEnd[index].reset();
+				mPathEnd[index].addRect(0, this.getHeight() - tolerance, tolerance, this.getHeight(), Path.Direction.CW);
 				break;
 			case 6:
-				mPath.reset();
-				mPath.addRect(0, 0, tolerance, this.getHeight(), Path.Direction.CW);
+				mPath[index].reset();
+				mPath[index].addRect(0, 0, tolerance, this.getHeight(), Path.Direction.CW);
 
-				mPathStart.reset();
-				mPathStart.addRect(0, 0, tolerance, tolerance, Path.Direction.CW);
+				mPathStart[index].reset();
+				mPathStart[index].addRect(0, 0, tolerance, tolerance, Path.Direction.CW);
 				break;
 		}
 	}
@@ -304,7 +415,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 						mStep = 3;
 						mStartX = mStartY = mEndX = mEndY = -1;
 						mLine = 1;
-						setPath(mLine);
+						setPath(mLine, 0);
 					}
 				}
 			}
@@ -341,7 +452,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 									Math.abs(mStartY - mEndY) >= this.getHeight() - width * 2) {
 								mStartX = mStartY = mEndX = mEndY = -1;
 								mLine++;
-								setPath(mLine);
+								setPath(mLine, 0);
 							}
 						}
 					}
@@ -362,7 +473,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 									Math.abs(mStartY - mEndY) >= this.getHeight() - width * 2) {
 								mStartX = mStartY = mEndX = mEndY = -1;
 								mLine++;
-								setPath(mLine);
+								setPath(mLine, 0);
 							}
 						}
 					}
@@ -383,7 +494,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 									Math.abs(mStartY - mEndY) <= tolerance * 2) {
 								mStartX = mStartY = mEndX = mEndY = -1;
 								mLine++;
-								setPath(mLine);
+								setPath(mLine, 0);
 							}
 						}
 					}
@@ -404,7 +515,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 									Math.abs(mStartY - mEndY) >= this.getHeight() - tolerance * 2) {
 								mStartX = mStartY = mEndX = mEndY = -1;
 								mLine++;
-								setPath(mLine);
+								setPath(mLine, 0);
 							}
 						}
 					}
@@ -425,7 +536,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 									Math.abs(mStartY - mEndY) <= tolerance * 2) {
 								mStartX = mStartY = mEndX = mEndY = -1;
 								mLine++;
-								setPath(mLine);
+								setPath(mLine, 0);
 							}
 						}
 					}
@@ -447,7 +558,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 								mStep = 2;
 								mTouchNum = 0;
 								Intent intent = new Intent();
-								intent.setAction(com.nuautotest.Activity.TPTestActivity.ACTION_TPSHOWBUTTON);
+								intent.setAction(TPTestActivity.ACTION_TPSHOWBUTTON);
 								mContext.sendBroadcast(intent);
 							}
 						}
@@ -455,6 +566,83 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 					break;
 			}
 			postInvalidate();
+		} else if (mStep == 4) {
+			for (int i = 0; i < event.getPointerCount(); i++) {
+				for (int j = 0; j <= event.getHistorySize(); j++) {
+					int x, y;
+					if (j == event.getHistorySize()) {
+						x = (int) (event.getX(i));
+						y = (int) (event.getY(i));
+					} else {
+						x = (int) (event.getHistoricalX(i, j));
+						y = (int) (event.getHistoricalY(i, j));
+					}
+
+					/* Rect fill */
+					for (int k = 0; k < 7; k++) {
+						for (int l = 1; l <= mRect[k][0].top; l++) {
+							if (!mPressed[k][l] && mRect[k][l].contains(x, y)) {
+								mPressed[k][l] = true;
+								mNumberPressed++;
+								break;
+							}
+						}
+					}
+
+					/* Path fill */
+					if (event.getAction() == MotionEvent.ACTION_UP) {
+						mStartX = mStartY = mEndX = mEndY = -1;
+					} else if (mStartX == -1) {
+						if ((mLine & 4) == 0 && (x<=width && y<=width ||
+								x>=this.getWidth()-width && y>=this.getHeight()-width)) {
+							mStartX = mEndX = x;
+							mStartY = mEndY = y;
+							mLine |= 1;
+						}
+						if ((mLine & 8) == 0 && (x<=width && y>=this.getHeight()-width ||
+								x>=this.getWidth()-width && y<=width)) {
+							mStartX = mEndX = x;
+							mStartY = mEndY = y;
+							mLine |= 2;
+						}
+					} else {
+						if ((mLine & 1) != 0) {
+							if (distance(x, y, 0, 0, this.getWidth(), this.getHeight()) > tolerance) {
+								mStartX = mStartY = mEndX = mEndY = -1;
+								mLine &= ~1;
+							} else {
+								mEndX = x;
+								mEndY = y;
+								if (Math.abs(mStartX - mEndX) >= this.getWidth() - width * 2 &&
+										Math.abs(mStartY - mEndY) >= this.getHeight() - width * 2) {
+									mStartX = mStartY = mEndX = mEndY = -1;
+									mLine = (mLine & ~1) | 4;
+								}
+							}
+						} else if ((mLine & 2) != 0) {
+							if (distance(x,y,0,this.getHeight(),this.getWidth(),0) > tolerance) {
+								mStartX = mStartY = mEndX = mEndY = -1;
+								mLine &= ~2;
+							} else {
+								mEndX = x;
+								mEndY = y;
+								if (Math.abs(mStartX - mEndX) >= this.getWidth() - width * 2 &&
+										Math.abs(mStartY - mEndY) >= this.getHeight() - width * 2) {
+									mStartX = mStartY = mEndX = mEndY = -1;
+									mLine = (mLine & ~2) | 8;
+								}
+							}
+						}
+					}
+				}
+			}
+			postInvalidate();
+
+			if (mNumberPressed == mNumberNeeded && (mLine & 4) != 0 && (mLine & 8) != 0) {
+				Intent intent = new Intent();
+				intent.setAction(TPTestActivity.ACTION_TPSUCCESS);
+				mContext.sendBroadcast(intent);
+			}
 		}
 
 		return true;

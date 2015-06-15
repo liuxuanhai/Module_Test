@@ -23,7 +23,6 @@ public class SystemPropertiesProxy {
 	 */
 	public static String get(Context context, String key) throws IllegalArgumentException {
 		String ret = "";
-
 		try {
 			ClassLoader cl = context.getClassLoader();
 			if (cl == null) return ret;
@@ -49,8 +48,6 @@ public class SystemPropertiesProxy {
 		} catch (Exception e) {
 			ret = "";
 		}
-
 		return ret;
-
 	}
 }

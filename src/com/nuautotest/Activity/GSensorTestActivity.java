@@ -82,7 +82,7 @@ public class GSensorTestActivity extends Activity implements
 	protected void initResume() {
 		Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mRegisteredSensor = mSensorManager.registerListener(this, sensor,
-				SensorManager.SENSOR_DELAY_NORMAL);
+				SensorManager.SENSOR_DELAY_GAME);
 		if (!mRegisteredSensor)
 			postError("In initResume():registerListener failed");
 	}

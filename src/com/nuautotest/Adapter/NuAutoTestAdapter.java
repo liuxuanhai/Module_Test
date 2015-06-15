@@ -3,6 +3,7 @@ package com.nuautotest.Adapter;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -48,7 +49,8 @@ public class NuAutoTestAdapter extends BaseAdapter {
 			"音频", "背光", "按键", "前摄头",
 			"后摄头", "闪光灯", "HDMI", "触屏",
 			"震动", "LCD", "休眠唤醒", "电话",
-			"出厂设置", "收音机", "LED", "设备状态" };
+			"出厂设置", "收音机", "LED", "设备状态"
+	};
 
 	public enum TestState {
 		TEST_STATE_NONE,
