@@ -93,7 +93,7 @@ public class FlashlightTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	protected void turnFlashlight(boolean off) {
+	void turnFlashlight(boolean off) {
 		RootCommand rootcmd = ModuleTestApplication.getRootcmd();
 		if (rootcmd.isEnabled()) {
 			try {
@@ -105,14 +105,14 @@ public class FlashlightTestActivity extends Activity {
 					rootcmd.Write("echo 0 > /sys/class/gpio/gpio46/value\n");
 					rootcmd.Write("echo 46 > /sys/class/gpio/unexport\n");
 					rootcmd.Write("echo 47 > /sys/class/gpio/unexport\n");
-					mbtFlashlight.setText("打开");
+					mbtFlashlight.setText(getString(R.string.open));
 				} else {
 					rootcmd.Write("echo 47 > /sys/class/gpio/export\n");
 					rootcmd.Write("echo out > /sys/class/gpio/gpio47/direction\n");
 					rootcmd.Write("echo 0 > /sys/class/gpio/gpio47/value\n");
 					rootcmd.Write("echo out > /sys/class/gpio/gpio46/direction\n");
 					rootcmd.Write("echo 1 > /sys/class/gpio/gpio46/value\n");
-					mbtFlashlight.setText("关闭");
+					mbtFlashlight.setText(getString(R.string.close));
 				}
 			} catch (Exception e) {
 				Log.w(ModuleTestApplication.TAG, "Flashlight Test: get root failed");
@@ -132,13 +132,13 @@ public class FlashlightTestActivity extends Activity {
 			if (off || Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode)) {
 				parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
 				mCamera.setParameters(parameters);
-				mbtFlashlight.setText("打开");
+				mbtFlashlight.setText(getString(R.string.open));
 			} else {
 				// Turn on the flash
 				if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
 					parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
 					mCamera.setParameters(parameters);
-					mbtFlashlight.setText("关闭");
+					mbtFlashlight.setText(getString(R.string.close));
 				}
 			}
 		}
@@ -174,7 +174,7 @@ public class FlashlightTestActivity extends Activity {
 		this.finish();
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -189,7 +189,7 @@ public class FlashlightTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

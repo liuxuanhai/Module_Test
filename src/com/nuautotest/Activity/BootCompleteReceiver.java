@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import com.nuautotest.application.ModuleTestApplication;
 
-public class BootCompleteReceiver extends BroadcastReceiver {
+class BootCompleteReceiver extends BroadcastReceiver {
 //	static final String ACTION = "android.intent.action.BOOT_COMPLETED";
 
 	@Override

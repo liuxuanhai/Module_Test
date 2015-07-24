@@ -27,7 +27,7 @@ import java.io.*;
  */
 
 public class DeviceInfoActivity extends Activity {
-	static final String CALIBRATION_PORT = "/dev/ttyN5";
+	private static final String CALIBRATION_PORT = "/dev/ttyN5";
 
 	private TextView mtvIMEI, mtvPCBASN, mtvSignal, mtvCalibration, mtvPcbaTestStatus, mtvApkTestStatus;
 	private TextView mtvBtName, mtvBtAddr, mtvBtScanmode, mtvBtState;
@@ -45,27 +45,27 @@ public class DeviceInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.device_info);
 
-		mtvIMEI = (TextView)this.findViewById(R.id.tvIMEI);
-		mtvPCBASN = (TextView)this.findViewById(R.id.tvPCBASN);
-		mtvSignal = (TextView)this.findViewById(R.id.tvSignal);
-		mtvCalibration = (TextView)this.findViewById(R.id.tvCalibration);
-		mtvPcbaTestStatus = (TextView)this.findViewById(R.id.tvPcbaTestStatus);
-		mtvApkTestStatus = (TextView)this.findViewById(R.id.tvApkTestStatus);
-		mtvBtName = (TextView)this.findViewById(R.id.tvBtName);
-		mtvBtAddr = (TextView)this.findViewById(R.id.tvBtAddr);
-		mtvBtScanmode = (TextView)this.findViewById(R.id.tvBtScanmode);
-		mtvBtState = (TextView)this.findViewById(R.id.tvBtState);
-		mtvWifiBSSID = (TextView)this.findViewById(R.id.tvWifiBSSID);
-		mtvWifiSSID = (TextView)this.findViewById(R.id.tvWifiSSID);
-		mtvWifiMac = (TextView)this.findViewById(R.id.tvWifiMac);
-		mtvWifiIp = (TextView)this.findViewById(R.id.tvWifiIp);
-		mtvWifiSpeed = (TextView)this.findViewById(R.id.tvWifiSpeed);
-		mtvBatteryCapacity = (TextView)this.findViewById(R.id.tvBatteryCapacity);
-		mtvBatteryVoltage = (TextView)this.findViewById(R.id.tvBatteryVoltage);
-		mtvBatteryTemperature = (TextView)this.findViewById(R.id.tvBatteryTemperature);
-		mtvVersionAP = (TextView)this.findViewById(R.id.tvVersionAP);
-		mtvVersionBP = (TextView)this.findViewById(R.id.tvVersionBP);
-		mtvVersionKernel = (TextView)this.findViewById(R.id.tvVersionKernel);
+		mtvIMEI = (TextView)this.findViewById(R.id.tvDIIMEI);
+		mtvPCBASN = (TextView)this.findViewById(R.id.tvDIPCBASN);
+		mtvSignal = (TextView)this.findViewById(R.id.tvDISignal);
+		mtvCalibration = (TextView)this.findViewById(R.id.tvDICalibration);
+		mtvPcbaTestStatus = (TextView)this.findViewById(R.id.tvDIPcbaTestStatus);
+		mtvApkTestStatus = (TextView)this.findViewById(R.id.tvDIApkTestStatus);
+		mtvBtName = (TextView)this.findViewById(R.id.tvDIBtName);
+		mtvBtAddr = (TextView)this.findViewById(R.id.tvDIBtAddr);
+		mtvBtScanmode = (TextView)this.findViewById(R.id.tvDIBtScanmode);
+		mtvBtState = (TextView)this.findViewById(R.id.tvDIBtState);
+		mtvWifiBSSID = (TextView)this.findViewById(R.id.tvDIWifiBSSID);
+		mtvWifiSSID = (TextView)this.findViewById(R.id.tvDIWifiSSID);
+		mtvWifiMac = (TextView)this.findViewById(R.id.tvDIWifiMac);
+		mtvWifiIp = (TextView)this.findViewById(R.id.tvDIWifiIp);
+		mtvWifiSpeed = (TextView)this.findViewById(R.id.tvDIWifiSpeed);
+		mtvBatteryCapacity = (TextView)this.findViewById(R.id.tvDIBatteryCapacity);
+		mtvBatteryVoltage = (TextView)this.findViewById(R.id.tvDIBatteryVoltage);
+		mtvBatteryTemperature = (TextView)this.findViewById(R.id.tvDIBatteryTemperature);
+		mtvVersionAP = (TextView)this.findViewById(R.id.tvDIVersionAP);
+		mtvVersionBP = (TextView)this.findViewById(R.id.tvDIVersionBP);
+		mtvVersionKernel = (TextView)this.findViewById(R.id.tvDIVersionKernel);
 
 		mPhoneManager = (TelephonyManager)this.getSystemService(TELEPHONY_SERVICE);
 		SignalStrengthListener mSignalListener = new SignalStrengthListener();
@@ -80,23 +80,20 @@ public class DeviceInfoActivity extends Activity {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
-					mtvBatteryCapacity.setText("电量: " + intent.getIntExtra("level", 0) + "%");
-					mtvBatteryVoltage.setText("电压: " + intent.getIntExtra("voltage", 0) + "mV");
-					mtvBatteryTemperature.setText("温度: " + intent.getIntExtra("temperature", 0)/10 + "度");
+					mtvBatteryCapacity.setText(getString(R.string.battery_capacity) + intent.getIntExtra("level", 0) + "%");
+					mtvBatteryVoltage.setText(getString(R.string.battery_voltage) + intent.getIntExtra("voltage", 0) + "mV");
+					mtvBatteryTemperature.setText(getString(R.string.battery_temperature) + intent.getIntExtra("temperature", 0)/10 + "℃");
 				}
 			}
 		};
 		this.registerReceiver(mBatteryBcr, intentFilter);
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-
-		/* IMEI */
+	private void getIMEI() {
 		if (mPhoneManager != null) mtvIMEI.setText(mPhoneManager.getDeviceId());
+	}
 
-		/* PCBA SN */
+	private void getPCBASN() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("/misc/pcbasn"));
 			String line = br.readLine();
@@ -104,8 +101,9 @@ public class DeviceInfoActivity extends Activity {
 		} catch (FileNotFoundException ignored) {
 		} catch (IOException ignored) {
 		}
+	}
 
-		/* Calibration */
+	private void getCalibration() {
 		try {
 			final String CALIB_WRITE = "at+xprs?\r\n";
 			final String CALIB_READ = "+XPRS:";
@@ -138,13 +136,13 @@ public class DeviceInfoActivity extends Activity {
 
 						switch (iCalib_state) {
 							case -1:
-								mtvCalibration.setText("未校准");
+								mtvCalibration.setText(getString(R.string.calibration_none));
 								break;
 							case 0:
-								mtvCalibration.setText("校准失败");
+								mtvCalibration.setText(getString(R.string.calibration_fail));
 								break;
 							case 1:
-								mtvCalibration.setText("已校准");
+								mtvCalibration.setText(getString(R.string.calibration_pass));
 								break;
 							default:
 								Log.e(ModuleTestApplication.TAG, "Unknown calibration state: " + iCalib_state);
@@ -152,13 +150,13 @@ public class DeviceInfoActivity extends Activity {
 						}
 						switch (iTest_state) {
 							case -1:
-								mtvCalibration.append(", 未综测");
+								mtvCalibration.append(", " + getString(R.string.bptest_none));
 								break;
 							case 0:
-								mtvCalibration.append(", 综测失败");
+								mtvCalibration.append(", " + getString(R.string.bptest_fail));
 								break;
 							case 1:
-								mtvCalibration.append(", 已综测");
+								mtvCalibration.append(", " + getString(R.string.bptest_pass));
 								break;
 							default:
 								Log.e(ModuleTestApplication.TAG, "Unknown test state: " + iTest_state);
@@ -176,58 +174,61 @@ public class DeviceInfoActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		/* Test status */
-		mtvPcbaTestStatus.setText("PCBA: 未完成");
-		mtvApkTestStatus.setText("APK: 未完成");
+	private void getTestStatus() {
+		mtvPcbaTestStatus.setText("PCBA: " + getString(R.string.not_finish));
+		mtvApkTestStatus.setText("APK: " + getString(R.string.not_finish));
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/misc/pcba_apk_test"));
+			BufferedReader br = new BufferedReader(new FileReader("/misc/prodmark"));
 			String line;
 			while ((line = br.readLine()) != null) {
-				if (line.equals("pcba_ok")) {
-					mtvPcbaTestStatus.setText("PCBA: 已完成");
-				} else if (line.equals("apk_ok")) {
-					mtvApkTestStatus.setText("APK: 已完成");
+				if (line.equals("PCBATEST=1")) {
+					mtvPcbaTestStatus.setText("PCBA: " + getString(R.string.finish));
+				} else if (line.equals("APKTEST=1")) {
+					mtvApkTestStatus.setText("APK: " + getString(R.string.finish));
 				}
 			}
 		} catch (FileNotFoundException ignored) {
 		} catch (IOException ignored) {
 		}
+	}
 
-		/* Bluetooth */
+	private void getBluetooth() {
 		if (mBluetoothAdapter != null) {
 			mtvBtName.setText("Name: " + mBluetoothAdapter.getName());
 			mtvBtAddr.setText("Address: " + mBluetoothAdapter.getAddress());
 			mtvBtScanmode.setText("Scan mode: ");
 			switch (mBluetoothAdapter.getScanMode()) {
 				case BluetoothAdapter.SCAN_MODE_NONE:
-					mtvBtScanmode.append("不可用");
+					mtvBtScanmode.append(getString(R.string.bt_scan_mode_none));
 					break;
 				case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
-					mtvBtScanmode.append("可连接");
+					mtvBtScanmode.append(getString(R.string.bt_scan_mode_connectable));
 					break;
 				case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
-					mtvBtScanmode.append("可连接(可被发现)");
+					mtvBtScanmode.append(getString(R.string.bt_scan_mode_connectable_discoverable));
 					break;
 			}
 			mtvBtState.setText("State: ");
 			switch (mBluetoothAdapter.getState()) {
 				case BluetoothAdapter.STATE_OFF:
-					mtvBtState.append("关闭");
+					mtvBtState.append(getString(R.string.status_disabled));
 					break;
 				case BluetoothAdapter.STATE_TURNING_ON:
-					mtvBtState.append("打开中...");
+					mtvBtState.append(getString(R.string.status_enabling));
 					break;
 				case BluetoothAdapter.STATE_ON:
-					mtvBtState.append("打开");
+					mtvBtState.append(getString(R.string.status_enabled));
 					break;
 				case BluetoothAdapter.STATE_TURNING_OFF:
-					mtvBtState.append("关闭中...");
+					mtvBtState.append(getString(R.string.status_disabling));
 					break;
 			}
 		}
+	}
 
-		/* Wifi */
+	private void getWifi() {
 		mtvWifiBSSID.setText("BSSID: " + mWifiInfo.getBSSID());
 		mtvWifiSSID.setText("SSID: " + mWifiInfo.getSSID());
 		mtvWifiMac.setText("Mac: " + mWifiInfo.getMacAddress());
@@ -248,6 +249,18 @@ public class DeviceInfoActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		getIMEI();
+		getPCBASN();
+		getCalibration();
+		getTestStatus();
+		getBluetooth();
+		getWifi();
 	}
 
 	@Override

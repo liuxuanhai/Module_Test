@@ -34,7 +34,8 @@ import java.util.List;
  */
 
 public class WifiTestActivity extends Activity {
-	private TextView tvWifiStatus, tvWifiConnStatus, tvWifiNumber;
+	private TextView tvWifiStatus, tvWifiNumber;
+	private TextView tvWifiID, tvWifiName, tvWifiIP, tvWifiServerStatus, tvWifiPing;
 
 	private WifiManager mWifiManager;
 	private BroadcastReceiver mBroadcastRcv;
@@ -49,45 +50,41 @@ public class WifiTestActivity extends Activity {
 	private Handler mHandler;
 	private FileWriter mLogWriter;
 
-	public class WifiBroadcastReceiver extends BroadcastReceiver {
+	private class WifiBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
 				int mWifiState = mWifiManager.getWifiState();
 				switch(mWifiState) {
 					case WifiManager.WIFI_STATE_DISABLING:
-						tvWifiStatus.setText("Wifi状态:关闭中...");
+						tvWifiStatus.setText(mContext.getString(R.string.status_disabling));
 						break;
 					case WifiManager.WIFI_STATE_DISABLED:
-						tvWifiStatus.setText("Wifi状态:关闭");
+						tvWifiStatus.setText(mContext.getString(R.string.status_disabled));
 						break;
 					case WifiManager.WIFI_STATE_ENABLING:
-						tvWifiStatus.setText("Wifi状态:打开中...");
+						tvWifiStatus.setText(mContext.getString(R.string.status_enabling));
 						break;
 					case WifiManager.WIFI_STATE_ENABLED:
-						tvWifiStatus.setText("Wifi状态:打开");
+						tvWifiStatus.setText(mContext.getString(R.string.status_enabled));
 						break;
 					case WifiManager.WIFI_STATE_UNKNOWN:
-						tvWifiStatus.setText("Wifi状态:不可用");
+						tvWifiStatus.setText(mContext.getString(R.string.status_unknown));
 						break;
 				}
 			} else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
 				WifiInfo wifiInfo;
 				wifiInfo = mWifiManager.getConnectionInfo();
 				if (wifiInfo.getNetworkId() != -1) {
-					tvWifiConnStatus.setText("当前网络:\r\n");
-					tvWifiConnStatus.append("编号:"+wifiInfo.getNetworkId()+"\r\n");
-					tvWifiConnStatus.append("名称:"+wifiInfo.getSSID()+"\r\n");
-					tvWifiConnStatus.append("IP:"+ipIntToString(wifiInfo.getIpAddress())+"\r\n");
-					tvWifiConnStatus.append("服务器状态:"+wifiInfo.getSupplicantState().name()+"\r\n");
-					tvWifiConnStatus.append("Ping服务器...\t");
+					tvWifiID.setText(String.valueOf(wifiInfo.getNetworkId()));
+					tvWifiName.setText(wifiInfo.getSSID());
+					tvWifiIP.setText(ipIntToString(wifiInfo.getIpAddress()));
+					tvWifiServerStatus.setText(wifiInfo.getSupplicantState().name());
 					boolean ping = mWifiManager.pingSupplicant();
 					if (ping)
-						tvWifiConnStatus.append("成功\r\n");
+						tvWifiPing.setText(mContext.getString(R.string.success));
 					else
-						tvWifiConnStatus.append("失败\r\n");
-				} else {
-					tvWifiConnStatus.setText("无网络连接");
+						tvWifiPing.setText(mContext.getString(R.string.fail));
 				}
 			}
 		}
@@ -102,9 +99,13 @@ public class WifiTestActivity extends Activity {
 			Log.i(ModuleTestApplication.TAG, "======"+device.getDeviceName()+"======");
 		mContext = this;
 		setContentView(R.layout.wifi_test);
-		tvWifiStatus = (TextView)findViewById(R.id.tvwifistatus);
-		tvWifiConnStatus = (TextView)findViewById(R.id.tvwificonnstatus);
+		tvWifiStatus = (TextView)findViewById(R.id.tvWifiStatus);
 		tvWifiNumber = (TextView)findViewById(R.id.tvWifiNumber);
+		tvWifiID = (TextView)findViewById(R.id.tvWifiID);
+		tvWifiName = (TextView)findViewById(R.id.tvWifiName);
+		tvWifiIP = (TextView)findViewById(R.id.tvWifiIp);
+		tvWifiServerStatus = (TextView)findViewById(R.id.tvWifiServerStatus);
+		tvWifiPing = (TextView)findViewById(R.id.tvWifiPing);
 		mUpdateHandler = new WifiUpdateHandler();
 
 		IntentFilter intentFilter = new IntentFilter();
@@ -116,7 +117,7 @@ public class WifiTestActivity extends Activity {
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_wifi.txt");
@@ -143,7 +144,7 @@ public class WifiTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	protected void releaseDestroy() {
+	void releaseDestroy() {
 		mScanThread.shouldStop = true;
 		try {
 			mContext.unregisterReceiver(mBroadcastRcv);
@@ -221,20 +222,20 @@ public class WifiTestActivity extends Activity {
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "WifiTestActivity" + "======" + error + "======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	protected class WifiUpdateHandler extends Handler {
+	private class WifiUpdateHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
-			tvWifiNumber.setText("热点数量: " + mScanResult.size());
+			tvWifiNumber.setText(String.valueOf(mScanResult.size()));
 		}
 	}
 
-	protected class WifiScanThread extends Handler implements Runnable {
+	class WifiScanThread extends Handler implements Runnable {
 		public boolean shouldStop = false;
 
 		@Override
@@ -259,7 +260,7 @@ public class WifiTestActivity extends Activity {
 		}
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -267,7 +268,7 @@ public class WifiTestActivity extends Activity {
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.wifi_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

@@ -13,9 +13,11 @@
 		<Button
 				android:id="@+id/btVibrate"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="0dp"
 				android:onClick="onVibrate"
-				android:text="震动" android:layout_weight="0.50" style="@android:style/Widget.Button"
+				android:text="@string/vibrate"
+				android:layout_weight="0.50"
+				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 
 	</LinearLayout>

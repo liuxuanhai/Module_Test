@@ -40,13 +40,13 @@ public class ChargerTestActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.charger_test);
-		text = (TextView) findViewById(R.id.sdsensor);
+		text = (TextView)findViewById(R.id.tvCharger);
 		mContext = this;
 
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_charger.txt");
@@ -67,11 +67,11 @@ public class ChargerTestActivity extends Activity
 			chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
 		if (!isAutomatic) {
 			if (chargePlug == BatteryManager.BATTERY_PLUGGED_USB)
-				text.setText("USB充电器已插入");
+				text.setText(mContext.getString(R.string.charger_usb));
 			else if (chargePlug == BatteryManager.BATTERY_PLUGGED_AC)
-				text.setText("AC充电器已插入");
+				text.setText(mContext.getString(R.string.charger_ac));
 			else
-				text.setText("充电器拔出");
+				text.setText(mContext.getString(R.string.charger_none));
 		} else {
 			if (chargePlug == BatteryManager.BATTERY_PLUGGED_USB ||
 					chargePlug == BatteryManager.BATTERY_PLUGGED_AC)
@@ -90,13 +90,13 @@ public class ChargerTestActivity extends Activity
 					} else {
 						if (intent.getIntExtra("plugged", 0) == BatteryManager.BATTERY_PLUGGED_AC) {
 							Log.i(ModuleTestApplication.TAG, "AC in");
-							text.setText("AC充电器已插入");
+							text.setText(mContext.getString(R.string.charger_ac));
 						} else if (intent.getIntExtra("plugged", 0) == BatteryManager.BATTERY_PLUGGED_USB) {
 							Log.i(ModuleTestApplication.TAG, "USB in");
-							text.setText("USB充电器已插入");
+							text.setText(mContext.getString(R.string.charger_usb));
 						} else {
 							Log.i(ModuleTestApplication.TAG, "Unplugged");
-							text.setText("充电器拨出");
+							text.setText(mContext.getString(R.string.charger_none));
 						}
 					}
 				}
@@ -112,7 +112,7 @@ public class ChargerTestActivity extends Activity
 		super.onDestroy();
 	}
 
-	protected void releaseDestroy() {
+	void releaseDestroy() {
 		if (mRegisteredListener != null) {
 			mContext.unregisterReceiver(broadcastRec);
 		}
@@ -148,7 +148,7 @@ public class ChargerTestActivity extends Activity
 		return true;
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -156,7 +156,7 @@ public class ChargerTestActivity extends Activity
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.charger_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -167,7 +167,7 @@ public class ChargerTestActivity extends Activity
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

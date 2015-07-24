@@ -2,13 +2,9 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +12,6 @@ import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.*;
-import java.util.HashMap;
 
 /**
  * usb测试
@@ -29,20 +24,20 @@ public class USBTestActivity extends Activity
 
 {
 	private TextView mtvUsbAccessory/*, mtvUsbHost*/;
-	//	private BroadcastReceiver mBcrAccessory, mBcrHost;
-	private boolean mListening, mIsAdb;
+//	private BroadcastReceiver mBcrAccessory, mBcrHost;
+	private boolean mListening/*, mIsAdb*/;
 	private Handler mUsbHandler;
 
-	static final int MSG_HOST_IN = 0x101;
-	static final int MSG_HOST_OUT = 0x102;
-	static final int MSG_ACCESSORY_IN = 0x103;
-	static final int MSG_ACCESSORY_OUT = 0x104;
+	private static final int MSG_HOST_IN = 0x101;
+	private static final int MSG_HOST_OUT = 0x102;
+	private static final int MSG_ACCESSORY_IN = 0x103;
+	private static final int MSG_ACCESSORY_OUT = 0x104;
 
 	private boolean isAutomatic, isFinished;
 	private int time;
 	private Context mContext;
 	private Handler mHandler;
-	private boolean mHostOK, mAccessoryOK;
+	private boolean /*mHostOK,*/ mAccessoryOK;
 
 	private FileWriter mLogWriter;
 
@@ -60,7 +55,7 @@ public class USBTestActivity extends Activity
 		initCreate();
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_usb.txt");
@@ -101,101 +96,101 @@ public class USBTestActivity extends Activity
 //		}
 
 
-		mUsbHandler = new UsbHostHandler();
+		mUsbHandler = new UsbHandler();
 		mListening = true;
 
-		Thread threadHost = new Thread(new UsbHostThread());
-		threadHost.start();
+//		Thread threadHost = new Thread(new UsbHostThread());
+//		threadHost.start();
 
 		Thread threadAccessory = new Thread(new UsbAccessoryThread());
 		threadAccessory.start();
 	}
 
-	public class UsbHostHandler extends Handler {
+	private class UsbHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case MSG_HOST_IN:
-//				mtvUsbHost.setText("USB Host状态:插入");
+//				    mtvUsbHost.setText("USB Host状态:插入");
 					break;
 				case MSG_HOST_OUT:
-//				mtvUsbHost.setText("USB Host状态:未插入");
+//				    mtvUsbHost.setText("USB Host状态:未插入");
 					break;
 				case MSG_ACCESSORY_IN:
-					mtvUsbAccessory.setText("状态:插入");
+					mtvUsbAccessory.setText(mContext.getString(R.string.usb_plugged));
 					break;
 				case MSG_ACCESSORY_OUT:
-					mtvUsbAccessory.setText("状态:未插入");
+					mtvUsbAccessory.setText(mContext.getString(R.string.usb_unplugged));
 			}
 		}
 	}
 
-	public class UsbHostThread extends Thread {
-		@Override
-		public void run() {
-			while (mListening) {
-				File fDeviceDir = new File("/sys/bus/usb/devices");
-				File [] fDevices = fDeviceDir.listFiles();
-				File fDeviceMaxChild;
-				boolean hasDevice = false;
-				int i;
-				for (i=0; i< (fDevices != null ? fDevices.length : 0); i++) {
-					fDeviceMaxChild =
-							new File("/sys/bus/usb/devices/"+fDevices[i].getName()+"/maxchild");
-					if ( (fDeviceMaxChild.isFile()) && (fDeviceMaxChild.canRead()) ) {
-						FileReader fReader;
-						try {
-							fReader = new FileReader(fDeviceMaxChild);
-							char [] chBuffer = new char[1024];
-							int readCount = fReader.read(chBuffer);
-							fReader.close();
-							String strBuffer = String.valueOf(chBuffer, 0, readCount-1);
-							if (strBuffer.equals("0"))
-								hasDevice = true;
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
+//	public class UsbHostThread extends Thread {
+//		@Override
+//		public void run() {
+//			while (mListening) {
+//				File fDeviceDir = new File("/sys/bus/usb/devices");
+//				File [] fDevices = fDeviceDir.listFiles();
+//				File fDeviceMaxChild;
+//				boolean hasDevice = false;
+//				int i;
+//				for (i=0; i< (fDevices != null ? fDevices.length : 0); i++) {
+//					fDeviceMaxChild =
+//							new File("/sys/bus/usb/devices/"+fDevices[i].getName()+"/maxchild");
+//					if ( (fDeviceMaxChild.isFile()) && (fDeviceMaxChild.canRead()) ) {
+//						FileReader fReader;
+//						try {
+//							fReader = new FileReader(fDeviceMaxChild);
+//							char [] chBuffer = new char[1024];
+//							int readCount = fReader.read(chBuffer);
+//							fReader.close();
+//							String strBuffer = String.valueOf(chBuffer, 0, readCount-1);
+//							if (strBuffer.equals("0"))
+//								hasDevice = true;
+//						} catch (FileNotFoundException e) {
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//
+//				if (hasDevice) {
+//					if (isAutomatic)
+//						mHostOK = true;
+//					else
+//						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
+//				} else {
+//					if (!isAutomatic)
+//						mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
+//				}
+//
+//				try {
+//					sleep(100);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//
+//				UsbManager manager = (UsbManager)mContext.getSystemService(USB_SERVICE);
+//
+//				HashMap<String,UsbDevice> device = manager.getDeviceList();
+//
+//				if ( (device != null) && (device.size() != 0) ) {
+//					if (isAutomatic)
+//						mHostOK = true;
+//					else
+//						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
+//				} else
+//					mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
+//
+//				try {
+//					Thread.sleep(100);
+//				} catch(InterruptedException ignored) {}
+//			}
+//		}
+//	}
 
-				if (hasDevice) {
-					if (isAutomatic)
-						mHostOK = true;
-					else
-						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
-				} else {
-					if (!isAutomatic)
-						mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
-				}
-
-				try {
-					sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				UsbManager manager = (UsbManager)mContext.getSystemService(USB_SERVICE);
-
-				HashMap<String,UsbDevice> device = manager.getDeviceList();
-
-				if ( (device != null) && (device.size() != 0) ) {
-					if (isAutomatic)
-						mHostOK = true;
-					else
-						mUsbHandler.sendEmptyMessage(MSG_HOST_IN);
-				} else
-					mUsbHandler.sendEmptyMessage(MSG_HOST_OUT);
-
-				try {
-					Thread.sleep(100);
-				} catch(InterruptedException ignored) {}
-			}
-		}
-	}
-
-	public class UsbAccessoryThread extends Thread {
+	private class UsbAccessoryThread extends Thread {
 		@Override
 		public void run() {
 			while (mListening) {
@@ -281,13 +276,13 @@ public class USBTestActivity extends Activity
 		super.onDestroy();
 	}
 
-	public void releaseDestroy() {
-		int permission =
-				mContext.checkCallingOrSelfPermission("android.permission.WRITE_SECURE_SETTINGS");
-		if (permission == PackageManager.PERMISSION_GRANTED) {
-			if (mIsAdb)
-				Settings.Secure.putInt(mContext.getContentResolver(), Settings.Global.ADB_ENABLED, 1);
-		}
+	void releaseDestroy() {
+//		int permission =
+//				mContext.checkCallingOrSelfPermission("android.permission.WRITE_SECURE_SETTINGS");
+//		if (permission == PackageManager.PERMISSION_GRANTED) {
+//			if (mIsAdb)
+//				Settings.Secure.putInt(mContext.getContentResolver(), Settings.Global.ADB_ENABLED, 1);
+//		}
 
 //		try {
 //			mContext.unregisterReceiver(mBcrAccessory);
@@ -329,7 +324,7 @@ public class USBTestActivity extends Activity
 		return true;
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
@@ -337,7 +332,7 @@ public class USBTestActivity extends Activity
 		initCreate();
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.usb_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -348,7 +343,7 @@ public class USBTestActivity extends Activity
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

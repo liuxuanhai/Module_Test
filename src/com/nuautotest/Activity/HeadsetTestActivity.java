@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
 import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
@@ -43,9 +42,11 @@ public class HeadsetTestActivity extends Activity
 	private MediaRecorder mRecorder = null;
 	private MediaPlayer mPlayer = null, mPlayer2 = null;
 
-	boolean mPlayingFile = false, mRecording = false, mPlaying = false;
+	private boolean mPlayingFile = false;
+	private boolean mRecording = false;
+	private boolean mPlaying = false;
 
-	protected static final int PLAYFILE = 0X105;
+	private static final int PLAYFILE = 0X105;
 
 	public Thread thread;
 
@@ -121,21 +122,21 @@ public class HeadsetTestActivity extends Activity
 		AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		if (mAudioManager == null) Log.e(ModuleTestApplication.TAG, "Get AudioManager failed");
 		else {
-			if (mAudioManager.isWiredHeadsetOn()) mHeadsetState.setText("已插入");
+			if (mAudioManager.isWiredHeadsetOn()) mHeadsetState.setText(mContext.getString(R.string.headset_plugged));
 		}
 	}
 
 	private void playFile() {
 		if (mPlayingFile) {
-			mPlayer = MediaPlayer.create(this, R.raw.audiofiletest);
+			mPlayer = MediaPlayer.create(this, R.raw.guitar_love);
 			mPlayer.start();
-			mPlayMusic.setText("停止播放");
+			mPlayMusic.setText(mContext.getString(R.string.stop_play));
 		} else {
 			if (mPlayer != null) {
 				mPlayer.release();
 				mPlayer = null;
 			}
-			mPlayMusic.setText("播放音乐");
+			mPlayMusic.setText(mContext.getString(R.string.play_music));
 		}
 	}
 
@@ -153,7 +154,7 @@ public class HeadsetTestActivity extends Activity
 				e.printStackTrace();
 				Log.e(ModuleTestApplication.TAG, "start recording failed");
 			}
-			mbtRecord.setText("停止录音");
+			mbtRecord.setText(mContext.getString(R.string.stop_record));
 		} else {
 			if (mRecorder != null) {
 				try {
@@ -165,11 +166,11 @@ public class HeadsetTestActivity extends Activity
 				}
 				mRecorder = null;
 			}
-			mbtRecord.setText("开始录音");
+			mbtRecord.setText(mContext.getString(R.string.start_record));
 		}
 	}
 
-	class OnRecordCompletionListener implements MediaPlayer.OnCompletionListener {
+	private class OnRecordCompletionListener implements MediaPlayer.OnCompletionListener {
 		@Override
 		public void onCompletion(MediaPlayer mp) {
 			try {
@@ -218,7 +219,7 @@ public class HeadsetTestActivity extends Activity
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			mbtPlay.setText("停止播放");
+			mbtPlay.setText(mContext.getString(R.string.stop_play));
 		} else {
 			if (mPlayer != null) {
 				mPlayer.release();
@@ -228,7 +229,7 @@ public class HeadsetTestActivity extends Activity
 				mPlayer2.release();
 				mPlayer2 = null;
 			}
-			mbtPlay.setText("开始播放");
+			mbtPlay.setText(mContext.getString(R.string.start_play));
 		}
 	}
 
@@ -273,7 +274,7 @@ public class HeadsetTestActivity extends Activity
 		return true;
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -288,7 +289,7 @@ public class HeadsetTestActivity extends Activity
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
@@ -302,7 +303,7 @@ public class HeadsetTestActivity extends Activity
 		}
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_headset.txt");
@@ -326,18 +327,18 @@ public class HeadsetTestActivity extends Activity
 					if (state == 1) {
 						if (isAutomatic) stopAutoTest(true);
 						else if (microphone == 1) {
-							mHeadsetState.setText("四段式耳机已插入");
+							mHeadsetState.setText(mContext.getString(R.string.headset_plugged_four));
 							mKeyHeadset.setBackgroundColor(Color.RED);
 							mllHeadsetKey.setVisibility(View.VISIBLE);
 							mllHeadsetRecord.setVisibility(View.VISIBLE);
 						} else {
-							mHeadsetState.setText("三段式耳机已插入");
+							mHeadsetState.setText(mContext.getString(R.string.headset_plugged_three));
 							mllHeadsetKey.setVisibility(View.INVISIBLE);
 							mllHeadsetRecord.setVisibility(View.INVISIBLE);
 						}
 					} else {
 						if (!isAutomatic) {
-							mHeadsetState.setText("未插入");
+							mHeadsetState.setText(mContext.getString(R.string.headset_unplugged));
 							mllHeadsetKey.setVisibility(View.INVISIBLE);
 							mllHeadsetRecord.setVisibility(View.INVISIBLE);
 						}
@@ -348,7 +349,7 @@ public class HeadsetTestActivity extends Activity
 		mContext.registerReceiver(mPlugListener, intentFilter);
 	}
 
-	public void releaseDestroy() {
+	void releaseDestroy() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
 			try {
@@ -370,7 +371,7 @@ public class HeadsetTestActivity extends Activity
 		return super.onKeyDown(keycode, event);
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 
@@ -380,7 +381,7 @@ public class HeadsetTestActivity extends Activity
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.headset_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -398,7 +399,7 @@ public class HeadsetTestActivity extends Activity
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

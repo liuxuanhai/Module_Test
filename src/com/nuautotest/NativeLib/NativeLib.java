@@ -1,6 +1,6 @@
 package com.nuautotest.NativeLib;
 
-public class NativeLib {
+class NativeLib {
 	static {
 		System.loadLibrary("ndk");
 	}

@@ -8,16 +8,34 @@
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="请遮挡传感器"
+			android:text="@string/psensor_prompt"
 			android:textSize="@dimen/header" android:textColor="@color/black" android:background="@color/widget"/>
 
-	<TextView
-			android:id="@+id/proxsensor"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="0dip"
-			android:layout_weight="1"
-			android:text="无反应"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp"/>
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/psensor_distance"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1"/>
+
+		<TextView
+				android:id="@+id/proxsensor"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/no_response"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1"/>
+	</LinearLayout>
 
 	<include layout="@layout/bottom_button" />
 

@@ -8,7 +8,6 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,19 +34,19 @@ public class AudioTestActivity extends Activity {
 	private MediaRecorder mRecorder = null;
 	private MediaPlayer mPlayer = null;
 
-	boolean mStartRecording = false;
-	boolean mStopRecording = false;
-	boolean mStartPlaying = false;
-	boolean mStopPlaying = false;
-	boolean mPlayingFile = false;
+	private boolean mStartRecording = false;
+	private boolean mStopRecording = false;
+	private boolean mStartPlaying = false;
+	private boolean mStopPlaying = false;
+	private boolean mPlayingFile = false;
 
-	protected static final int START = 0x101;
-	protected static final int STOP = 0x102;
-	protected static final int PLAY = 0x103;
-	protected static final int STOPPLAY = 0x104;
-	protected static final int PLAYFILE = 0x105;
+//	private static final int START = 0x101;
+//	private static final int STOP = 0x102;
+//	private static final int PLAY = 0x103;
+//	private static final int STOPPLAY = 0x104;
+//	private static final int PLAYFILE = 0x105;
 
-	public Thread thread;
+//	public Thread thread;
 
 	private boolean isFinished;
 	private int time;
@@ -59,34 +58,36 @@ public class AudioTestActivity extends Activity {
 	private int mTimeout;
 	private TimerHandler mTimerHandler;
 
-	Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-				case AudioTestActivity.START:
-					onRecord();
-					break;
-				case AudioTestActivity.STOP:
-					stopRecord();
-					break;
-				case AudioTestActivity.PLAY:
-					onPlay();
-					break;
-				case AudioTestActivity.STOPPLAY:
-					stopPlay();
-					break;
-				case AudioTestActivity.PLAYFILE:
-					playFile();
-					break;
-			}
-
-			super.handleMessage(msg);
-		}
-	};
+//	Handler handler = new Handler() {
+//		public void handleMessage(Message msg) {
+//			switch (msg.what) {
+//				case AudioTestActivity.START:
+//					onRecord();
+//					break;
+//				case AudioTestActivity.STOP:
+//					stopRecord();
+//					break;
+//				case AudioTestActivity.PLAY:
+//					onPlay();
+//					break;
+//				case AudioTestActivity.STOPPLAY:
+//					stopPlay();
+//					break;
+//				case AudioTestActivity.PLAYFILE:
+//					playFile();
+//					break;
+//			}
+//
+//			super.handleMessage(msg);
+//		}
+//	};
+// --Commented out by Inspection STOP (15-7-20 上午11:40)
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		mContext = this;
 		setContentView(R.layout.audio_test);
 		initCreate();
 		InitPathRecord();
@@ -222,7 +223,7 @@ public class AudioTestActivity extends Activity {
 //		}
 //	}
 
-	public void InitPathRecord() {
+	void InitPathRecord() {
 		mRecordName = ModuleTestApplication.LOG_DIR + "/audiorecordtest.3gp";
 		System.out.println(mRecordName);
 	}
@@ -255,7 +256,7 @@ public class AudioTestActivity extends Activity {
 			return;
 		}
 
-		text.setText("开始播放...");
+		text.setText(mContext.getString(R.string.start_play));
 		stopPlayButton.setVisibility(View.VISIBLE);
 		playButton.setVisibility(View.INVISIBLE);
 		startButton.setVisibility(View.INVISIBLE);
@@ -269,7 +270,7 @@ public class AudioTestActivity extends Activity {
 			mPlayer = null;
 		}
 
-		text.setText("播放完毕");
+		text.setText(mContext.getString(R.string.stop_play));
 		startButton.setVisibility(View.VISIBLE);
 		playButton.setVisibility(View.VISIBLE);
 		stopButton.setVisibility(View.INVISIBLE);
@@ -293,7 +294,7 @@ public class AudioTestActivity extends Activity {
 			return;
 		}
 
-		text.setText("开始录制...");
+		text.setText(mContext.getString(R.string.start_record));
 		stopButton.setVisibility(View.VISIBLE);
 		playButton.setVisibility(View.INVISIBLE);
 		startButton.setVisibility(View.INVISIBLE);
@@ -313,7 +314,7 @@ public class AudioTestActivity extends Activity {
 			mRecorder = null;
 		}
 
-		text.setText("已停止录制");
+		text.setText(mContext.getString(R.string.stop_record));
 		stopButton.setVisibility(View.INVISIBLE);
 		startButton.setVisibility(View.VISIBLE);
 		if (!mPlayingFile) playButton.setVisibility(View.VISIBLE);
@@ -323,15 +324,15 @@ public class AudioTestActivity extends Activity {
 	private void playFile() {
 		if (!mPlayingFile) {
 			try {
-				mPlayer = MediaPlayer.create(this, R.raw.audiofiletest);
+				mPlayer = MediaPlayer.create(this, R.raw.guitar_love);
 				mPlayer.start();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.e(ModuleTestApplication.TAG, "start playing failed");
 				return;
 			}
-			text.setText("开始播放文件...");
-			playFileButton.setText("停止播放文件");
+			text.setText(mContext.getString(R.string.audio_play_file));
+			playFileButton.setText(mContext.getString(R.string.stop_play));
 			playButton.setVisibility(View.INVISIBLE);
 		} else {
 			if (mPlayer != null) {
@@ -339,8 +340,8 @@ public class AudioTestActivity extends Activity {
 				mPlayer = null;
 			}
 
-			text.setText("播放文件完毕");
-			playFileButton.setText("播放音频文件");
+			text.setText(mContext.getString(R.string.stop_play));
+			playFileButton.setText(mContext.getString(R.string.audio_play_file));
 			if (mStopRecording) playButton.setVisibility(View.VISIBLE);
 		}
 	}
@@ -386,7 +387,7 @@ public class AudioTestActivity extends Activity {
 		return true;
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -401,7 +402,7 @@ public class AudioTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {
@@ -415,7 +416,7 @@ public class AudioTestActivity extends Activity {
 		}
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_record.txt");
@@ -427,7 +428,7 @@ public class AudioTestActivity extends Activity {
 		Log.i(ModuleTestApplication.TAG, "---Record Test---");
 	}
 
-	public void releaseDestroy() {
+	void releaseDestroy() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
 			try {
@@ -438,7 +439,7 @@ public class AudioTestActivity extends Activity {
 		}
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isFinished = false;
 
 		initCreate();
@@ -447,16 +448,13 @@ public class AudioTestActivity extends Activity {
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 
 		mPlayer = new MediaPlayer();
-		mPlayer = MediaPlayer.create(mContext, R.raw.audiofiletest);
-		if (mPlayer == null) stopAutoTest(false);
+		mPlayer = MediaPlayer.create(mContext, R.raw.guitar_love);
+		if (mPlayer == null) stopAutoTest();
 		mPlayer.start();
 	}
 
-	public void stopAutoTest(boolean success) {
-		if (success)
-			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
-		else
-			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
+	void stopAutoTest() {
+		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.audio_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		isFinished = true;
 
@@ -470,7 +468,7 @@ public class AudioTestActivity extends Activity {
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();
@@ -489,7 +487,7 @@ public class AudioTestActivity extends Activity {
 				time++;
 			}
 			if (time >= 2000) {
-				stopAutoTest(false);
+				stopAutoTest();
 			}
 		}
 	}

@@ -23,23 +23,22 @@ import java.io.IOException;
 
 public class BackLightTestActivity extends Activity
 {
-	public TextView t;
-	public WindowManager.LayoutParams lp;
-	public Thread thread;
-	public float j=1;
+	private TextView mtvBacklight;
+	private WindowManager.LayoutParams lp;
+	private float j=1;
 	private FileWriter mLogWriter;
 
-	protected static final int MESSAGE_TEST = 0X101;
+	private static final int MESSAGE_TEST = 0X101;
 
 	private static final int MSG_TIMEOUT = 0x102;
 	private int mTimeout;
 	private TimerHandler mTimerHandler;
 
-	Handler handler = new Handler() {
+	private final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case BackLightTestActivity.MESSAGE_TEST:
-					t.setText("亮度: " + j/10f);
+					mtvBacklight.setText(String.valueOf(j / 10f));
 					lp.screenBrightness = j/10f;
 					getWindow().setAttributes(lp);
 					break;
@@ -64,12 +63,12 @@ public class BackLightTestActivity extends Activity
 		}
 		Log.i(ModuleTestApplication.TAG, "---BackLight Test---");
 
-		t = (TextView) findViewById(R.id.sensor);
+		mtvBacklight = (TextView) findViewById(R.id.tvBacklight);
 		lp = getWindow().getAttributes();
 		lp.screenBrightness = 0.01f;
 		getWindow().setAttributes(lp);
 
-		thread = new Thread(new myThread());
+		Thread thread = new Thread(new myThread());
 		thread.start();
 	}
 
@@ -99,7 +98,7 @@ public class BackLightTestActivity extends Activity
 		super.onDestroy();
 	}
 
-	class myThread implements Runnable {
+	private class myThread implements Runnable {
 
 		public void run() {
 			for (int i = 1; i <=10; i++) {
@@ -140,13 +139,13 @@ public class BackLightTestActivity extends Activity
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "BackLightTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.backlight_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -161,7 +160,7 @@ public class BackLightTestActivity extends Activity
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

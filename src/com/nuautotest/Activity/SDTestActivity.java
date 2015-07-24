@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 
 public class SDTestActivity extends Activity {
-	private TextView text, tvSDStatus;
+	private TextView mtvSDStatus;
 	private BroadcastReceiver broadcastRec;
 
 	private boolean isFinished;
@@ -39,11 +39,11 @@ public class SDTestActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		mContext = this;
 		setContentView(R.layout.sd_test);
 		initCreate();
 
-		text = (TextView) findViewById(R.id.sdsensor);
-		tvSDStatus = (TextView) findViewById(R.id.tvSDStatus);
+		mtvSDStatus = (TextView)findViewById(R.id.tvSDStatus);
 
 		IntentFilter intentFilter = new IntentFilter(
 				Intent.ACTION_MEDIA_MOUNTED);
@@ -59,16 +59,14 @@ public class SDTestActivity extends Activity {
 					if ("android.intent.action.MEDIA_MOUNTED".equals(intent.getAction())) {
 						String path = uri.toString().substring("file://".length());
 						if (path.equals("/mnt/sdcardEx")) {
-							text.setText("操作: 插入");
-							tvSDStatus.setText("状态: SD卡已插入");
+							mtvSDStatus.setText(mContext.getString(R.string.sd_insert));
 						}
 					} else if ("android.intent.action.MEDIA_REMOVED".equals(intent.getAction())
 							|| "android.intent.action.MEDIA_UNMOUNTED".equals(intent.getAction())
 							|| "android.intent.action.MEDIA_BAD_REMOVAL".equals(intent.getAction())) {
 						String path = uri.toString().substring("file://".length());
 						if (path.equals("/mnt/sdcardEx")) {
-							text.setText("操作: 移除");
-							tvSDStatus.setText("状态: SD卡未插入");
+							mtvSDStatus.setText(mContext.getString(R.string.sd_remove));
 						}
 					}
 				}
@@ -78,9 +76,9 @@ public class SDTestActivity extends Activity {
 		registerReceiver(broadcastRec, intentFilter);
 
 		if (statusTest())
-			tvSDStatus.setText("状态: SD卡已插入");
+			mtvSDStatus.setText(mContext.getString(R.string.sd_insert));
 		else
-			tvSDStatus.setText("状态: SD卡未插入");
+			mtvSDStatus.setText(mContext.getString(R.string.sd_remove));
 	}
 
 	@Override
@@ -115,7 +113,7 @@ public class SDTestActivity extends Activity {
 		return true;
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_sd.txt");
@@ -127,7 +125,7 @@ public class SDTestActivity extends Activity {
 		Log.i(ModuleTestApplication.TAG, "---SD Test---");
 	}
 
-	public void releaseDestroy() {
+	void releaseDestroy() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			ModuleTestApplication.getInstance().recordLog(mLogWriter);
 			try {
@@ -138,13 +136,13 @@ public class SDTestActivity extends Activity {
 		}
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "SDTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public boolean statusTest() {
+	boolean statusTest() {
 //		String state = Environment.getExternalStorageState();
 //		if ( (state.equals(Environment.MEDIA_MOUNTED)) ||
 //			 (state.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) ) {
@@ -165,14 +163,14 @@ public class SDTestActivity extends Activity {
 		}
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isFinished = false;
 		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 		initCreate();
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.sd_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -183,7 +181,7 @@ public class SDTestActivity extends Activity {
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

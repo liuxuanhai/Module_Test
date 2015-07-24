@@ -12,7 +12,7 @@ import android.view.View;
 import com.nuautotest.Activity.TPTestActivity;
 import com.nuautotest.application.ModuleTestApplication;
 
-public class TPTestView extends View implements View.OnSystemUiVisibilityChangeListener {
+class TPTestView extends View implements View.OnSystemUiVisibilityChangeListener {
 	/* Step 1 */
 	private final int mBorder = 1;
 	private final int mCombine = 2;
@@ -20,18 +20,20 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 	private final int tolerance = 80;
 	private int width;
 
-	private Paint mPaint;
-	Path [] mPath, mPathStart, mPathEnd;
+	private final Paint mPaint;
+	private final Path [] mPath;
+	private final Path [] mPathStart;
+	private final Path [] mPathEnd;
 	private RectF[][] mRect;
 	private boolean[][] mPressed;
 	private int mNumberPressed, mNumberNeeded;
 	private int mRectRow, mRectColumn, mRectWidth, mRectHeight;
-	private Context mContext;
+	private final Context mContext;
 	private int mStep;
 	private int mTouchNum;
 	private int mLine, mStartX, mStartY, mEndX, mEndY;
-	int mLastSystemUiVis;
-	private int mSdkVersion = Build.VERSION.SDK_INT;
+	private int mLastSystemUiVis;
+	private final int mSdkVersion = Build.VERSION.SDK_INT;
 
 	public TPTestView(Context context, AttributeSet attr) {
 		super(context, attr);
@@ -51,7 +53,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 			setOnSystemUiVisibilityChangeListener(this);
 	}
 
-	protected void setRectInfo(int scrWidth, int scrHeight) {
+	void setRectInfo(int scrWidth, int scrHeight) {
 		int i, j, w, h, m, mr=0, mc=0;
 
 		m = Math.abs(scrWidth-scrHeight);
@@ -72,7 +74,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 		mRectHeight = scrHeight/mr;
 	}
 
-	protected void init(int w, int h) {
+	void init(int w, int h) {
 		width = (int) (tolerance * Math.sqrt(w * w + h * h) / h);
 		mNumberPressed = 0;
 		mStep = 4;
@@ -302,7 +304,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 		}
 	}
 
-	protected void setPath(int line, int index) {
+	void setPath(int line, int index) {
 		switch (line) {
 			case 1:
 				mPath[index].reset();
@@ -379,7 +381,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 	 * @param by Y coordinate of B
 	 * @return distance P->AB
 	 */
-	public double distance(int px, int py, int ax, int ay, int bx, int by) {
+	double distance(int px, int py, int ax, int ay, int bx, int by) {
 		return (Math.abs((px-ax)*(by-ay)-(py-ay)*(bx-ax)))/Math.sqrt((bx-ax)*(bx-ax)+(by-ay)*(by-ay));
 	}
 
@@ -648,7 +650,7 @@ public class TPTestView extends View implements View.OnSystemUiVisibilityChangeL
 		return true;
 	}
 
-	Runnable mNavHider = new Runnable() {
+	private final Runnable mNavHider = new Runnable() {
 		@Override public void run() {
 			setNavVisibility(false);
 		}

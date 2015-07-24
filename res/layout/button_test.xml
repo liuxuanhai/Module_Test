@@ -14,15 +14,15 @@
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="音量上键"
+				android:text="@string/button_volup"
 				android:textSize="@dimen/header"
-				android:textColor="@color/black" android:layout_weight="5"/>
+				android:textColor="@color/black"
+				android:layout_weight="1"/>
 
 		<TextView
 				android:id="@+id/keySoundUp"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="                    "
 				android:background="#FF0000"
 				android:textSize="@dimen/header"
 				android:layout_weight="1"/>
@@ -33,22 +33,24 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
-			android:orientation="horizontal" android:gravity="center" android:layout_marginLeft="10dp"
+			android:orientation="horizontal"
+			android:gravity="center"
+			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp">
 
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="音量下键"
+				android:text="@string/button_voldown"
 				android:textSize="@dimen/header"
-				android:textColor="@color/black" android:layout_weight="5">
+				android:textColor="@color/black"
+				android:layout_weight="1">
 		</TextView>
 
 		<TextView
 				android:id="@+id/keySoundDown"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="                    "
 				android:background="#FF0000"
 				android:textSize="@dimen/header"
 				android:layout_weight="1">
@@ -60,25 +62,31 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
-			android:orientation="horizontal" android:gravity="center" android:layout_marginLeft="10dp"
+			android:orientation="horizontal"
+			android:gravity="center"
+			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp">
 
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="返回键"
+				android:text="@string/button_back"
 				android:textSize="@dimen/header"
-				android:textColor="@color/black" android:gravity="center_vertical" android:layout_weight="5">
+				android:textColor="@color/black"
+				android:gravity="center_vertical"
+				android:layout_weight="1">
 		</TextView>
 
 		<TextView
 				android:id="@+id/keyBack"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="需按键灯亮"
+				android:text="@string/button_need_key_light"
 				android:background="#FF0000"
 				android:textSize="@dimen/header"
-				android:layout_weight="1" android:gravity="center" android:textColor="@color/black">
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textColor="@color/black">
 		</TextView>
 
 	</LinearLayout>
@@ -87,25 +95,30 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
-			android:orientation="horizontal" android:gravity="center" android:layout_marginRight="10dp"
+			android:orientation="horizontal"
+			android:gravity="center"
+			android:layout_marginRight="10dp"
 			android:layout_marginLeft="10dp">
 
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="菜单键"
+				android:text="@string/button_menu"
 				android:textSize="@dimen/header"
-				android:textColor="@color/black" android:layout_weight="5">
+				android:textColor="@color/black"
+				android:layout_weight="1">
 		</TextView>
 
 		<TextView
 				android:id="@+id/keyMenu"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="需按键灯亮"
+				android:text="@string/button_need_key_light"
 				android:background="#FF0000"
 				android:textSize="@dimen/header"
-				android:layout_weight="1" android:textColor="@color/black" android:gravity="center">
+				android:layout_weight="1"
+				android:textColor="@color/black"
+				android:gravity="center">
 		</TextView>
 
 	</LinearLayout>

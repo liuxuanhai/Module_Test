@@ -21,14 +21,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class PhoneTestActivity extends Activity {
-	public static final String ACTION_CALL_PRIVILEGED = "android.intent.action.CALL_PRIVILEGED";
+	private static final String ACTION_CALL_PRIVILEGED = "android.intent.action.CALL_PRIVILEGED";
 
 	private MediaRecorder mediaRecorder=null;
 	private MediaPlayer   mPlayer=null;
 	private MyPhoneStateListener mListener;
-	Button m_phone1Button, m_phone2Button;
-	TelephonyManager manager;
-	Context m_context;
+	private TelephonyManager manager;
+	private Context m_context;
 	private Boolean isFromThis = false;
 
 	@Override
@@ -36,8 +35,8 @@ public class PhoneTestActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.phone_test);
 
-		m_phone1Button = (Button) findViewById(R.id.btPhone1);
-		m_phone2Button = (Button)findViewById(R.id.btPhone2);
+		Button m_phone1Button = (Button) findViewById(R.id.btPhone1);
+		Button m_phone2Button = (Button) findViewById(R.id.btPhone2);
 		m_context = getApplicationContext();
 
 		m_phone1Button.setOnClickListener(new View.OnClickListener() {
@@ -45,11 +44,11 @@ public class PhoneTestActivity extends Activity {
 			public void onClick(View v) {
 				isFromThis = true;
 				String strNum = "10010";
-				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
+				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:" + strNum));
 				try {
 					startActivity(intent);
 				} catch (Exception e) {
-					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
+					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + strNum));
 					startActivity(intent);
 				}
 			}
@@ -60,11 +59,11 @@ public class PhoneTestActivity extends Activity {
 			public void onClick(View v) {
 				isFromThis = true;
 				String strNum = "112";
-				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:"+strNum));
+				Intent intent = new Intent(ACTION_CALL_PRIVILEGED, Uri.parse("tel:" + strNum));
 				try {
 					startActivity(intent);
 				} catch (Exception e) {
-					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+strNum));
+					intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + strNum));
 					startActivity(intent);
 				}
 			}
@@ -163,11 +162,11 @@ public class PhoneTestActivity extends Activity {
 							Log.d(ModuleTestApplication.TAG, "=after mediaplayer prepare");
 							mPlayer.start();
 							Log.d(ModuleTestApplication.TAG, "=after mediaplayer start");
-							Toast.makeText(m_context, "开始播放录音", Toast.LENGTH_LONG).show();
+							Toast.makeText(m_context, m_context.getString(R.string.phone_start_play), Toast.LENGTH_LONG).show();
 							mPlayer.setOnCompletionListener(new OnCompletionListener() {
 								@Override
 								public void onCompletion(MediaPlayer mp) {
-									Toast.makeText(m_context, "录音播放完毕", Toast.LENGTH_LONG).show();
+									Toast.makeText(m_context, m_context.getString(R.string.phone_stop_play), Toast.LENGTH_LONG).show();
 								}
 							});
 						}

@@ -3,7 +3,6 @@ package com.nuautotest.Activity;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +13,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.provider.Settings;
-import android.provider.Telephony;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +22,6 @@ import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * 休眠唤醒测试
@@ -35,10 +31,10 @@ import java.util.Set;
  */
 
 public class SuspendResumeTestActivity extends Activity {
-	public final String ACTION_WAKEUP = "com.nuautotest.Activity.SleepResumeTestActivity.ACTION_WAKEUP";
-	public final String ACTION_SLEEP = "com.nuautotest.Activity.SleepResumeTestActivity.ACTION_SLEEP";
-	public final String TAG_WAKELOCK = "com.nuautotest.Activity.SleepResumeTestActivity.TAG_WAKELOCK";
-	public static final int RTC_WAKEUP_NUFRONT = 4;
+	private final String ACTION_WAKEUP = "com.nuautotest.Activity.SleepResumeTestActivity.ACTION_WAKEUP";
+	private final String ACTION_SLEEP = "com.nuautotest.Activity.SleepResumeTestActivity.ACTION_SLEEP";
+	private final String TAG_WAKELOCK = "com.nuautotest.Activity.SleepResumeTestActivity.TAG_WAKELOCK";
+	private static final int RTC_WAKEUP_NUFRONT = 4;
 
 	private EditText tbTime, tbNumber, tbInterval;
 	private TextView tvStatus;
@@ -82,7 +78,7 @@ public class SuspendResumeTestActivity extends Activity {
 		initCreate();
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_suspendresume.txt");
@@ -119,7 +115,7 @@ public class SuspendResumeTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	public void releaseDestroy() {
+	void releaseDestroy() {
 //		if (mDevicePolicyManager.isAdminActive(mDeviceAdminReceiver))
 //		mDevicePolicyManager.removeActiveAdmin(mDeviceAdminReceiver);
 		try {
@@ -174,19 +170,19 @@ public class SuspendResumeTestActivity extends Activity {
 		}
 	}
 
-	public boolean GetAirplaneMode() {
+	boolean GetAirplaneMode() {
 		int enable = Settings.Global.getInt(this.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0);
 		return enable == 1;
 	}
 
-	public void SetAirplaneMode(boolean enable) {
+	void SetAirplaneMode(boolean enable) {
 		Settings.Global.putInt(this.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, (enable)?1:0);
 		Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
 		intent.putExtra("state", enable);
 		mContext.sendBroadcast(intent);
 	}
 
-	public void startTest() {
+	void startTest() {
 		isTesting = 0;
 
 		if (mPartialWakeLock != null) {
@@ -209,14 +205,14 @@ public class SuspendResumeTestActivity extends Activity {
 //		}
 	}
 
-	public class S3Listener implements android.widget.CompoundButton.OnCheckedChangeListener {
+	private class S3Listener implements android.widget.CompoundButton.OnCheckedChangeListener {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			isS3 = isChecked;
 		}
 	}
 
-	public class StartButtonListener implements View.OnClickListener {
+	private class StartButtonListener implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
 			if (tbTime.length() == 0) {
@@ -237,7 +233,7 @@ public class SuspendResumeTestActivity extends Activity {
 		}
 	}
 
-	public class AlarmReceiver extends BroadcastReceiver {
+	private class AlarmReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			try {
@@ -318,7 +314,7 @@ public class SuspendResumeTestActivity extends Activity {
 		return true;
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -331,7 +327,7 @@ public class SuspendResumeTestActivity extends Activity {
 		startTest();
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.suspendresume_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -346,7 +342,7 @@ public class SuspendResumeTestActivity extends Activity {
 		this.finish();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

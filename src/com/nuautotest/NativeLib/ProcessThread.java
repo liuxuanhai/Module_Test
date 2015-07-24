@@ -13,10 +13,10 @@ import java.util.List;
 public class ProcessThread extends Thread {
 
 	public static final int MSG_KILLTHREAD = 0x101;
-	private ActivityManager am;
-	private ContextWrapper cw;
+	private final ActivityManager am;
+	private final ContextWrapper cw;
 	private boolean flag = true;
-	public  PTHandler handler;
+	public final PTHandler handler;
 
 	public ProcessThread(ActivityManager pam, ContextWrapper pcw) {
 		super();

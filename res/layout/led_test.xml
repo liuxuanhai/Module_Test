@@ -9,30 +9,36 @@
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
+
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="当前颜色:"
-				android:textSize="@dimen/header" android:textColor="@color/black"/>
+				android:text="@string/led_current"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"/>
+
 		<TextView
-				android:layout_width="wrap_content"
+				android:layout_width="50dp"
 				android:layout_height="wrap_content"
-				android:id="@+id/tvLED" android:layout_marginLeft="10dp" android:text="        "
-				android:background="@color/black" android:textSize="@dimen/header"/>
+				android:id="@+id/tvLED"
+				android:layout_marginLeft="10dp"
+				android:background="@color/black"
+				android:textSize="@dimen/header"/>
 	</LinearLayout>
 
 	<Button
 		android:id="@+id/btLedRed"
-		android:text="红色：打开"
+		android:text="@string/led_red_open"
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
-		android:onClick="onClickLedRed" style="@android:style/Widget.Button"
+		android:onClick="onClickLedRed"
+		style="@android:style/Widget.Button"
 		android:textSize="@dimen/buttonText"/>
 
 	<Button
 		android:id="@+id/btLedGreen"
-		android:text="绿色：打开"
+		android:text="@string/led_green_open"
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
@@ -41,7 +47,7 @@
 
 	<Button
 		android:id="@+id/btLedBlue"
-		android:text="蓝色：打开"
+		android:text="@string/led_blue_open"
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"

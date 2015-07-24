@@ -25,11 +25,11 @@ public class NuAutoTestActivity extends Activity {
 	private NuAutoTestAdapter adapter;
 	private boolean mAutoTested;
 	private AutoTestThread mAutoTestThread;
-	public Handler mRefreshHandler;
+	private Handler mRefreshHandler;
 	static private boolean isPCBA = false, isAndroid = false;
 	static final int MSG_REFRESH = 0x101;
-	static final int MSG_RUNNEXT = 0x102;
-	static final int MSG_FINISH = 0x103;
+	private static final int MSG_RUNNEXT = 0x102;
+	private static final int MSG_FINISH = 0x103;
 
 	static final String MODE_PCBA = "pcba";
 	static final String Mode_ANDROID = "android";
@@ -39,7 +39,7 @@ public class NuAutoTestActivity extends Activity {
 		instance = this;
 	}
 
-	public class RefreshHandler extends Handler {
+	private class RefreshHandler extends Handler {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_REFRESH) {
 				adapter.notifyDataSetChanged();
@@ -98,9 +98,9 @@ public class NuAutoTestActivity extends Activity {
 		private Looper mLooper;
 		private int mCount;
 
-		public AutoTestThread(int index) {
+		public AutoTestThread() {
 			super();
-			mIndex = index;
+			mIndex = 0;
 			mLastIndex = mIndex-1;
 		}
 
@@ -302,7 +302,7 @@ public class NuAutoTestActivity extends Activity {
 			public void onClick(View v) {
 				if (!mAutoTested) {
 					Thread thread;
-					mAutoTestThread = new AutoTestThread(0);
+					mAutoTestThread = new AutoTestThread();
 					thread = new Thread(mAutoTestThread);
 					thread.start();
 					mAutoTested = true;
@@ -411,7 +411,7 @@ public class NuAutoTestActivity extends Activity {
 			} else if (btTest.getText().equals(getString(R.string.proximitysensor_test))) {
 				// 距离传感器测试
 				startActivity(new Intent(NuAutoTestActivity.this, ProximitySensorTestActivity.class));
-			} else if (btTest.getText().equals(getString(R.string.test_status))) {
+			} else if (btTest.getText().equals(getString(R.string.device_status))) {
 				// 校准/测试状态
 				startActivity(new Intent(NuAutoTestActivity.this, TestStatusActivity.class));
 			}

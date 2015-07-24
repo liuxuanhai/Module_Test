@@ -8,7 +8,7 @@
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="请将设备与电视连接\n如果显示一致的话则通过..."
+			android:text="@string/hdmi_prompt"
 			android:textSize="@dimen/header" android:textColor="@color/black">
 	</TextView>
 
@@ -16,9 +16,9 @@
 			android:layout_gravity="center"
 			android:src="@drawable/hdmi"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="0dp"
 			android:layout_weight="1"
-			>
+			android:contentDescription="@string/hdmi_image">
 	</ImageView>
 
 	<include layout="@layout/bottom_button" />

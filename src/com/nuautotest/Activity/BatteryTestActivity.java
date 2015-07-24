@@ -25,7 +25,7 @@ import java.io.IOException;
 
 public class BatteryTestActivity extends Activity
 {
-	private TextView text;
+	private TextView mtvCapacity, mtvMax, mtvTemperature, mtvVoltage;
 	private BroadcastReceiver broadcastRec;
 	private int dataLevel, dataVol, dataTemp;
 
@@ -42,11 +42,14 @@ public class BatteryTestActivity extends Activity
 
 		mContext = this;
 		setContentView(R.layout.battery_test);
-		text = (TextView) findViewById(R.id.bsensor);
+		mtvCapacity = (TextView)findViewById(R.id.tvBatteryCapacity);
+		mtvMax = (TextView)findViewById(R.id.tvbatteryMax);
+		mtvTemperature = (TextView)findViewById(R.id.tvBatteryTemperature);
+		mtvVoltage = (TextView)findViewById(R.id.tvBatteryVoltage);
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_battery.txt");
@@ -74,11 +77,10 @@ public class BatteryTestActivity extends Activity
 						else
 							stopAutoTest(false);
 					} else {
-						text.setText("电量：\t"+dataLevel+"%"+"\n\n"
-										+"最大：\t"+intent.getIntExtra("scale", 0)+"%"	+"\n\n"
-										+"温度：\t"+dataTemp+"度"+"\n\n"
-										+"电压：\t"+dataVol+"mV"+"\n"
-						);
+						mtvCapacity.setText(dataLevel+"%");
+						mtvMax.setText(intent.getIntExtra("scale", 0) + "%");
+						mtvTemperature.setText(String.valueOf(dataTemp) + "℃");
+						mtvVoltage.setText(dataVol+"mV");
 					}
 				}
 			}
@@ -94,7 +96,7 @@ public class BatteryTestActivity extends Activity
 		super.onDestroy();
 	}
 
-	protected void releaseDestroy() {
+	void releaseDestroy() {
 		try {
 			mContext.unregisterReceiver(broadcastRec);
 		} catch (IllegalArgumentException e) {
@@ -132,13 +134,7 @@ public class BatteryTestActivity extends Activity
 		return true;
 	}
 
-	protected void postError(String error) {
-		Log.e(ModuleTestApplication.TAG, "BatteryTestActivity"+"======"+error+"======");
-		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
-		this.finish();
-	}
-
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -146,7 +142,7 @@ public class BatteryTestActivity extends Activity
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.battery_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

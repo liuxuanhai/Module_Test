@@ -29,17 +29,17 @@ import java.io.IOException;
 
 public class CompassTestActivity extends Activity implements
 		SensorEventListener {
-	TextView text;
+	private TextView text;
 
 	private boolean mRegisteredMagSensor, mRegisteredAccSensor;
 
 	private SensorManager mSensorManager;
 	private Sensor mMagSensor, mAccSensor;
 
-	private float[] magValue = new float[3];
-	private float[] accValue = new float[3];
-	private float[] rotation = new float[9];
-	private float[] orientation = new float[3];
+	private final float[] magValue = new float[3];
+	private final float[] accValue = new float[3];
+	private final float[] rotation = new float[9];
+	private final float[] orientation = new float[3];
 	private float autoRecOrientation = 0;
 
 	private boolean isAutomatic, isFinished;
@@ -55,11 +55,11 @@ public class CompassTestActivity extends Activity implements
 
 		mContext = this;
 		setContentView(R.layout.compass_test);
-		text = (TextView) findViewById(R.id.csensor);
+		text = (TextView) findViewById(R.id.tvCompass);
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_compass.txt");
@@ -86,7 +86,7 @@ public class CompassTestActivity extends Activity implements
 		initResume();
 	}
 
-	protected void initResume() {
+	void initResume() {
 		mMagSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		mRegisteredMagSensor = mSensorManager.registerListener(this, mMagSensor,
 				SensorManager.SENSOR_DELAY_GAME);
@@ -107,7 +107,7 @@ public class CompassTestActivity extends Activity implements
 		super.onPause();
 	}
 
-	protected void releasePause() {
+	void releasePause() {
 		if (mRegisteredMagSensor) {
 			mSensorManager.unregisterListener(this, mMagSensor);
 			mRegisteredMagSensor = false;
@@ -151,7 +151,7 @@ public class CompassTestActivity extends Activity implements
 			else
 				autoRecOrientation = orientation[0];
 		} else {
-			text.setText("方向="+ ((int) orientation[0]));
+			text.setText(String.valueOf(orientation[0]));
 
 			Display display = getWindowManager().getDefaultDisplay();
 			int deviceRotation = display.getRotation();
@@ -193,13 +193,13 @@ public class CompassTestActivity extends Activity implements
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "CompassTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -208,7 +208,7 @@ public class CompassTestActivity extends Activity implements
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.compass_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

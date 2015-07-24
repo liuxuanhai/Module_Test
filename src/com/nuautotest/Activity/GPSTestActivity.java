@@ -30,8 +30,8 @@ import java.util.Vector;
 public class GPSTestActivity extends Activity
 		implements LocationListener, GpsStatus.Listener {
 
-	TextView text, record;
-	private Vector<GpsSatellite> mData = new Vector<GpsSatellite>();
+	private TextView mtvGPSPrompt, mtvGPSStatus, mtvGPSRecord;
+	private final Vector<GpsSatellite> mData = new Vector<GpsSatellite>();
 	private boolean mRegisteredListener, mProviderEnable;
 
 	private LocationManager mLocationManager;
@@ -49,12 +49,13 @@ public class GPSTestActivity extends Activity
 
 		mContext = this;
 		setContentView(R.layout.gps_test);
-		text = (TextView)findViewById(R.id.gsensor);
-		record = (TextView)findViewById(R.id.grecord);
+		mtvGPSPrompt = (TextView)findViewById(R.id.tvGPSPrompt);
+		mtvGPSStatus = (TextView)findViewById(R.id.tvGPSStatus);
+		mtvGPSRecord = (TextView)findViewById(R.id.tvGPSRecord);
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_gps.txt");
@@ -79,7 +80,7 @@ public class GPSTestActivity extends Activity
 		printRecord();
 	}
 
-	protected void initResume() {
+	void initResume() {
 		mProviderEnable = Settings.Secure.isLocationProviderEnabled(
 				mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
 
@@ -110,12 +111,12 @@ public class GPSTestActivity extends Activity
 	@Override
 	public void onPause() {
 		releasePause();
-		record.setText("");
+		mtvGPSRecord.setText("");
 
 		super.onPause();
 	}
 
-	protected void releasePause() {
+	void releasePause() {
 		try {
 			if (mRegisteredListener) {
 				mLocationManager.removeUpdates(this);
@@ -149,13 +150,13 @@ public class GPSTestActivity extends Activity
 		Log.d(ModuleTestApplication.TAG, "event= "+event);
 		switch(event) {
 			case GpsStatus.GPS_EVENT_STARTED:
-				if (!isAutomatic) text.setText("GPS打开");
+				if (!isAutomatic) mtvGPSStatus.setText(mContext.getString(R.string.gps_event_started));
 				break;
 			case GpsStatus.GPS_EVENT_STOPPED:
-				if (!isAutomatic) text.setText("GPS关闭");
+				if (!isAutomatic) mtvGPSStatus.setText(mContext.getString(R.string.gps_event_stopped));
 				break;
 			case GpsStatus.GPS_EVENT_FIRST_FIX:
-				if (!isAutomatic) text.setText("首次定位");
+				if (!isAutomatic) mtvGPSStatus.setText(mContext.getString(R.string.gps_event_first_fix));
 				break;
 			case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
 				status = mLocationManager.getGpsStatus(null);
@@ -181,15 +182,16 @@ public class GPSTestActivity extends Activity
 	}
 
 	private void printRecord() {
-		if (mData.size() == 0) record.setText("暂无数据");
+		if (mData.size() == 0) mtvGPSRecord.setText(mContext.getString(R.string.gps_no_record));
 		else {
-			text.setText("卫星数量:"+mData.size());
-			record.setText("卫星:\r\n");
+			mtvGPSPrompt.setText(mContext.getString(R.string.satellite_number));
+			mtvGPSStatus.setText(String.valueOf(mData.size()));
+			mtvGPSRecord.setText("");
 			for (GpsSatellite data : mData) {
-				record.append("编号: " + data.getPrn() +
-						"\t\t信号强度: " + data.getSnr() +
-						"\t\t海拔: " + data.getElevation() +
-						"\t\t方位:" + data.getAzimuth() + "\r\n");
+				mtvGPSRecord.append("Prn: " + data.getPrn() +
+						"\t\tSnr: " + data.getSnr() +
+						"\t\tElev: " + data.getElevation() +
+						"\t\tAzi:" + data.getAzimuth() + "\r\n");
 			}
 		}
 	}
@@ -231,13 +233,13 @@ public class GPSTestActivity extends Activity
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "GPSTestActivity" + "======" + error + "======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -258,7 +260,7 @@ public class GPSTestActivity extends Activity
 		Looper.loop();
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gps_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else
@@ -273,7 +275,7 @@ public class GPSTestActivity extends Activity
 		this.finish();
 	}
 
-	public class EndLoopTask extends TimerTask {
+	private class EndLoopTask extends TimerTask {
 		@Override
 		public void run() {
 			if (mLooper != null) stopAutoTest(false);

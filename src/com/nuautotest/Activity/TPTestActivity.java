@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -47,7 +46,7 @@ public class TPTestActivity extends Activity {
 	private TimerHandler mTimerHandler;
 	private ProcessThread mProcessThread = null;
 	private int mPrevPointerLocation, mPrevShowTouches;
-	private int mSdkVersion = Build.VERSION.SDK_INT;
+	private final int mSdkVersion = Build.VERSION.SDK_INT;
 
 	public class TPTestBroadcastReceiver extends BroadcastReceiver {
 		private View mBottomView;
@@ -195,7 +194,7 @@ public class TPTestActivity extends Activity {
 		if (mAutomatic) mTimeout = -1;
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -210,7 +209,7 @@ public class TPTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

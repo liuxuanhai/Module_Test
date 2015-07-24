@@ -29,7 +29,7 @@
 		<Button
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
-				android:text="对焦"
+				android:text="@string/camera_focus"
 				android:id="@+id/btAutoFocus"
 				android:layout_gravity="center_horizontal"
 				style="@android:style/Widget.Button"
@@ -41,7 +41,7 @@
 
 		<Button
 				android:id="@+id/btTakePicture"
-				android:text="拍照"
+				android:text="@string/camera_take"
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
 		        android:onClick="onClickTakePicture"
@@ -62,7 +62,7 @@
 				style="@android:style/Widget.Button"
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
-				android:text="失败"
+				android:text="@string/fail"
 				android:id="@+id/btCameraFail"
 				android:layout_gravity="center_horizontal"
 				android:enabled="true"
@@ -74,7 +74,7 @@
 		<Button
 				style="@android:style/Widget.Button"
 				android:id="@+id/btCameraSuccess"
-				android:text="成功"
+				android:text="@string/success"
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
 				android:onClick="onbackbtn"

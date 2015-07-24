@@ -5,7 +5,7 @@
               android:orientation="vertical" android:background="@color/bg">
 
 	<LinearLayout
-			android:layout_width="wrap_content"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal" android:gravity="center_vertical">
 
@@ -13,16 +13,17 @@
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:text="状态："
-				android:textSize="@dimen/header" android:textColor="@color/black">
+				android:text="@string/headset_status"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black">
 		</TextView>
 
 		<TextView
 				android:id="@+id/headsetState"
 				android:layout_width="0dip"
 				android:layout_height="wrap_content"
-				android:layout_weight="2"
-				android:text="未插入"
+				android:layout_weight="1"
+				android:text="@string/headset_unplugged"
 				android:textSize="@dimen/header" android:textColor="@color/black">
 		</TextView>
 
@@ -32,25 +33,33 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="3"
-	        android:text="播放音乐" style="@android:style/Widget.Button" android:layout_marginTop="10dp"
+	        android:text="@string/play_music"
+	        style="@android:style/Widget.Button"
+	        android:layout_marginTop="10dp"
 	        android:textSize="@dimen/buttonText"/>
 
 	<LinearLayout android:id="@+id/llHeadsetKey" android:layout_width="fill_parent"
 	              android:layout_height="0dip"
 	              android:layout_weight="3"
-	              android:gravity="center_vertical" android:layout_marginTop="10dp" android:visibility="invisible">
+	              android:gravity="center_vertical"
+	              android:layout_marginTop="10dp"
+	              android:visibility="invisible">
 
-		<TextView android:layout_width="wrap_content"
+		<TextView android:layout_width="0dp"
 		          android:layout_height="wrap_content"
-		          android:text="耳机键："
-		          android:textSize="@dimen/header" android:textColor="@color/black"/>
+		          android:text="@string/headset_button"
+		          android:textSize="@dimen/header"
+		          android:textColor="@color/black"
+		          android:layout_weight="1"
+		          android:layout_marginLeft="10dp"/>
 
 		<TextView android:id="@+id/keyHeadset"
-		          android:layout_width="wrap_content"
+		          android:layout_width="0dp"
 		          android:layout_height="wrap_content"
 		          android:background="@color/red"
-		          android:text="                  "
-		          android:textSize="@dimen/header"/>
+		          android:textSize="@dimen/header"
+		          android:layout_weight="1"
+		          android:layout_marginRight="10dp"/>
 
 	</LinearLayout>
 
@@ -63,13 +72,13 @@
 		<Button
 				android:layout_width="0dp"
 				android:layout_height="fill_parent"
-				android:text="开始录音"
+				android:text="@string/start_record"
 				android:id="@+id/btHeadsetRecord" style="@android:style/Widget.Button" android:layout_weight="1"
 				android:textSize="@dimen/buttonText"/>
 		<Button
 				android:layout_width="0dp"
 				android:layout_height="fill_parent"
-				android:text="开始播放"
+				android:text="@string/start_play"
 				android:id="@+id/btHeadsetPlay" style="@android:style/Widget.Button" android:layout_weight="1"
 				android:singleLine="false"
 				android:textSize="@dimen/buttonText"/>

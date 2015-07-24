@@ -102,13 +102,13 @@ public class VibratorTestActivity extends Activity {
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "VibratorTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.vibrator_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -123,7 +123,7 @@ public class VibratorTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

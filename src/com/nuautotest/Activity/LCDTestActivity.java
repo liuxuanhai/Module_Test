@@ -32,7 +32,7 @@ import java.util.TimerTask;
 
 public class LCDTestActivity extends Activity implements View.OnSystemUiVisibilityChangeListener {
 
-	static final boolean MANUAL = true;
+	private boolean MANUAL = true;
 
 	private LinearLayout mllLcd;
 	private Button mlcdBtSuccess, mlcdBtFail;
@@ -41,8 +41,8 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 	private int mCurrentColor;
 	private Handler mHandler;
 	private FileWriter mLogWriter;
-	static final int MSG_CHANGEBG = 0x101;
-	static final int MSG_TIMEOUT = 0x102;
+	private static final int MSG_CHANGEBG = 0x101;
+	private static final int MSG_TIMEOUT = 0x102;
 	private int mTimeout;
 	private TimerHandler mTimerHandler;
 	private ProcessThread mProcessThread;
@@ -150,13 +150,13 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG,"LCDTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lcd_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void changeColor() {
+	void changeColor() {
 		switch(mCurrentColor) {
 			case Color.RED:
 				mCurrentColor = Color.GREEN;
@@ -178,7 +178,7 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		}
 	}
 
-	Runnable mNavHider = new Runnable() {
+	private final Runnable mNavHider = new Runnable() {
 		@Override public void run() {
 			setNavVisibility(false);
 		}
@@ -211,7 +211,7 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 
 	}
 
-	public class ChangeBGHandler extends Handler {
+	private class ChangeBGHandler extends Handler {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_CHANGEBG)
 				changeColor();
@@ -219,21 +219,21 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		}
 	}
 
-	public class ChangeBGTask extends TimerTask {
+	private class ChangeBGTask extends TimerTask {
 		@Override
 		public void run() {
 			mHandler.sendEmptyMessage(MSG_CHANGEBG);
 		}
 	}
 
-	public class OnLcdClickListener implements OnClickListener {
+	private class OnLcdClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			mHandler.sendEmptyMessage(MSG_CHANGEBG);
 		}
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -248,7 +248,7 @@ public class LCDTestActivity extends Activity implements View.OnSystemUiVisibili
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

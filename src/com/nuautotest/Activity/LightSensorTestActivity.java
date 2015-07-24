@@ -48,7 +48,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_lightsensor.txt");
@@ -73,7 +73,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		initResume();
 	}
 
-	protected void initResume() {
+	void initResume() {
 		if (!mRegisteredSensor) {
 			mRegisteredSensor = sm.registerListener(this, lightSensor,
 					SensorManager.SENSOR_DELAY_FASTEST);
@@ -89,7 +89,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		super.onPause();
 	}
 
-	protected void releasePause() {
+	void releasePause() {
 		if (mRegisteredSensor) {
 			sm.unregisterListener(this);
 			mRegisteredSensor = false;
@@ -115,7 +115,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 			else
 				autoRecLux = dataLux;
 		} else
-			tvLight.setText("光线强度:" + dataLux);
+			tvLight.setText(String.valueOf(dataLux));
 	}
 
 	@Override
@@ -141,13 +141,13 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "LightSensorTestAcitivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -156,7 +156,7 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.lightsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

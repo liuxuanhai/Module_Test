@@ -8,16 +8,34 @@
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="请调节光线"
+			android:text="@string/lightsensor_prompt"
 			android:textColor="@color/black" android:background="@color/widget" android:textSize="@dimen/header"/>
 
-	<TextView
-			android:id="@+id/lightsensor"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="0dip"
-			android:layout_weight="1"
-			android:text="无反应"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp"/>
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/light_strength"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1"/>
+
+		<TextView
+				android:id="@+id/lightsensor"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/no_response"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1"/>
+	</LinearLayout>
 
 	<include layout="@layout/bottom_button" />
 

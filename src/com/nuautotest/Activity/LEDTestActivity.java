@@ -50,15 +50,15 @@ public class LEDTestActivity extends Activity {
 
 			if (!sred.next().equals("0")) {
 				mPrev |= LED_RED;
-				mBtRed.setText("红色：关闭");
+				mBtRed.setText(getString(R.string.led_red_close));
 			}
 			if (!sgreen.next().equals("0")) {
 				mPrev |= LED_GREEN;
-				mBtGreen.setText("绿色：关闭");
+				mBtGreen.setText(getString(R.string.led_green_close));
 			}
 			if (!sblue.next().equals("0")) {
 				mPrev |= LED_BLUE;
-				mBtBlue.setText("蓝色：关闭");
+				mBtBlue.setText(getString(R.string.led_blue_close));
 			}
 			mCurrent = mPrev;
 			updateLight();
@@ -96,36 +96,36 @@ public class LEDTestActivity extends Activity {
 		return true;
 	}
 
-	protected void updateLight() {
+	void updateLight() {
 		FileWriter fw;
 		try {
 				fw = new FileWriter(LED_RED_FILE);
 				if ((mCurrent & LED_RED) != 0) {
 					fw.write("1");
-					mBtRed.setText("红色：关闭");
+					mBtRed.setText(getString(R.string.led_red_close));
 				} else {
 					fw.write("0");
-					mBtRed.setText("红色：打开");
+					mBtRed.setText(getString(R.string.led_red_open));
 				}
 				fw.close();
 
 				fw = new FileWriter(LED_GREEN_FILE);
 				if ((mCurrent & LED_GREEN) != 0) {
 					fw.write("1");
-					mBtGreen.setText("绿色：关闭");
+					mBtGreen.setText(getString(R.string.led_green_close));
 				} else {
 					fw.write("0");
-					mBtGreen.setText("绿色：打开");
+					mBtGreen.setText(getString(R.string.led_green_open));
 				}
 				fw.close();
 
 				fw = new FileWriter(LED_BLUE_FILE);
 				if ((mCurrent & LED_BLUE) != 0) {
 					fw.write("1");
-					mBtBlue.setText("蓝色：关闭");
+					mBtBlue.setText(getString(R.string.led_blue_close));
 				} else {
 					fw.write("0");
-					mBtBlue.setText("蓝色：打开");
+					mBtBlue.setText(getString(R.string.led_blue_open));
 				}
 				fw.close();
 		} catch (IOException e) {

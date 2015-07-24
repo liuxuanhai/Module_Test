@@ -182,7 +182,7 @@
 		          android:parentActivityName=".NuAutoTestActivity"
 		          android:screenOrientation="portrait"/>
 		<activity android:name=".TestStatusActivity"
-		          android:label="@string/test_status"
+		          android:label="@string/device_status"
 		          android:parentActivityName=".NuAutoTestActivity"
 		          android:screenOrientation="portrait"/>
 		<activity android:name=".ModeSelectActivity"

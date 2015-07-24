@@ -2,17 +2,14 @@ package com.nuautotest.Adapter;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nuautotest.Activity.CameraTestActivity;
 import com.nuautotest.Activity.NuAutoTestActivity;
@@ -20,9 +17,6 @@ import com.nuautotest.Activity.R;
 import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * 测试界面Adapter
@@ -38,18 +32,25 @@ public class NuAutoTestAdapter extends BaseAdapter {
 	 *
 	 * These should be as same as
 	 *  #res/values/strings.xml
-	 *  #assets/config.ini
+	 *  #assets/config-en.ini
 	 */
-	public static final int numberOfTest = 28;
+	private static final int numberOfTest = 28;
 
 	private String[] items = {
-			"加速传感", "光传感", "距离传感", "电池",
-			"指南针", "WIFI", "蓝牙", "GPS",
-			"充电器", "USB", "SD卡", "耳机",
-			"音频", "背光", "按键", "前摄头",
-			"后摄头", "闪光灯", "HDMI", "触屏",
-			"震动", "LCD", "休眠唤醒", "电话",
-			"出厂设置", "收音机", "LED", "设备状态"
+			NuAutoTestActivity.getInstance().getString(R.string.gsensor_test), NuAutoTestActivity.getInstance().getString(R.string.lightsensor_test), NuAutoTestActivity.getInstance().getString(R.string.proximitysensor_test), NuAutoTestActivity.getInstance().getString(R.string.battery_test),
+			NuAutoTestActivity.getInstance().getString(R.string.compass_test), NuAutoTestActivity.getInstance().getString(R.string.wifi_test), NuAutoTestActivity.getInstance().getString(R.string.bluetooth_test), NuAutoTestActivity.getInstance().getString(R.string.gps_test),
+			NuAutoTestActivity.getInstance().getString(R.string.charger_test), NuAutoTestActivity.getInstance().getString(R.string.usb_test), NuAutoTestActivity.getInstance().getString(R.string.sd_test), NuAutoTestActivity.getInstance().getString(R.string.headset_test),
+			NuAutoTestActivity.getInstance().getString(R.string.audio_test), NuAutoTestActivity.getInstance().getString(R.string.backlight_test), NuAutoTestActivity.getInstance().getString(R.string.button_test), NuAutoTestActivity.getInstance().getString(R.string.front_camera_test),
+			NuAutoTestActivity.getInstance().getString(R.string.back_camera_test), NuAutoTestActivity.getInstance().getString(R.string.flashlight_test), NuAutoTestActivity.getInstance().getString(R.string.hdmi_test), NuAutoTestActivity.getInstance().getString(R.string.tp_test),
+			NuAutoTestActivity.getInstance().getString(R.string.vibrator_test), NuAutoTestActivity.getInstance().getString(R.string.lcd_test), NuAutoTestActivity.getInstance().getString(R.string.suspendresume_test), NuAutoTestActivity.getInstance().getString(R.string.phone_test),
+			NuAutoTestActivity.getInstance().getString(R.string.factoryreset_test), NuAutoTestActivity.getInstance().getString(R.string.fm_test), NuAutoTestActivity.getInstance().getString(R.string.led_test), NuAutoTestActivity.getInstance().getString(R.string.device_status),
+//			"加速传感", "光传感", "距离传感", "电池",
+//			"指南针", "WIFI", "蓝牙", "GPS",
+//			"充电器", "USB", "SD卡", "耳机",
+//			"音频", "背光", "按键", "前摄头",
+//			"后摄头", "闪光灯", "HDMI", "触屏",
+//			"震动", "LCD", "休眠唤醒", "电话",
+//			"出厂设置", "收音机", "LED", "设备状态"
 	};
 
 	public enum TestState {
@@ -60,15 +61,15 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		TEST_STATE_TIME_OUT,
 	}
 
-	private String[] states = new String[numberOfTest];
-	private int[] map = new int[numberOfTest];
+	private final String[] states = new String[numberOfTest];
+	private final int[] map = new int[numberOfTest];
 	private int count = 0;
 	private int needSuccessCount = 0;
 	private int successCount = 0;
 
-	private LayoutInflater inflater;
-	private View[] mView = new View[numberOfTest];
-	private Context mContext;
+	private final LayoutInflater inflater;
+	private final View[] mView = new View[numberOfTest];
+	private final Context mContext;
 	private static NuAutoTestAdapter instance;
 	private boolean isPCBA = false;
 
@@ -85,12 +86,16 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		return instance;
 	}
 
-	protected void initConfig() {
+	void initConfig() {
 		int i, j;
 
 		try {
+			String file = "config.ini";
+			String lang = mContext.getResources().getConfiguration().locale.getLanguage();
+			if (lang.endsWith("en")) file = "config-en.ini";
+
 			AssetManager config = mContext.getAssets();
-			InputStream iStream = config.open("config.ini");
+			InputStream iStream = config.open(file);
 			byte[] buffer = new byte[1024];
 			String string, section = "";
 			int secIndex = -1;
@@ -133,7 +138,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 									continue;
 								map[count] = secIndex;
 								count++;
-								if (section.equals(mContext.getString(R.string.test_status)) || section.equals(mContext.getString(R.string.factoryreset_test)))
+								if (section.equals(mContext.getString(R.string.device_status)) || section.equals(mContext.getString(R.string.factoryreset_test)))
 									needSuccessCount--;
 							}
 						} else if (strs[0].equals("rotation") && items[secIndex].equals(mContext.getString(R.string.front_camera_test))) {
@@ -226,8 +231,8 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		return mView[position];
 	}
 
-	protected void setSuccessCount(String name, int inc) {
-		if (!name.equals(mContext.getString(R.string.test_status)) && !name.equals(mContext.getString(R.string.factoryreset_test)))
+	void setSuccessCount(String name, int inc) {
+		if (!name.equals(mContext.getString(R.string.device_status)) && !name.equals(mContext.getString(R.string.factoryreset_test)))
 			successCount += inc;
 	}
 
@@ -280,7 +285,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		}
 	}
 
-	public int getIndex(String name) {
+	int getIndex(String name) {
 		for (int i=0; i<numberOfTest; i++)
 			if (items[i].equals(name)) return i;
 		return -1;
@@ -292,8 +297,7 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		}
 	}
 
-	protected void copyFile(File f) {
-		String name = f.getName();
+	void copyFile(File f) {
 		int length = (int) f.length();
 		char[] buf = new char[length];
 		try {
@@ -316,21 +320,9 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		}
 	}
 
-	protected void setMiscFlag() {
-		File f = new File("/misc/pcba_apk_test");
+	void setMiscFlag() {
 		File fprodmark = new File("/misc/prodmark");
-		boolean flag = false, pflag = false;
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(f));
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				if (!isPCBA && line.equals("apk_ok") || isPCBA && line.equals("pcba_ok")) {
-					flag = true;
-					break;
-				}
-			}
-		} catch (Exception ignored) {}
+		boolean pflag = false;
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fprodmark));
@@ -345,22 +337,6 @@ public class NuAutoTestAdapter extends BaseAdapter {
 		} catch (Exception ignored) {}
 
 		try {
-			if (!flag) {
-				if (!f.canWrite()) copyFile(f);
-				FileWriter fw = new FileWriter(f, true);
-				if (isPCBA) {
-					fw.write("pcba_ok\n");
-				} else {
-					fw.write("apk_ok\n");
-				}
-				fw.flush();
-				fw.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
 			if (!pflag) {
 				if (!fprodmark.canWrite()) copyFile(fprodmark);
 				FileWriter fwprodmark = new FileWriter(fprodmark, true);
@@ -372,6 +348,12 @@ public class NuAutoTestAdapter extends BaseAdapter {
 				fwprodmark.flush();
 				fwprodmark.close();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Runtime.getRuntime().exec("sync");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

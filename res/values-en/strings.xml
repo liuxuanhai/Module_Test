@@ -4,4 +4,193 @@
 	<string name="app_name">Module Test</string>
 	<string name="app_name_pcba">PCBA Test</string>
 
+	<string name="audio_test">Audio</string>
+	<string name="audio_prompt">Audio test</string>
+	<string name="audio_warning">**Please unplug headset**</string>
+	<string name="audio_play_file">Play music</string>
+
+	<string name="gsensor_test">G-sensor</string>
+	<string name="gsensor_image">G-Sensor Image</string>
+
+	<string name="lightsensor_test">L-sensor</string>
+	<string name="lightsensor_prompt">Change ambient light</string>
+	<string name="light_strength">Light strength:</string>
+
+	<string name="proximitysensor_test">P-sensor</string>
+	<string name="psensor_prompt">Cover p-sensor</string>
+	<string name="psensor_distance">Distance:</string>
+
+	<string name="compass_test">Compass</string>
+	<string name="compass_prompt">Change direction</string>
+	<string name="compass_direction">Direction:</string>
+	<string name="compass_image">Compass image</string>
+
+	<string name="battery_test">Battery</string>
+	<string name="battery_capacity">Capacity:</string>
+	<string name="battery_max">Max:</string>
+	<string name="battery_temperature">Temperature:</string>
+	<string name="battery_voltage">Voltage:</string>
+
+	<string name="backlight_test">Backlight</string>
+	<string name="backlight_prompt">Backlight</string>
+
+	<string name="button_test">Button</string>
+	<string name="button_volup">Volume up</string>
+	<string name="button_voldown">Volume down</string>
+	<string name="button_back">Back</string>
+	<string name="button_menu">Menu</string>
+	<string name="button_need_key_light">Is key light on?</string>
+
+	<string name="front_camera_test">Front camera</string>
+	<string name="back_camera_test">Back camera</string>
+	<string name="camera_focus">Focus</string>
+	<string name="camera_focusing">Focusing…</string>
+	<string name="camera_take">Take picture</string>
+	<string name="camera_taking">Taking…</string>
+	<string name="camera_continue">Continue preview</string>
+
+	<string name="usb_test">USB</string>
+	<string name="usb_prompt">Plug and unplug USB cable</string>
+	<string name="usb_status">Status</string>
+	<string name="usb_plugged">Plugged</string>
+	<string name="usb_unplugged">Unplugged</string>
+
+	<string name="hdmi_test">HDMI</string>
+	<string name="hdmi_prompt">Connect HDMI cable</string>
+	<string name="hdmi_image">HDMI image</string>
+
+	<string name="wifi_test">WIFI</string>
+	<string name="wifi_status">Wifi status</string>
+	<string name="wifi_number">Hotspot number</string>
+	<string name="wifi_current">Current network</string>
+	<string name="wifi_id">ID</string>
+	<string name="wifi_name">Name</string>
+	<string name="wifi_ip">IP</string>
+	<string name="wifi_server_status">Server status</string>
+	<string name="wifi_ping">Ping server…</string>
+	<string name="wifi_setting">Wifi setting</string>
+	<string name="wifi_open_web">Open website</string>
+
+	<string name="bluetooth_test">Bluetooth</string>
+	<string name="bt_status">BT status</string>
+	<string name="bt_device_around">Devices nearby</string>
+	<string name="bt_setting">Bluetooth setting</string>
+	<string name="bt_scan_mode_none">None</string>
+	<string name="bt_scan_mode_connectable">Connectable</string>
+	<string name="bt_scan_mode_connectable_discoverable">Connectable(discoverable)</string>
+
+	<string name="gps_test">GPS</string>
+	<string name="gps_status">GPS Status</string>
+	<string name="satellite_number">Satellite num</string>
+	<string name="satellite">Satellite</string>
+	<string name="gps_event_started">Started</string>
+	<string name="gps_event_stopped">Stopped</string>
+	<string name="gps_event_first_fix">First fix</string>
+	<string name="gps_no_record">No record</string>
+
+	<string name="sd_test">SD</string>
+	<string name="sd_prompt">Insert SD card</string>
+	<string name="sd_status">Status</string>
+	<string name="sd_action">Action: none</string>
+	<string name="sd_insert">SD inserted</string>
+	<string name="sd_remove">SD removed</string>
+
+	<string name="charger_test">Charger</string>
+	<string name="charger_prompt">Plug AC/USB charger</string>
+	<string name="charger_usb">USB charger plugged</string>
+	<string name="charger_ac">AC charger plugged</string>
+	<string name="charger_none">Charger unplugged</string>
+
+	<string name="tp_test">TP</string>
+
+	<string name="vibrator_test">Vibrator</string>
+	<string name="vibrate">Vibrate</string>
+
+	<string name="lcd_test">LCD</string>
+
+	<string name="headset_test">Headset</string>
+	<string name="headset_status">Status</string>
+	<string name="headset_plugged">Plugged</string>
+	<string name="headset_unplugged">Unplugged</string>
+	<string name="headset_button">Headset key</string>
+	<string name="headset_plugged_four">Four segment plugged</string>
+	<string name="headset_plugged_three">Three segment plugged</string>
+
+	<string name="flashlight_test">Flashlight</string>
+
+	<string name="suspendresume_test">Suspend resume</string>
+	<string name="suspend_resume_s3">Deep sleep</string>
+	<string name="suspend_time">Suspend time(s)</string>
+	<string name="suspend_time_default">12</string>
+	<string name="suspend_number">Suspend number</string>
+	<string name="suspend_number_default">1</string>
+	<string name="suspend_interval">Suspend interval(s)</string>
+	<string name="suspend_interval_default">0</string>
+
+	<string name="factoryreset_test">Factory reset</string>
+	<string name="factory_reset_prompt">Click start, device will do factory reset and power off</string>
+
+	<string name="phone_test">Phone</string>
+	<string name="phone1">10010</string>
+	<string name="phone2">112</string>
+	<string name="phone_start_play">Record play start</string>
+	<string name="phone_stop_play">Record play finish</string>
+
+	<string name="fm_test">FM</string>
+
+	<string name="led_test">LED</string>
+	<string name="led_current">Current color</string>
+	<string name="led_red_open">Red: on</string>
+	<string name="led_red_close">Red: off</string>
+	<string name="led_green_open">Green: on</string>
+	<string name="led_green_close">Green: off</string>
+	<string name="led_blue_open">Blue: on</string>
+	<string name="led_blue_close">Blue: off</string>
+
+	<string name="auto_test">Auto test</string>
+
+	<string name="device_info">Device info</string>
+	<string name="imei">IMEI</string>
+	<string name="pcbasn">PCBASN</string>
+	<string name="signal_strength">Signal strength</string>
+	<string name="calibration_status">Calibration status</string>
+	<string name="test_status">Test status</string>
+	<string name="bluetooth">Bluetooth</string>
+	<string name="wifi">WIFI</string>
+	<string name="battery">Battery</string>
+	<string name="sw_version">Software version</string>
+
+	<string name="device_status">Device status</string>
+	<string name="calibration_none">Not calibrated</string>
+	<string name="calibration_fail">Calibration fail</string>
+	<string name="calibration_pass">Calibration pass</string>
+	<string name="bptest_status">BP test status</string>
+	<string name="bptest_none">not tested</string>
+	<string name="bptest_fail">test fail</string>
+	<string name="bptest_pass">test pass</string>
+	<string name="pcba_status">PCBA status</string>
+	<string name="apk_status">APK status</string>
+
+	<string name="status_disabling">Disabling……</string>
+	<string name="status_disabled">Disabled</string>
+	<string name="status_enabling">Enabling……</string>
+	<string name="status_enabled">Enabled</string>
+	<string name="status_unknown">Unavailable</string>
+
+	<string name="start_record">Start record</string>
+	<string name="stop_record">Stop record</string>
+	<string name="start_play">Start play</string>
+	<string name="stop_play">Stop play</string>
+	<string name="play_music">Play music</string>
+
+	<string name="device_number">Device number</string>
+	<string name="no_response">No response</string>
+	<string name="success">Success</string>
+	<string name="fail">Fail</string>
+	<string name="open">Turn on</string>
+	<string name="close">Turn off</string>
+	<string name="start">Start</string>
+	<string name="not_finish">Not finish</string>
+	<string name="finish">Finish</string>
+
 </resources>

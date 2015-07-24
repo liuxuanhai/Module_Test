@@ -1,6 +1,5 @@
 package com.nuautotest.Activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -28,11 +27,10 @@ import java.io.IOException;
  *
  */
 
-public class GSensorTestActivity extends Activity implements
-		SensorEventListener
+public class GSensorTestActivity extends Activity implements SensorEventListener
 {
-	TextView text;
-	ImageView image;
+	private TextView text;
+	private ImageView image;
 	private boolean mRegisteredSensor;
 
 	private boolean isAutomatic, isFinished;
@@ -55,7 +53,7 @@ public class GSensorTestActivity extends Activity implements
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_gsensor.txt");
@@ -79,7 +77,7 @@ public class GSensorTestActivity extends Activity implements
 		initResume();
 	}
 
-	protected void initResume() {
+	void initResume() {
 		Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mRegisteredSensor = mSensorManager.registerListener(this, sensor,
 				SensorManager.SENSOR_DELAY_GAME);
@@ -94,7 +92,7 @@ public class GSensorTestActivity extends Activity implements
 		super.onPause();
 	}
 
-	protected void releasePause() {
+	void releasePause() {
 		if (mRegisteredSensor) {
 			mSensorManager.unregisterListener(this);
 			mRegisteredSensor = false;
@@ -129,7 +127,7 @@ public class GSensorTestActivity extends Activity implements
 					autoRecY = dataY;
 					autoRecZ = dataZ;
 				} else {
-					text.setText("数据：\nX: " + dataX);
+					text.setText("X: " + dataX);
 					text.append("\nY: " + dataY);
 					text.append("\nZ: " + dataZ);
 					if (dataY != 0) {
@@ -178,18 +176,13 @@ public class GSensorTestActivity extends Activity implements
 		return true;
 	}
 
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-	}
-
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "GSensorTestActivity"+"======"+error+"======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -198,7 +191,7 @@ public class GSensorTestActivity extends Activity implements
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.gsensor_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

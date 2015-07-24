@@ -10,11 +10,15 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
 			android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="校准状态"
-				android:textColor="@color/black" android:textSize="@dimen/header" android:layout_weight="5"/>
+				android:text="@string/calibration_status"
+				android:textColor="@color/black"
+				android:textSize="@dimen/header"
+				android:layout_weight="5"/>
+
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -24,10 +28,18 @@
 	<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
-			android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
-		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="综测状态"
-		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp">
+
+		<TextView android:layout_width="0dp"
+		          android:layout_height="wrap_content"
+		          android:text="@string/bptest_status"
+		          android:layout_weight="5"
+		          android:textColor="@color/black"
+		          android:textSize="@dimen/header"/>
 		<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -39,7 +51,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dp" android:layout_weight="1" android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp" android:gravity="center">
-		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="PCBA测试状态"
+		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/pcba_status"
 		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
 		<TextView
 				android:layout_width="0dp"
@@ -52,7 +64,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="0dp" android:layout_weight="1" android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp" android:gravity="center">
-		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="APK测试状态"
+		<TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/apk_status"
 		          android:layout_weight="5" android:textColor="@color/black" android:textSize="@dimen/header"/>
 		<TextView
 				android:layout_width="0dp"

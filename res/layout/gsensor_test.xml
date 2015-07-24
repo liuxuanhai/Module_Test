@@ -16,14 +16,17 @@
 				android:layout_height="0dp"
 				android:layout_gravity="center"
 				android:layout_weight="2"
-				android:src="@drawable/arrow" />
+				android:src="@drawable/arrow"
+				android:contentDescription="@string/gsensor_image"/>
 
 		<TextView
 				android:id="@+id/tvSpeedSensor"
 				android:layout_width="wrap_content"
 				android:layout_height="0dp"
 				android:layout_gravity="center"
-				android:layout_weight="1" android:textColor="@color/black" android:textSize="@dimen/content"/>
+				android:layout_weight="1"
+				android:textColor="@color/black"
+				android:textSize="@dimen/content"/>
 
 	</LinearLayout>
 

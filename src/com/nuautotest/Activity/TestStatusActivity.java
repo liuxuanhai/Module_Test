@@ -19,7 +19,7 @@ import java.io.*;
  */
 
 public class TestStatusActivity extends Activity {
-	static final String CALIBRATION_PORT = "/dev/ttyN5";
+	private static final String CALIBRATION_PORT = "/dev/ttyN5";
 
 	private TextView mtvCalibration, mtvBPTest, mtvPCBA, mtvAPK;
 
@@ -84,12 +84,12 @@ public class TestStatusActivity extends Activity {
 
 		/* Test status */
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/misc/pcba_apk_test"));
+			BufferedReader br = new BufferedReader(new FileReader("/misc/prodmark"));
 			String line;
 			while ((line = br.readLine()) != null) {
-				if (line.equals("pcba_ok"))
+				if (line.equals("PCBATEST=1"))
 					mtvPCBA.setBackgroundColor(Color.GREEN);
-				else if (line.equals("apk_ok"))
+				else if (line.equals("APKTEST=1"))
 					mtvAPK.setBackgroundColor(Color.GREEN);
 			}
 		} catch (FileNotFoundException ignored) {
@@ -100,11 +100,11 @@ public class TestStatusActivity extends Activity {
 	public void onbackbtn(View view) {
 		switch (view.getId()) {
 			case R.id.fail:
-				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.test_status), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.device_status), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 				this.finish();
 				break;
 			case R.id.success:
-				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.test_status), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
+				NuAutoTestAdapter.getInstance().setTestState(getString(R.string.device_status), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 				this.finish();
 				break;
 		}

@@ -5,13 +5,28 @@
               android:orientation="vertical" android:background="@color/bg">
 
 
-	<TextView
-			android:id="@+id/sensor"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="亮度"
-			android:textSize="@dimen/header" android:textColor="@color/black">
-	</TextView>
+			android:layout_height="wrap_content">
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/backlight_prompt"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1">
+		</TextView>
+
+		<TextView
+				android:id="@+id/tvBacklight"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1"/>
+	</LinearLayout>
 
 	<LinearLayout
 			android:layout_width="fill_parent"

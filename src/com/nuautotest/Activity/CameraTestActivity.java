@@ -29,12 +29,11 @@ import java.util.List;
  */
 
 public class CameraTestActivity extends Activity {
-	public static final int MSG_TIMEOUT = 0x101;
+	private static final int MSG_TIMEOUT = 0x101;
 	private SurfaceView surfaceView;
 	private SurfaceHolder mSurfaceHolder;
 	private Camera camera;
 	private String Flag = "";
-	DisplayMetrics outMetrics;
 	private FileWriter mLogWriter;
 	private SurfaceCallback mSurfaceCallback;
 	private CameraDisplayListener mDisplayListener;
@@ -84,7 +83,7 @@ public class CameraTestActivity extends Activity {
 		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView);
 
 		Display display = getWindowManager().getDefaultDisplay();
-		outMetrics = new DisplayMetrics();
+		DisplayMetrics outMetrics = new DisplayMetrics();
 		display.getMetrics(outMetrics);
 		Intent intent = this.getIntent();
 		Flag = intent.getStringExtra("Flag");
@@ -275,17 +274,17 @@ public class CameraTestActivity extends Activity {
 
 	}
 
-	public class CameraFocusCallback implements Camera.AutoFocusCallback {
+	private class CameraFocusCallback implements Camera.AutoFocusCallback {
 		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
 			if (state == STATE_FOCUSING) {
-				mBtAutoFocus.setText("对焦");
+				mBtAutoFocus.setText(getString(R.string.camera_focus));
 				state = STATE_FOCUSED;
 				mBtAutoFocus.setEnabled(true);
 				mBtTakePicture.setEnabled(true);
 			} else if (state == STATE_TAKING) {
 				camera.takePicture(null, null, null);
-				mBtTakePicture.setText("继续预览");
+				mBtTakePicture.setText(getString(R.string.camera_continue));
 				state = STATE_TAKEN;
 				mBtTakePicture.setEnabled(true);
 			}
@@ -303,7 +302,7 @@ public class CameraTestActivity extends Activity {
 			switch (state) {
 				case STATE_IDLE:
 				case STATE_FOCUSED:
-					mBtAutoFocus.setText("正在对焦...");
+					mBtAutoFocus.setText(getString(R.string.camera_focusing));
 					state = STATE_FOCUSING;
 					mBtAutoFocus.setEnabled(false);
 					mBtTakePicture.setEnabled(false);
@@ -314,7 +313,7 @@ public class CameraTestActivity extends Activity {
 			switch (state) {
 				case STATE_IDLE:
 				case STATE_FOCUSED:
-					mBtTakePicture.setText("正在拍照...");
+					mBtTakePicture.setText(getString(R.string.camera_taking));
 					mBtAutoFocus.setEnabled(false);
 					mBtTakePicture.setEnabled(false);
 					if (state == STATE_IDLE && Flag.equals("Back")) {
@@ -323,13 +322,13 @@ public class CameraTestActivity extends Activity {
 					} else {
 						state = STATE_TAKING;
 						camera.takePicture(null, null, null);
-						mBtTakePicture.setText("继续预览");
+						mBtTakePicture.setText(getString(R.string.camera_continue));
 						state = STATE_TAKEN;
 						mBtTakePicture.setEnabled(true);
 					}
 					break;
 				case STATE_TAKEN:
-					mBtTakePicture.setText("拍照");
+					mBtTakePicture.setText(getString(R.string.camera_take));
 					mBtAutoFocus.setEnabled(true);
 					state = STATE_IDLE;
 					camera.startPreview();
@@ -338,7 +337,7 @@ public class CameraTestActivity extends Activity {
 		}
 	}
 
-	protected void checkExistance() {
+	void checkExistance() {
 		RootCommand rootcmd = ModuleTestApplication.getRootcmd();
 		if (!rootcmd.isEnabled()) return;
 
@@ -385,7 +384,7 @@ public class CameraTestActivity extends Activity {
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "CameraTestActivity" + "======" + error + "======");
 		if (Flag.equals("Front")) {
 			NuAutoTestAdapter.getInstance().setTestState(getString(R.string.front_camera_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
@@ -395,7 +394,7 @@ public class CameraTestActivity extends Activity {
 		this.finish();
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -410,7 +409,7 @@ public class CameraTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

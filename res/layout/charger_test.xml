@@ -8,17 +8,21 @@
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:text="分别插入AC和USB充电器"
+			android:textSize="@dimen/header"
+			android:textColor="@color/black"
+			android:text="@string/charger_prompt"
 			android:background="@color/widget">
 	</TextView>
 
 	<TextView
-			android:id="@+id/sdsensor"
+			android:id="@+id/tvCharger"
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
+			android:layout_height="0dp"
 			android:layout_weight="1"
-			android:text="无反应"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp">
+			android:text="@string/no_response"
+			android:textSize="@dimen/header"
+			android:textColor="@color/black"
+			android:layout_marginTop="10dp">
 	</TextView>
 
 	<include layout="@layout/bottom_button" />

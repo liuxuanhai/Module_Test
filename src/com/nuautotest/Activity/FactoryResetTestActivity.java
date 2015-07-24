@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 
 public class FactoryResetTestActivity extends Activity {
-	public static final String BOOT_CONFIG = "/misc/boot_config";
+	private static final String BOOT_CONFIG = "/misc/boot_config";
 	private PowerManager mPowerManager;
 
 	private Context mContext;
@@ -44,7 +44,7 @@ public class FactoryResetTestActivity extends Activity {
 		initCreate();
 	}
 
-	public void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_reboot.txt");
@@ -72,7 +72,7 @@ public class FactoryResetTestActivity extends Activity {
 		}
 	}
 
-	protected void wipeSDCard() {
+	void wipeSDCard() {
 		File sdcard = new File(Environment.getExternalStorageDirectory().toString());
 		try {
 			File[] files = sdcard.listFiles();
@@ -93,7 +93,7 @@ public class FactoryResetTestActivity extends Activity {
 		return true;
 	}
 
-	public void StartTest() {
+	void StartTest() {
 		File bootconfigFlag = new File(BOOT_CONFIG);
 		try {
 			if (bootconfigFlag.exists()) {
@@ -139,14 +139,14 @@ public class FactoryResetTestActivity extends Activity {
 		mPowerManager.reboot(null);
 	}
 
-	public class StartButtonListener implements View.OnClickListener {
+	private class StartButtonListener implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
 			StartTest();
 		}
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		initCreate();
 		NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.factoryreset_test), NuAutoTestAdapter.TestState.TEST_STATE_ON_GOING);
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
@@ -154,7 +154,7 @@ public class FactoryResetTestActivity extends Activity {
 		StartTest();
 	}
 
-	public class AutoTestThread extends Handler implements Runnable {
+	private class AutoTestThread extends Handler implements Runnable {
 
 		public AutoTestThread(Context context, Handler handler) {
 			super();

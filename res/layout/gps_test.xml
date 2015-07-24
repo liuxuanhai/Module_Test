@@ -4,22 +4,47 @@
               android:layout_height="match_parent"
               android:orientation="vertical" android:background="@color/bg">
 
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+
+		<TextView
+				android:id="@+id/tvGPSPrompt"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:text="@string/gps_status"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1">
+		</TextView>
+
+		<TextView
+				android:id="@+id/tvGPSStatus"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1"/>
+	</LinearLayout>
+
 	<TextView
-			android:id="@+id/gsensor"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="无反应"
-			android:textSize="@dimen/header" android:textColor="@color/black">
+			android:text="@string/satellite"
+			android:textSize="@dimen/content"
+			android:textColor="@color/black"
+			android:layout_marginTop="10dp">
 	</TextView>
 
 	<TextView
-			android:id="@+id/grecord"
+			android:id="@+id/tvGPSRecord"
 			android:layout_width="fill_parent"
 			android:layout_height="0dip"
 			android:layout_weight="1"
-			android:text="暂无记录"
-			android:textSize="@dimen/content" android:textColor="@color/black" android:layout_marginTop="10dp">
-	</TextView>
+			android:textSize="@dimen/content"
+			android:textColor="@color/black"
+			android:layout_marginTop="10dp"/>
 
 	<include layout="@layout/bottom_button" />
 

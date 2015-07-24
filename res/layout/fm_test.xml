@@ -14,9 +14,9 @@
 		<Button
 				android:id="@+id/btFM"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="0dp"
 				android:onClick="onFM"
-				android:text="打开"
+				android:text="@string/open"
 				android:layout_weight="0.50"
 				android:enabled="true" style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>

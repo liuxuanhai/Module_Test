@@ -21,14 +21,14 @@ public class ModuleTestApplication extends Application {
 	public static final String TAG = "ModuleTest";
 
 	/* Control whether the log is enable for the whole project */
-	public static final boolean LOG_ENABLE = false;
+	public static boolean LOG_ENABLE = false;
 	public static String LOG_DIR;
-	static FileWriter mLogWriter;
-	ArrayList<String> mWriteLog;
-	ArrayList<String> mClearLog;
+	private static FileWriter mLogWriter;
+	private ArrayList<String> mWriteLog;
+	private ArrayList<String> mClearLog;
 
 	/* class RootCommand for read/write command as root */
-	public static RootCommand rootcmd;
+	private static RootCommand rootcmd;
 
 	public static RootCommand getRootcmd() {
 		if (rootcmd == null)
@@ -45,7 +45,7 @@ public class ModuleTestApplication extends Application {
 		return instance;
 	}
 
-	public ModuleTestApplication() {
+	ModuleTestApplication() {
 		instance = this;
 		rootcmd = new RootCommand();
 	}

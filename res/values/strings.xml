@@ -1,48 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="version">3.5.0615</string>
+	<string name="version">3.6.0724</string>
 
 	<string name="app_name">整机测试</string>
 	<string name="app_name_pcba">PCBA测试</string>
 
 	<string name="audio_test">"音频"</string>
+	<string name="audio_prompt">测试录音</string>
+	<string name="audio_warning">**请务必拔出耳机**</string>
+	<string name="audio_play_file">播放音频文件</string>
+
 	<string name="gsensor_test">加速传感</string>
+	<string name="gsensor_image">G-Sensor Image</string>
+
 	<string name="lightsensor_test">光传感</string>
+	<string name="lightsensor_prompt">请调节光线</string>
+	<string name="light_strength">光线强度:</string>
+
 	<string name="proximitysensor_test">距离传感</string>
+	<string name="psensor_prompt">请遮挡传感器</string>
+	<string name="psensor_distance">距离:</string>
+
 	<string name="compass_test">指南针</string>
+	<string name="compass_prompt">改变方向</string>
+	<string name="compass_direction">方向:</string>
+	<string name="compass_image">Compass image</string>
+
 	<string name="battery_test">电池</string>
+	<string name="battery_capacity">电量:</string>
+	<string name="battery_max">最大:</string>
+	<string name="battery_temperature">温度:</string>
+	<string name="battery_voltage">电压:</string>
+
 	<string name="backlight_test">背光</string>
+	<string name="backlight_prompt">亮度</string>
+
 	<string name="button_test">按键</string>
+	<string name="button_volup">音量上键</string>
+	<string name="button_voldown">音量下键</string>
+	<string name="button_back">返回键</string>
+	<string name="button_menu">菜单键</string>
+	<string name="button_need_key_light">需按键灯亮</string>
+
 	<string name="front_camera_test">前摄头</string>
 	<string name="back_camera_test">后摄头</string>
+	<string name="camera_focus">对焦</string>
+	<string name="camera_focusing">正在对焦…</string>
+	<string name="camera_take">拍照</string>
+	<string name="camera_taking">正在拍照…</string>
+	<string name="camera_continue">继续预览</string>
+
 	<string name="usb_test">USB</string>
+	<string name="usb_prompt">请插拔USB线</string>
+	<string name="usb_status">状态</string>
+	<string name="usb_plugged">插入</string>
+	<string name="usb_unplugged">未插入</string>
+
 	<string name="hdmi_test">HDMI</string>
+	<string name="hdmi_prompt">请将设备与电视连接\n如果显示一致的话则通过…</string>
+	<string name="hdmi_image">HDMI image</string>
+
 	<string name="wifi_test">WIFI</string>
+	<string name="wifi_status">Wifi状态</string>
+	<string name="wifi_number">热点数量</string>
+	<string name="wifi_current">当前网络</string>
+	<string name="wifi_id">编号</string>
+	<string name="wifi_name">名称</string>
+	<string name="wifi_ip">IP地址</string>
+	<string name="wifi_server_status">服务器状态</string>
+	<string name="wifi_ping">Ping服务器…</string>
+	<string name="wifi_setting">设置Wifi</string>
+	<string name="wifi_open_web">打开网页</string>
+
 	<string name="bluetooth_test">蓝牙</string>
+	<string name="bt_status">蓝牙状态</string>
+	<string name="bt_device_around">附近设备</string>
+	<string name="bt_setting">设置蓝牙</string>
+	<string name="bt_scan_mode_none">不可用</string>
+	<string name="bt_scan_mode_connectable">可连接</string>
+	<string name="bt_scan_mode_connectable_discoverable">可连接(可被发现)</string>
+
 	<string name="gps_test">GPS</string>
+	<string name="gps_status">GPS状态</string>
+	<string name="satellite_number">卫星数量</string>
+	<string name="satellite">卫星</string>
+	<string name="gps_event_started">打开</string>
+	<string name="gps_event_stopped">关闭</string>
+	<string name="gps_event_first_fix">首次定位</string>
+	<string name="gps_no_record">暂无数据</string>
+
 	<string name="sd_test">SD卡</string>
+	<string name="sd_prompt">请插拔SD卡</string>
+	<string name="sd_status">状态</string>
+	<string name="sd_action">操作: 无插拔</string>
+	<string name="sd_insert">SD卡已插入</string>
+	<string name="sd_remove">SD卡未插入</string>
+
 	<string name="charger_test">充电器</string>
+	<string name="charger_prompt">分别插入AC和USB充电器</string>
+	<string name="charger_usb">USB充电器已插入</string>
+	<string name="charger_ac">AC充电器已插入</string>
+	<string name="charger_none">充电器拔出</string>
+
 	<string name="tp_test">触屏</string>
+
 	<string name="vibrator_test">震动</string>
+	<string name="vibrate">震动</string>
+
 	<string name="lcd_test">LCD</string>
+
 	<string name="headset_test">耳机</string>
+	<string name="headset_status">状态</string>
+	<string name="headset_plugged">插入</string>
+	<string name="headset_unplugged">未插入</string>
+	<string name="headset_button">耳机键</string>
+	<string name="headset_plugged_four">四段式耳机已插入</string>
+	<string name="headset_plugged_three">三段式耳机已插入</string>
+
 	<string name="flashlight_test">闪光灯</string>
+
 	<string name="suspendresume_test">休眠唤醒</string>
+	<string name="suspend_resume_s3">深度休眠</string>
+	<string name="suspend_time">休眠时间(秒)</string>
+	<string name="suspend_time_default">12</string>
+	<string name="suspend_number">休眠次数(次)</string>
+	<string name="suspend_number_default">1</string>
+	<string name="suspend_interval">休眠间隔(秒)</string>
+	<string name="suspend_interval_default">0</string>
+
 	<string name="factoryreset_test">出厂设置</string>
+	<string name="factory_reset_prompt">点击开始按钮，恢复出厂设置并关机</string>
+
 	<string name="phone_test">电话</string>
-	<string name="fm_test">收音机</string>
-	<string name="led_test">LED</string>
-	<string name="device_info">设备信息</string>
-	<string name="test_status">设备状态</string>
-
-	<string name="takepicture">拍照</string>
-	<string name="autofouse">自动对焦</string>
-
-	<string name="menu_settings">Settings</string>
-	<string name="title_activity_telinkcall">TelinkCallRecord</string>
-	<string name="input_num">电话录音测试</string>
 	<string name="phone1">10010</string>
 	<string name="phone2">112</string>
+	<string name="phone_start_play">开始播放录音</string>
+	<string name="phone_stop_play">录音播放完毕</string>
+
+	<string name="fm_test">收音机</string>
+
+	<string name="led_test">LED</string>
+	<string name="led_current">当前颜色</string>
+	<string name="led_red_open">红色：打开</string>
+	<string name="led_red_close">红色：关闭</string>
+	<string name="led_green_open">绿色：打开</string>
+	<string name="led_green_close">绿色：关闭</string>
+	<string name="led_blue_open">蓝色：打开</string>
+	<string name="led_blue_close">蓝色：关闭</string>
+
+	<string name="auto_test">自动测试</string>
+
+	<string name="device_info">设备信息</string>
+	<string name="imei">IMEI</string>
+	<string name="pcbasn">PCBASN</string>
+	<string name="signal_strength">信号强度</string>
+	<string name="calibration_status">校准状态</string>
+	<string name="test_status">测试状态</string>
+	<string name="bluetooth">蓝牙</string>
+	<string name="wifi">WIFI</string>
+	<string name="battery">电池</string>
+	<string name="sw_version">软件版本</string>
+
+	<string name="device_status">设备状态</string>
+	<string name="calibration_none">未校准</string>
+	<string name="calibration_fail">校准失败</string>
+	<string name="calibration_pass">已校准</string>
+	<string name="bptest_status">综测状态</string>
+	<string name="bptest_none">未综测</string>
+	<string name="bptest_fail">综测失败</string>
+	<string name="bptest_pass">已综测</string>
+	<string name="pcba_status">PCBA测试状态</string>
+	<string name="apk_status">APK测试状态</string>
+
+	<string name="status_disabling">关闭中……</string>
+	<string name="status_disabled">关闭</string>
+	<string name="status_enabling">打开中……</string>
+	<string name="status_enabled">打开</string>
+	<string name="status_unknown">不可用</string>
+
+	<string name="start_record">开始录音</string>
+	<string name="stop_record">停止录音</string>
+	<string name="start_play">开始播放</string>
+	<string name="stop_play">停止播放</string>
+	<string name="play_music">播放音乐</string>
+
+	<string name="device_number">设备数量</string>
+	<string name="no_response">无反应</string>
+	<string name="success">成功</string>
+	<string name="fail">失败</string>
+	<string name="open">打开</string>
+	<string name="close">关闭</string>
+	<string name="start">开始</string>
+	<string name="not_finish">未完成</string>
+	<string name="finish">已完成</string>
 
 </resources>

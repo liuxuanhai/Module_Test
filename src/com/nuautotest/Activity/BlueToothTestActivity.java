@@ -17,7 +17,6 @@ import com.nuautotest.application.ModuleTestApplication;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -29,19 +28,19 @@ import java.util.Vector;
 
 public class BlueToothTestActivity extends Activity {
 	private TextView tvBTStatus, tvBTConnStatus, tvBTNumber;
-	Vector<BluetoothDevice> mDevice = new Vector<BluetoothDevice>();
+	private final Vector<BluetoothDevice> mDevice = new Vector<BluetoothDevice>();
 
 	private BluetoothAdapter mBTAdapter;
 	private BroadcastReceiver mBroadcastRcv;
 
-	private boolean mBtEnable = false;
+	private boolean mBtEnable = false, mPaused = false;
 	private boolean isAutomatic, isFinished;
 	private int time;
 	private Context mContext;
 	private Handler mHandler;
 	private FileWriter mLogWriter;
 
-	public class BTBroadcastReceiver extends BroadcastReceiver {
+	private class BTBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (isAutomatic) {
@@ -61,17 +60,17 @@ public class BlueToothTestActivity extends Activity {
 				if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
 					switch(mBTAdapter.getState()) {
 						case BluetoothAdapter.STATE_OFF:
-							tvBTStatus.setText("蓝牙状态:关闭");
+							tvBTStatus.setText(mContext.getString(R.string.status_disabled));
 							break;
 						case BluetoothAdapter.STATE_TURNING_ON:
-							tvBTStatus.setText("蓝牙状态:打开中...");
+							tvBTStatus.setText(mContext.getString(R.string.status_enabling));
 							break;
 						case BluetoothAdapter.STATE_ON:
-							tvBTStatus.setText("蓝牙状态:打开");
+							tvBTStatus.setText(mContext.getString(R.string.status_enabled));
 							mBTAdapter.startDiscovery();
 							break;
 						case BluetoothAdapter.STATE_TURNING_OFF:
-							tvBTStatus.setText("蓝牙状态:关闭中...");
+							tvBTStatus.setText(mContext.getString(R.string.status_disabling));
 							break;
 					}
 				} else if (BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
@@ -84,26 +83,24 @@ public class BlueToothTestActivity extends Activity {
 					}
 					printRecord();
 				} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(intent.getAction())) {
-					mBTAdapter.startDiscovery();
+					if (!mPaused) mBTAdapter.startDiscovery();
 				}
 			}
 		}
 	}
 
-	protected void printRecord() {
-		int i;
-
-		tvBTNumber.setText("设备数量: " + mDevice.size());
-		tvBTConnStatus.setText("附近设备:\r\n");
+	void printRecord() {
+		tvBTNumber.setText(String.valueOf(mDevice.size()));
 		for (BluetoothDevice device : mDevice) {
-			tvBTConnStatus.append("名称:" + device.getName() + "\t地址:"
+			String devices = String.valueOf(tvBTConnStatus.getText());
+			if (devices.contains(device.getAddress())) continue;
+			tvBTConnStatus.append(device.getName() + "\t\t"
 					+ device.getAddress() + "\r\n");
 		}
 	}
 
-	protected int indexOfDevice(BluetoothDevice device) {
+	int indexOfDevice(BluetoothDevice device) {
 		int i;
-		if (mDevice == null) return -1;
 		for (i=0; i<mDevice.size(); i++) {
 			if (mDevice.get(i).getAddress().equals(device.getAddress()))
 				return i;
@@ -123,7 +120,7 @@ public class BlueToothTestActivity extends Activity {
 		initCreate();
 	}
 
-	protected void initCreate() {
+	void initCreate() {
 		if (ModuleTestApplication.LOG_ENABLE) {
 			try {
 				mLogWriter = new FileWriter(ModuleTestApplication.LOG_DIR + "/ModuleTest/log_bluetooth.txt");
@@ -158,21 +155,28 @@ public class BlueToothTestActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
+		mPaused = false;
 		switch(mBTAdapter.getState()) {
 			case BluetoothAdapter.STATE_OFF:
-				tvBTStatus.setText("蓝牙状态:关闭");
+				tvBTStatus.setText(mContext.getString(R.string.status_disabled));
 				break;
 			case BluetoothAdapter.STATE_TURNING_ON:
-				tvBTStatus.setText("蓝牙状态:打开中...");
+				tvBTStatus.setText(mContext.getString(R.string.status_enabling));
 				break;
 			case BluetoothAdapter.STATE_ON:
-				tvBTStatus.setText("蓝牙状态:打开");
+				tvBTStatus.setText(mContext.getString(R.string.status_enabled));
 				mBTAdapter.startDiscovery();
 				break;
 			case BluetoothAdapter.STATE_TURNING_OFF:
-				tvBTStatus.setText("蓝牙状态:关闭中...");
+				tvBTStatus.setText(mContext.getString(R.string.status_disabling));
 				break;
 		}
+	}
+
+	@Override
+	public void onPause() {
+		mPaused = true;
+		super.onPause();
 	}
 
 	@Override
@@ -182,7 +186,7 @@ public class BlueToothTestActivity extends Activity {
 		super.onDestroy();
 	}
 
-	protected void releaseDestroy() {
+	void releaseDestroy() {
 		try {
 			mContext.unregisterReceiver(mBroadcastRcv);
 		} catch (IllegalArgumentException e) {
@@ -224,13 +228,13 @@ public class BlueToothTestActivity extends Activity {
 		return true;
 	}
 
-	protected void postError(String error) {
+	void postError(String error) {
 		Log.e(ModuleTestApplication.TAG, "BlueToothTestActivity" + "======" + error + "======");
 		NuAutoTestAdapter.getInstance().setTestState(getString(R.string.bluetooth_test), NuAutoTestAdapter.TestState.TEST_STATE_FAIL);
 		this.finish();
 	}
 
-	public void startAutoTest() {
+	void startAutoTest() {
 		isAutomatic = true;
 		isFinished = false;
 		initCreate();
@@ -238,7 +242,7 @@ public class BlueToothTestActivity extends Activity {
 		mHandler.sendEmptyMessage(NuAutoTestActivity.MSG_REFRESH);
 	}
 
-	public void stopAutoTest(boolean success) {
+	void stopAutoTest(boolean success) {
 		if (success)
 			NuAutoTestAdapter.getInstance().setTestState(mContext.getString(R.string.bluetooth_test), NuAutoTestAdapter.TestState.TEST_STATE_SUCCESS);
 		else

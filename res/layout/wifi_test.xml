@@ -4,38 +4,207 @@
               android:layout_height="match_parent"
               android:orientation="vertical" android:background="@color/bg">
 
-	<TextView
-			android:id="@+id/tvwifistatus"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="Wifi状态"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:password="false">
-	</TextView>
+			android:layout_height="wrap_content">
 
-	<TextView
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:text="@string/wifi_status"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1"/>
+
+		<TextView
+				android:id="@+id/tvWifiStatus"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:text="@string/no_response"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_weight="1"/>
+	</LinearLayout>
+
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/tvWifiNumber" android:layout_marginTop="10dp" android:textColor="@color/black"
-			android:text="热点数量" android:password="false" android:textSize="@dimen/header"/>
-	<TextView
-			android:id="@+id/tvwificonnstatus"
+			android:layout_height="wrap_content">
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:layout_marginTop="10dp"
+				android:textColor="@color/black"
+				android:text="@string/wifi_number"
+				android:textSize="@dimen/header"
+				android:layout_weight="1"/>
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:id="@+id/tvWifiNumber"
+				android:layout_marginTop="10dp"
+				android:textColor="@color/black"
+				android:text="@string/no_response"
+				android:textSize="@dimen/header"
+				android:layout_weight="1"/>
+	</LinearLayout>
+
+	<LinearLayout
+			android:orientation="vertical"
 			android:layout_width="fill_parent"
-			android:layout_height="0dip"
-			android:layout_weight="1"
-			android:textSize="@dimen/content" android:textColor="@color/black" android:layout_marginTop="10dp"
-			android:text="当前网络">
-	</TextView>
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+		<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/content"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:text="@string/wifi_current">
+		</TextView>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+
+			<TextView
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:text="@string/wifi_id"
+					android:layout_weight="1"/>
+
+			<TextView
+					android:id="@+id/tvWifiID"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:layout_weight="1"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				>
+
+			<TextView
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:text="@string/wifi_name"
+					android:layout_weight="1"/>
+
+			<TextView
+					android:id="@+id/tvWifiName"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:layout_weight="1"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				>
+
+			<TextView
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:text="@string/wifi_ip"
+					android:layout_weight="1"/>
+
+			<TextView
+					android:id="@+id/tvWifiIp"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:layout_weight="1"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				>
+
+			<TextView
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:text="@string/wifi_server_status"
+					android:layout_weight="1"/>
+
+			<TextView
+					android:id="@+id/tvWifiServerStatus"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:layout_weight="1"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				>
+
+			<TextView
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:text="@string/wifi_ping"
+					android:layout_weight="1"/>
+
+			<TextView
+					android:id="@+id/tvWifiPing"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:textSize="@dimen/content"
+					android:textColor="@color/black"
+					android:layout_marginTop="10dp"
+					android:layout_weight="1"/>
+		</LinearLayout>
+	</LinearLayout>
 
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content" >
+			android:layout_height="wrap_content">
 
 		<Button
 				android:id="@+id/btEnableWifi"
 				android:layout_width="0dp"
 				android:layout_height="@dimen/buttonHeight"
 				android:onClick="onEnableWifi"
-				android:text="设置Wifi" style="@android:style/Widget.Button" android:layout_weight="1"
+				android:text="@string/wifi_setting"
+				style="@android:style/Widget.Button"
+				android:layout_weight="1"
 				android:textSize="@dimen/buttonText"/>
 
 		<Button
@@ -43,7 +212,9 @@
 				android:layout_width="0dp"
 				android:layout_height="@dimen/buttonHeight"
 				android:onClick="onOpenWeb"
-				android:text="打开网页" style="@android:style/Widget.Button" android:layout_weight="1"
+				android:text="@string/wifi_open_web"
+				style="@android:style/Widget.Button"
+				android:layout_weight="1"
 				android:textSize="@dimen/buttonText"/>
 
 	</LinearLayout>

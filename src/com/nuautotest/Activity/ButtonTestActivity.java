@@ -23,7 +23,10 @@ import java.io.IOException;
 
 public class ButtonTestActivity extends Activity {
 
-	TextView textKeyUp, textKeyDown, textKeyBack, textKeyMenu;
+	private TextView textKeyUp;
+	private TextView textKeyDown;
+	private TextView textKeyBack;
+	private TextView textKeyMenu;
 	private FileWriter mLogWriter;
 	private static final int MSG_TIMEOUT = 0x101;
 	private int mTimeout;
@@ -126,7 +129,7 @@ public class ButtonTestActivity extends Activity {
 		return true;
 	}
 
-	protected class TimerThread extends Thread {
+	private class TimerThread extends Thread {
 		@Override
 		public void run() {
 			while (mTimeout > 0) {
@@ -141,7 +144,7 @@ public class ButtonTestActivity extends Activity {
 		}
 	}
 
-	protected class TimerHandler extends Handler {
+	private class TimerHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_TIMEOUT) {

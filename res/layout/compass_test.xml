@@ -7,24 +7,45 @@
 	<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:text="改变方向"
+			android:textSize="@dimen/header"
+			android:textColor="@color/black"
+			android:text="@string/compass_prompt"
 			android:background="@color/widget">
 	</TextView>
 
-	<TextView
-			android:id="@+id/csensor"
+	<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="无反应"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:layout_marginTop="10dp">
-	</TextView>
+			android:layout_height="wrap_content">
+
+		<TextView
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:text="@string/compass_direction"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1">
+		</TextView>
+
+		<TextView
+				android:id="@+id/tvCompass"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:text="@string/no_response"
+				android:textSize="@dimen/header"
+				android:textColor="@color/black"
+				android:layout_marginTop="10dp"
+				android:layout_weight="1"/>
+	</LinearLayout>
 
 	<ImageView
 			android:id="@+id/compassimage"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="0dp"
 			android:layout_weight="1"
-			android:src="@drawable/compass" />
+			android:src="@drawable/compass"
+			android:contentDescription="@string/compass_image"/>
 
 	<include layout="@layout/bottom_button" />
 

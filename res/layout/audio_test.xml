@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" android:background="@color/bg">
+              android:orientation="vertical"
+              android:background="@color/bg">
 
 	<TextView
 			android:id="@+id/sound"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
-			android:text="测试录音"
+			android:text="@string/audio_prompt"
 			android:textSize="@dimen/header" android:background="@color/widget" android:textColor="@color/black"/>
 
 	<TextView
@@ -17,7 +18,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
-			android:text="**请务必拔出耳机**"
+			android:text="@string/audio_warning"
 			android:textSize="@dimen/content"
 			android:background="@color/bg"
 			android:textColor="@color/black"/>
@@ -31,7 +32,8 @@
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="开始录音" style="@android:style/Widget.Button"
+				android:text="@string/start_record"
+				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 
 		<Button
@@ -39,7 +41,8 @@
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="停止录音" style="@android:style/Widget.Button"
+				android:text="@string/stop_record"
+				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
 
@@ -53,7 +56,7 @@
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="播放录音"
+				android:text="@string/start_play"
 				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 
@@ -62,7 +65,7 @@
 				android:layout_width="0dip"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:text="停止播放"
+				android:text="@string/stop_play"
 				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
@@ -76,7 +79,7 @@
 				android:id="@+id/playFile"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:text="播放音频文件"
+				android:text="@string/audio_play_file"
 				style="@android:style/Widget.Button"
 				android:textSize="@dimen/buttonText"/>
 	</LinearLayout>
