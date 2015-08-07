@@ -9,13 +9,13 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/psensor_prompt"
-			android:textSize="@dimen/header" android:textColor="@color/black" android:background="@color/widget"/>
+			android:textSize="@dimen/header" android:textColor="@android:color/holo_red_dark" android:background="@color/widget"/>
 
 	<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1">
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp">
 
 		<TextView
 				android:layout_width="0dp"
@@ -23,19 +23,27 @@
 				android:text="@string/psensor_distance"
 				android:textSize="@dimen/header"
 				android:textColor="@color/black"
-				android:layout_marginTop="10dp"
 				android:layout_weight="1"/>
 
 		<TextView
-				android:id="@+id/proxsensor"
+				android:id="@+id/tvProxSensor"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="@string/no_response"
 				android:textSize="@dimen/header"
 				android:textColor="@color/black"
-				android:layout_marginTop="10dp"
 				android:layout_weight="1"/>
 	</LinearLayout>
+
+	<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:text="@string/success"
+			android:id="@+id/tvProxSuccess"
+			android:layout_weight="1"
+			android:textColor="@color/green"
+			android:textSize="@dimen/header"
+			android:gravity="center"
+			android:visibility="invisible"/>
 
 	<include layout="@layout/bottom_button" />
 

@@ -2,6 +2,7 @@ package com.nuautotest.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -27,7 +28,7 @@ import java.io.IOException;
 public class ProximitySensorTestActivity extends Activity implements SensorEventListener {
 	private SensorManager sm;
 	private Sensor proxSensor;
-	private TextView tvProx;
+	private TextView tvProx, tvProxSuccess;
 	private boolean mRegisteredSensor;
 	private float dataProx;
 	private float autoRecProx = -1;
@@ -44,7 +45,8 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 
 		mContext = this;
 		setContentView(R.layout.proximity_sensor_test);
-		tvProx = (TextView) findViewById(R.id.proxsensor);
+		tvProx = (TextView)findViewById(R.id.tvProxSensor);
+		tvProxSuccess = (TextView)findViewById(R.id.tvProxSuccess);
 		initCreate();
 	}
 
@@ -114,8 +116,14 @@ public class ProximitySensorTestActivity extends Activity implements SensorEvent
 				stopAutoTest(true);
 			else
 				autoRecProx = dataProx;
-		} else
-			tvProx.setText(String.valueOf(dataProx));
+		} else if (dataProx == 0) {
+			tvProx.setText(mContext.getString(R.string.psensor_response));
+			tvProx.setTextColor(mContext.getResources().getColor(R.color.green));
+//			tvProxSuccess.setVisibility(View.VISIBLE);
+		} else {
+			tvProx.setText(mContext.getString(R.string.psensor_no_response));
+			tvProx.setTextColor(mContext.getResources().getColor(R.color.red));
+		}
 	}
 
 	@Override

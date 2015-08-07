@@ -94,50 +94,7 @@
     <favorites_list name="Module_Test" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5511182" vertical-offset="315" max-vertical-offset="2955">
-              <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
-              <folding>
-                <element signature="e#216#233#0" expanded="true" />
-                <element signature="e#2459#2477#0" expanded="true" />
-                <element signature="e#2844#2862#0" expanded="true" />
-                <element signature="e#3160#3181#0" expanded="true" />
-                <element signature="e#3368#3390#0" expanded="true" />
-                <element signature="e#3581#3607#0" expanded="true" />
-                <element signature="e#3794#3816#0" expanded="true" />
-                <element signature="e#3998#4015#0" expanded="true" />
-                <element signature="e#4202#4224#0" expanded="true" />
-                <element signature="e#4408#4427#0" expanded="true" />
-                <element signature="e#4616#4640#0" expanded="true" />
-                <element signature="e#4825#4845#0" expanded="true" />
-                <element signature="e#5032#5054#0" expanded="true" />
-                <element signature="e#5237#5255#0" expanded="true" />
-                <element signature="e#5441#5468#0" expanded="true" />
-                <element signature="e#5651#5669#0" expanded="true" />
-                <element signature="e#5853#5872#0" expanded="true" />
-                <element signature="e#6061#6085#0" expanded="true" />
-                <element signature="e#6267#6284#0" expanded="true" />
-                <element signature="e#6472#6495#0" expanded="true" />
-                <element signature="e#6678#6696#0" expanded="true" />
-                <element signature="e#6883#6905#0" expanded="true" />
-                <element signature="e#7095#7120#0" expanded="true" />
-                <element signature="e#7314#7342#0" expanded="true" />
-                <element signature="e#7920#7947#0" expanded="true" />
-                <element signature="e#8132#8152#0" expanded="true" />
-                <element signature="e#8334#8351#0" expanded="true" />
-                <element signature="e#8537#8558#0" expanded="true" />
-                <element signature="e#8741#8759#0" expanded="true" />
-                <element signature="e#8954#8984#0" expanded="true" />
-                <element signature="e#9170#9193#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -147,27 +104,16 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/nu_autotest_activity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/camera_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/suspend_resume_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/button_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/audio_test.xml" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/LCDTestActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/View/TPTestView.java" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/NativeLib/SystemPropertiesProxy.java" />
         <option value="$PROJECT_DIR$/assets-en/config.ini" />
-        <option value="$PROJECT_DIR$/res/layout/bottom_button.xml" />
         <option value="$PROJECT_DIR$/res/layout/gsensor_test.xml" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/GSensorTestActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/LightSensorTestActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/ProximitySensorTestActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/battery_test.xml" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/CompassTestActivity.java" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/application/ModuleTestApplication.java" />
         <option value="$PROJECT_DIR$/res/layout/device_info.xml" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/WifiTestActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/light_sensor_test.xml" />
-        <option value="$PROJECT_DIR$/res/layout/proximity_sensor_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/compass_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/wifi_test.xml" />
         <option value="$PROJECT_DIR$/res/layout/bluetooth_test.xml" />
@@ -193,11 +139,22 @@
         <option value="$PROJECT_DIR$/src/com/nuautotest/Adapter/NuAutoTestAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/TestStatusActivity.java" />
         <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/DeviceInfoActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/factory_reset_test.xml" />
+        <option value="$PROJECT_DIR$/res/layout/nu_autotest_activity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/bottom_button.xml" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/View/TPTestView.java" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/TPTestActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/tp_test.xml" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/LightSensorTestActivity.java" />
         <option value="$PROJECT_DIR$/res/values-en/strings.xml" />
-        <option value="$PROJECT_DIR$/assets/config-en.ini" />
-        <option value="$PROJECT_DIR$/assets/config.ini" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/ProximitySensorTestActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/proximity_sensor_test.xml" />
+        <option value="$PROJECT_DIR$/res/layout/light_sensor_test.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/assets/config.ini" />
+        <option value="$PROJECT_DIR$/assets/config-en.ini" />
+        <option value="$PROJECT_DIR$/src/com/nuautotest/Activity/GSensorTestActivity.java" />
       </list>
     </option>
   </component>
@@ -206,7 +163,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="59" />
-    <option name="y" value="24" />
+    <option name="y" value="792" />
     <option name="width" value="1307" />
     <option name="height" value="744" />
   </component>
@@ -261,9 +218,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane />
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -279,6 +233,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Module_Test" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nuautotest" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="View" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -414,6 +390,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
       <pane id="Scope" />
     </panes>
   </component>
@@ -436,7 +415,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="androi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;teststatus&#9;PSI&#9;JAVA://com.nuautotest.Activity.TestStatusActivity&#10;teststa&#9;PSI&#9;JAVA://com.nuautotest.Adapter.NuAutoTestAdapter.TestState&#10;devicein&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/DeviceInfoActivity.java&#10;phone&#9;PSI&#9;JAVA://com.nuautotest.Activity.PhoneTestActivity&#10;led&#9;PSI&#9;JAVA://com.nuautotest.Activity.LEDTestActivity&#10;fla&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/FlashlightTestActivity.java&#10;camera_&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/camera_test.xml&#10;camera&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/CameraTestActivity.java&#10;backli&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/BackLightTestActivity.java&#10;audio&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/AudioTestActivity.java&#10;head&#9;PSI&#9;JAVA://com.nuautotest.Activity.HeadsetTestActivity&#10;headset&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/headset_test.xml&#10;usb&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/USBTestActivity.java&#10;sd&#9;PSI&#9;JAVA://com.nuautotest.Activity.SDTestActivity&#10;char&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/ChargerTestActivity.java&#10;charg&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/ChargerTestActivity.java&#10;and&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;gps&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/GPSTestActivity.java&#10;blue&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/BlueToothTestActivity.java&#10;wifi_&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/wifi_test.xml&#10;compass_test&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/compass_test.xml&#10;roximi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/proximity_sensor_test.xml&#10;light_s&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/light_sensor_test.xml&#10;gsen&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/gsensor_test.xml&#10;wifi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/WifiTestActivity.java&#10;deviceinfo&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/DeviceInfoActivity.java&#10;compa&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/CompassTestActivity.java&#10;lightsen&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/LightSensorTestActivity.java&#10;gsenso&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/GSensorTestActivity.java&#10;appli&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/application/ModuleTestApplication.java&#10;nuau&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/NuAutoTestActivity.java&#10;manife&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;blu&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/bluetooth_test.xml&#10;adapter&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Adapter/NuAutoTestAdapter.java&#10;flash&#9;PSI&#9;JAVA://com.nuautotest.Activity.FlashlightTestActivity&#10;cameratest&#9;PSI&#9;JAVA://com.nuautotest.Activity.CameraTestActivity&#10;android&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;suspend&#9;PSI&#9;JAVA://com.nuautotest.Activity.SuspendResumeTestActivity&#10;audiotest&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/AudioTestActivity.java&#10;string&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/values/strings.xml&#10;root&#9;PSI&#9;JAVA://com.nuautotest.NativeLib.RootCommand&#10;phon&#9;FILE&#9;file:///home/hangxie/Downloads/android-sdk-linux_19/sources/android-19/android/telephony/PhoneStateListener.java&#10;lcdtestac&#9;PSI&#9;JAVA://com.nuautotest.Activity.LCDTestActivity&#10;tptest&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/View/TPTestView.java&#10;phonetestac&#9;PSI&#9;JAVA://com.nuautotest.Activity.PhoneTestActivity&#10;compass&#9;PSI&#9;JAVA://com.nuautotest.Activity.CompassTestActivity&#10;&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;batt&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/BatteryTestActivity.java&#10;value&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/values/value.xml" />
+    <property name="SearchEverywhereHistoryKey" value="gse&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/GSensorTestActivity.java&#10;handler&#9;PSI&#9;JAVA://com.nuautotest.Activity.BackLightTestActivity#handler&#10;androi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;gsensor&#9;PSI&#9;JAVA://com.nuautotest.Activity.GSensorTestActivity&#10;light&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/light_sensor_test.xml&#10;color.xml&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/values/color.xml&#10;prox&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/proximity_sensor_test.xml&#10;androidm&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;pro&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/proximity_sensor_test.xml&#10;strings.&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/values-en/strings.xml&#10;strings&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/values/strings.xml&#10;light_se&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/light_sensor_test.xml&#10;tp_tes&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/tp_test.xml&#10;bott&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/bottom_button.xml&#10;nuau&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/nu_autotest_activity.xml&#10;factory_&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/factory_reset_test.xml&#10;teststatus&#9;PSI&#9;JAVA://com.nuautotest.Activity.TestStatusActivity&#10;teststa&#9;PSI&#9;JAVA://com.nuautotest.Adapter.NuAutoTestAdapter.TestState&#10;devicein&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/DeviceInfoActivity.java&#10;phone&#9;PSI&#9;JAVA://com.nuautotest.Activity.PhoneTestActivity&#10;led&#9;PSI&#9;JAVA://com.nuautotest.Activity.LEDTestActivity&#10;fla&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/FlashlightTestActivity.java&#10;camera_&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/camera_test.xml&#10;camera&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/CameraTestActivity.java&#10;backli&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/BackLightTestActivity.java&#10;audio&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/AudioTestActivity.java&#10;head&#9;PSI&#9;JAVA://com.nuautotest.Activity.HeadsetTestActivity&#10;headset&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/headset_test.xml&#10;usb&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/USBTestActivity.java&#10;sd&#9;PSI&#9;JAVA://com.nuautotest.Activity.SDTestActivity&#10;char&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/ChargerTestActivity.java&#10;charg&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/ChargerTestActivity.java&#10;and&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;gps&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/GPSTestActivity.java&#10;blue&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/BlueToothTestActivity.java&#10;wifi_&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/wifi_test.xml&#10;compass_test&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/compass_test.xml&#10;roximi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/proximity_sensor_test.xml&#10;light_s&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/light_sensor_test.xml&#10;gsen&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/gsensor_test.xml&#10;wifi&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/WifiTestActivity.java&#10;deviceinfo&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/DeviceInfoActivity.java&#10;compa&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/CompassTestActivity.java&#10;lightsen&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/LightSensorTestActivity.java&#10;gsenso&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Activity/GSensorTestActivity.java&#10;appli&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/application/ModuleTestApplication.java&#10;manife&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/AndroidManifest.xml&#10;blu&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/res/layout/bluetooth_test.xml&#10;adapter&#9;FILE&#9;file:///home/hangxie/workspace/Module_Test/src/com/nuautotest/Adapter/NuAutoTestAdapter.java&#10;flash&#9;PSI&#9;JAVA://com.nuautotest.Activity.FlashlightTestActivity" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0123456789ABCDEF" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="AVD4.1" />
@@ -667,7 +646,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="59" y="24" width="1307" height="744" extended-state="6" />
+    <frame x="59" y="792" width="1307" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -681,8 +660,8 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20079051" sideWeight="0.5007657" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26086956" sideWeight="0.5022831" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3093415" sideWeight="0.49960473" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41807044" sideWeight="0.49960473" order="12" side_tool="false" content_ui="tabs" x="81" y="283" width="1265" height="283" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3078101" sideWeight="0.49960473" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41500765" sideWeight="0.49960473" order="12" side_tool="false" content_ui="tabs" x="81" y="283" width="1265" height="283" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23794466" sideWeight="0.4977029" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -692,8 +671,8 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26798418" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2735178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969373" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -758,196 +737,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/NuAutoTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07512521" vertical-offset="0" max-vertical-offset="6450">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gen/com/nuautotest/Activity/R.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21246459" vertical-offset="0" max-vertical-offset="353">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/content/res/Resources.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33144477" vertical-offset="2403" max-vertical-offset="35250">
-          <caret line="211" column="28" selection-start-line="211" selection-start-column="28" selection-end-line="211" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/content/Context.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2912" max-vertical-offset="43260">
-          <caret line="252" column="33" selection-start-line="252" selection-start-column="33" selection-end-line="252" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/content/res/AssetManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323263" vertical-offset="4795" max-vertical-offset="10950">
-          <caret line="351" column="33" selection-start-line="351" selection-start-column="33" selection-end-line="351" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/bottom_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.115385" vertical-offset="63" max-vertical-offset="480">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding>
-            <element signature="e#798#815#0" expanded="false" />
-            <element signature="e#876#895#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/GSensorTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1228" max-vertical-offset="3240">
-          <caret line="129" column="37" selection-start-line="129" selection-start-column="37" selection-end-line="129" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/LightSensorTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1143" max-vertical-offset="2775">
-          <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/ProximitySensorTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4824281" vertical-offset="1228" max-vertical-offset="2760">
-          <caret line="117" column="51" selection-start-line="117" selection-start-column="51" selection-end-line="117" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/CompassTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4824281" vertical-offset="1723" max-vertical-offset="3495">
-          <caret line="153" column="34" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/application/ModuleTestApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="1650">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/device_info.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0558659" vertical-offset="2802" max-vertical-offset="3405">
-          <caret line="212" column="41" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/battery_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26233765" vertical-offset="1159" max-vertical-offset="1980">
-          <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/WifiTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6055274" vertical-offset="2831" max-vertical-offset="4290">
-          <caret line="64" column="57" selection-start-line="64" selection-start-column="57" selection-end-line="64" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/gsensor_test.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="117" max-vertical-offset="615">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/light_sensor_test.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="37" max-vertical-offset="705">
-          <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/proximity_sensor_test.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="705">
-          <caret line="31" column="52" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/compass_test.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="855">
-          <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/bluetooth_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25" vertical-offset="675" max-vertical-offset="1275">
-          <caret line="55" column="49" selection-start-line="55" selection-start-column="49" selection-end-line="55" selection-end-column="49" />
-          <folding>
-            <element signature="e#522#541#0" expanded="false" />
-            <element signature="e#563#578#0" expanded="false" />
-            <element signature="e#795#810#0" expanded="false" />
-            <element signature="e#1129#1152#0" expanded="false" />
-            <element signature="e#1211#1226#0" expanded="false" />
-            <element signature="e#1470#1485#0" expanded="false" />
-            <element signature="e#1724#1740#0" expanded="false" />
-            <element signature="e#1987#2003#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/wifi_test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.525" vertical-offset="270" max-vertical-offset="3435">
-          <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
-          <folding>
-            <element signature="e#522#543#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33278957" vertical-offset="23796" max-vertical-offset="29430">
@@ -963,6 +752,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/gps_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.423077" vertical-offset="240" max-vertical-offset="840">
           <caret line="41" column="46" selection-start-line="41" selection-start-column="46" selection-end-line="41" selection-end-column="46" />
@@ -973,9 +765,6 @@
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/widget/TextView.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -984,22 +773,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/GPSTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.87746173" vertical-offset="2149" max-vertical-offset="4440">
-          <caret line="188" column="37" selection-start-line="188" selection-start-column="37" selection-end-line="188" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/charger_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="525">
           <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/ChargerTestActivity.java">
@@ -1010,29 +792,29 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/usb_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.769231" vertical-offset="148" max-vertical-offset="915">
           <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/sd_test.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/sd_test.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5" vertical-offset="315" max-vertical-offset="780">
           <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
           <folding>
-            <element signature="e#830#849#0" expanded="true" />
-            <element signature="e#871#886#0" expanded="true" />
-            <element signature="e#1168#1183#0" expanded="true" />
+            <element signature="e#830#849#0" expanded="false" />
+            <element signature="e#871#886#0" expanded="false" />
+            <element signature="e#1168#1183#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/USBTestActivity.java">
@@ -1057,6 +839,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/headset_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0550458" vertical-offset="180" max-vertical-offset="1410">
           <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
@@ -1065,9 +850,6 @@
             <element signature="e#1180#1200#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/AudioTestActivity.java">
@@ -1078,36 +860,29 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/backlight_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.423077" vertical-offset="0" max-vertical-offset="690">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="e#524#550#0" expanded="true" />
-            <element signature="e#572#587#0" expanded="true" />
-            <element signature="e#810#825#0" expanded="true" />
+            <element signature="e#524#550#0" expanded="false" />
+            <element signature="e#572#587#0" expanded="false" />
+            <element signature="e#810#825#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/BackLightTestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="2505">
-          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/camera_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1395">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/CameraTestActivity.java">
@@ -1166,85 +941,234 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/factory_reset_test.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/os/Looper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.7085986" vertical-offset="3497" max-vertical-offset="4125">
+          <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/GPSTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5479233" vertical-offset="3272" max-vertical-offset="4440">
+          <caret line="259" column="22" selection-start-line="259" selection-start-column="22" selection-end-line="259" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/bottom_button.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/View/TPTestView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09787928" vertical-offset="0" max-vertical-offset="10275">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/TPTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.629393" vertical-offset="206" max-vertical-offset="3465">
+          <caret line="40" column="24" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/tp_test.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.225" vertical-offset="0" max-vertical-offset="600">
+          <caret line="9" column="46" selection-start-line="9" selection-start-column="46" selection-end-line="9" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/nu_autotest_activity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/Sensor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="571" max-vertical-offset="5850">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/TriggerEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="780">
+          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/TriggerEventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="407" max-vertical-offset="1035">
+          <caret line="67" column="22" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/SensorManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="21061" max-vertical-offset="22590">
+          <caret line="1448" column="51" selection-start-line="1448" selection-start-column="51" selection-end-line="1448" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/SensorEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="413" max-vertical-offset="7455">
+          <caret line="55" column="13" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/hardware/SensorEventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5940594" vertical-offset="0" max-vertical-offset="615">
+          <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/LightSensorTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1440678" vertical-offset="1260" max-vertical-offset="2940">
+          <caret line="127" column="57" selection-start-line="127" selection-start-column="57" selection-end-line="127" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/graphics/Color.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33226836" vertical-offset="167" max-vertical-offset="5955">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/ProximitySensorTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="2865">
+          <caret line="124" column="76" selection-start-line="124" selection-start-column="76" selection-end-line="124" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/color.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16773163" vertical-offset="0" max-vertical-offset="626">
+          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/proximity_sensor_test.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="780">
+          <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/light_sensor_test.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="1065">
+          <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values-en/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3015">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/config-en.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8502496" vertical-offset="899" max-vertical-offset="1500">
-          <caret line="94" column="5" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9234609" vertical-offset="855" max-vertical-offset="1500">
-          <caret line="94" column="5" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="3075">
+          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07188498" vertical-offset="0" max-vertical-offset="3045">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3105">
           <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="921" max-vertical-offset="1500">
+          <caret line="94" column="5" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/config-en.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47668394" vertical-offset="894" max-vertical-offset="1500">
+          <caret line="78" column="10" selection-start-line="78" selection-start-column="10" selection-end-line="78" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5511182" vertical-offset="315" max-vertical-offset="2955">
-          <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.26357827" vertical-offset="765" max-vertical-offset="2955">
+          <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-linux_19/sources/android-19/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20175439" vertical-offset="1581" max-vertical-offset="10815">
+          <caret line="131" column="43" selection-start-line="131" selection-start-column="43" selection-end-line="131" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/GSensorTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2535212" vertical-offset="2235" max-vertical-offset="3240">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/nuautotest/Activity/BackLightTestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.1549296" vertical-offset="1125" max-vertical-offset="2535">
+          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
           <folding>
-            <element signature="e#216#233#0" expanded="true" />
-            <element signature="e#2459#2477#0" expanded="true" />
-            <element signature="e#2844#2862#0" expanded="true" />
-            <element signature="e#3160#3181#0" expanded="true" />
-            <element signature="e#3368#3390#0" expanded="true" />
-            <element signature="e#3581#3607#0" expanded="true" />
-            <element signature="e#3794#3816#0" expanded="true" />
-            <element signature="e#3998#4015#0" expanded="true" />
-            <element signature="e#4202#4224#0" expanded="true" />
-            <element signature="e#4408#4427#0" expanded="true" />
-            <element signature="e#4616#4640#0" expanded="true" />
-            <element signature="e#4825#4845#0" expanded="true" />
-            <element signature="e#5032#5054#0" expanded="true" />
-            <element signature="e#5237#5255#0" expanded="true" />
-            <element signature="e#5441#5468#0" expanded="true" />
-            <element signature="e#5651#5669#0" expanded="true" />
-            <element signature="e#5853#5872#0" expanded="true" />
-            <element signature="e#6061#6085#0" expanded="true" />
-            <element signature="e#6267#6284#0" expanded="true" />
-            <element signature="e#6472#6495#0" expanded="true" />
-            <element signature="e#6678#6696#0" expanded="true" />
-            <element signature="e#6883#6905#0" expanded="true" />
-            <element signature="e#7095#7120#0" expanded="true" />
-            <element signature="e#7314#7342#0" expanded="true" />
-            <element signature="e#7920#7947#0" expanded="true" />
-            <element signature="e#8132#8152#0" expanded="true" />
-            <element signature="e#8334#8351#0" expanded="true" />
-            <element signature="e#8537#8558#0" expanded="true" />
-            <element signature="e#8741#8759#0" expanded="true" />
-            <element signature="e#8954#8984#0" expanded="true" />
-            <element signature="e#9170#9193#0" expanded="true" />
+            <element signature="e#1133#1134#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1301,7 +1225,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Module_Test</last-edited>
+          <last-edited>Android|Module_Test</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

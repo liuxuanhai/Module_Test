@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="version">3.6.0724</string>
+	<string name="version">3.6.0803</string>
 
 	<string name="app_name">整机测试</string>
 	<string name="app_name_pcba">PCBA测试</string>
@@ -16,11 +16,15 @@
 
 	<string name="lightsensor_test">光传感</string>
 	<string name="lightsensor_prompt">请调节光线</string>
-	<string name="light_strength">光线强度:</string>
+	<string name="default_light_strength">初始勒克斯:</string>
+	<string name="light_strength">勒克斯:</string>
+	<string name="zero">0.0</string>
 
 	<string name="proximitysensor_test">距离传感</string>
 	<string name="psensor_prompt">请遮挡传感器</string>
 	<string name="psensor_distance">距离:</string>
+	<string name="psensor_no_response">远离</string>
+	<string name="psensor_response">靠近</string>
 
 	<string name="compass_test">指南针</string>
 	<string name="compass_prompt">改变方向</string>
@@ -130,7 +134,7 @@
 	<string name="suspend_interval_default">0</string>
 
 	<string name="factoryreset_test">出厂设置</string>
-	<string name="factory_reset_prompt">点击开始按钮，恢复出厂设置并关机</string>
+	<string name="factory_reset_prompt">点击开始，恢复出厂设置并关机</string>
 
 	<string name="phone_test">电话</string>
 	<string name="phone1">10010</string>

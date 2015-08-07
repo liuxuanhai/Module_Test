@@ -12,7 +12,7 @@ import android.view.View;
 import com.nuautotest.Activity.TPTestActivity;
 import com.nuautotest.application.ModuleTestApplication;
 
-class TPTestView extends View implements View.OnSystemUiVisibilityChangeListener {
+public class TPTestView extends View implements View.OnSystemUiVisibilityChangeListener {
 	/* Step 1 */
 	private final int mBorder = 1;
 	private final int mCombine = 2;

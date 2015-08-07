@@ -40,7 +40,6 @@
 			style="@android:style/Widget.GridView"
 			android:drawSelectorOnTop="false"
 			android:stackFromBottom="false"
-			android:background="@color/bg"
 			android:numColumns="@integer/gridColNumber">
 	</GridView>
 

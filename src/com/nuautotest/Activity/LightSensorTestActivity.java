@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nuautotest.Adapter.NuAutoTestAdapter;
 import com.nuautotest.application.ModuleTestApplication;
@@ -27,7 +28,8 @@ import java.io.IOException;
 public class LightSensorTestActivity extends Activity implements SensorEventListener {
 	private SensorManager sm;
 	private Sensor lightSensor;
-	private TextView tvLight;
+	private LinearLayout llLightChange;
+	private TextView tvLightDefault, tvLight, tvLightSuccess;
 	private boolean mRegisteredSensor;
 	private float dataLux;
 	private float autoRecLux = -1;
@@ -44,7 +46,10 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 
 		mContext = this;
 		setContentView(R.layout.light_sensor_test);
-		tvLight = (TextView) findViewById(R.id.lightsensor);
+		llLightChange = (LinearLayout)findViewById(R.id.llLightChange);
+		tvLightDefault = (TextView)findViewById(R.id.tvLightDefault);
+		tvLight = (TextView)findViewById(R.id.tvLight);
+		tvLightSuccess = (TextView)findViewById(R.id.tvLightSuccess);
 		initCreate();
 	}
 
@@ -114,8 +119,15 @@ public class LightSensorTestActivity extends Activity implements SensorEventList
 				stopAutoTest(true);
 			else
 				autoRecLux = dataLux;
-		} else
-			tvLight.setText(String.valueOf(dataLux));
+		} else {
+			if (tvLightDefault.getText().equals(mContext.getString(R.string.zero))) {
+				tvLightDefault.setText(String.valueOf(dataLux));
+			} else if (!tvLightDefault.getText().equals(String.valueOf(dataLux))) {
+				llLightChange.setVisibility(View.VISIBLE);
+				tvLight.setText(String.valueOf(dataLux));
+				tvLightSuccess.setVisibility(View.VISIBLE);
+			}
+		}
 	}
 
 	@Override

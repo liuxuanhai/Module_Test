@@ -14,11 +14,15 @@
 
 	<string name="lightsensor_test">L-sensor</string>
 	<string name="lightsensor_prompt">Change ambient light</string>
-	<string name="light_strength">Light strength:</string>
+	<string name="default_light_strength">Default lux:</string>
+	<string name="light_strength">Lux:</string>
+	<string name="zero">0.0</string>
 
 	<string name="proximitysensor_test">P-sensor</string>
 	<string name="psensor_prompt">Cover p-sensor</string>
 	<string name="psensor_distance">Distance:</string>
+	<string name="psensor_no_response">Released</string>
+	<string name="psensor_response">Covered</string>
 
 	<string name="compass_test">Compass</string>
 	<string name="compass_prompt">Change direction</string>
